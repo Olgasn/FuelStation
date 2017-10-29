@@ -1,5 +1,3 @@
-using System;
-
 namespace Fuels.Models
 {
     public class ErrorViewModel
