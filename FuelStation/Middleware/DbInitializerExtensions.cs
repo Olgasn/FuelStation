@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
-namespace Fuels.Middleware
+namespace FuelStation.Middleware
 {
     public static class DbInitializerExtensions
     {

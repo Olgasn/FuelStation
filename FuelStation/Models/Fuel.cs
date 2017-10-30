@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Fuels.Models
+namespace FuelStation.Models
 {
     public class Fuel
     {

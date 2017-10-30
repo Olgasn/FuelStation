@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
-namespace Fuels.Migrations
+namespace FuelStation.Migrations
 {
     public partial class Initial : Migration
     {

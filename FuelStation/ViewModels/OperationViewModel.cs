@@ -1,22 +1,19 @@
 ﻿using System;
-namespace Fuels.Models
+
+namespace FuelStation.ViewModels
 {
-    public class Operation
+    public class OperationViewModel
     {
         //ID операции
         public int OperationID { get; set; }
         //ID топлива
-        public int? FuelID { get; set; }
+        public string FuelType { get; set; }
         //ID емкости
-        public int? TankID { get; set; }
+        public string TankType { get; set; }
         //Приход/Расход
         public float? Inc_Exp { get; set; }
         //Дата операции
         public DateTime Date { get; set; }
-        //ссылка на виды топлива
-        public virtual Fuel Fuel { get; set; }
-        //ссылка на емкости
-        public virtual Tank Tank { get; set; }
 
     }
 }

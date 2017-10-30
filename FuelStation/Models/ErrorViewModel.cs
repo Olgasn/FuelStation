@@ -1,4 +1,4 @@
-namespace Fuels.Models
+namespace FuelStation.Models
 {
     public class ErrorViewModel
     {

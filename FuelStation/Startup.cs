@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Fuels.Middleware;
-using Fuels.Data;
+using FuelStation.Middleware;
+using FuelStation.Data;
 
-namespace Fuels
+namespace FuelStation
 {
     public class Startup
     {

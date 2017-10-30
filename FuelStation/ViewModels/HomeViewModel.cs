@@ -1,7 +1,7 @@
-﻿using Fuels.Models;
+﻿using FuelStation.Models;
 using System.Collections.Generic;
 
-namespace Fuels.ViewModels
+namespace FuelStation.ViewModels
 {
     public class HomeViewModel
     {

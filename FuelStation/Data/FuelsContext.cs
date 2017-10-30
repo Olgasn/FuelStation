@@ -1,7 +1,7 @@
-﻿using Fuels.Models;
+﻿using FuelStation.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fuels.Data
+namespace FuelStation.Data
 {
     public class FuelsContext: DbContext
     {

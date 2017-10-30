@@ -3,11 +3,11 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 
-using Fuels.Models;
-using Fuels.ViewModels;
-using Fuels.Data;
+using FuelStation.Models;
+using FuelStation.ViewModels;
+using FuelStation.Data;
 
-namespace Fuels.Controllers
+namespace FuelStation.Controllers
 {
     public class HomeController : Controller
     {

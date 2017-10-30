@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>FuelStation</AssemblyName>
+    <RootNamespace>FuelStation</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

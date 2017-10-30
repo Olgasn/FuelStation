@@ -1,8 +1,8 @@
-﻿using Fuels.Models;
+﻿using FuelStation.Models;
 using System;
 using System.Linq;
 //Класс для инициализации базы данных путем заполнения ее таблиц тестовым набором записей
-namespace Fuels.Data
+namespace FuelStation.Data
 {
     public static class DbInitializer
     {
