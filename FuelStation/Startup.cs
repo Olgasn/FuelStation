@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using FuelStation.Middleware;
 using FuelStation.Data;
+using FuelStation.Services;
 
 namespace FuelStation
 {
@@ -22,6 +23,10 @@ namespace FuelStation
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<FuelsContext>(options => options.UseSqlServer(connection));
+            // внедрение зависимости OperationService
+            services.AddTransient<OperationService>();
+            // добавление кэширования
+            services.AddMemoryCache();
             //добавление сессии
             services.AddDistributedMemoryCache();
             services.AddSession();
@@ -45,10 +50,10 @@ namespace FuelStation
             app.UseStaticFiles();
             // добавляем поддержку сессий
             app.UseSession();
-
             // добавляем компонента miidleware по инициализации базы данных
             app.UseDbInitializer();
-
+            // реализуем кэширование
+            app.UseOperatinCache();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

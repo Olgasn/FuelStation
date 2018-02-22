@@ -6,28 +6,24 @@ using Microsoft.AspNetCore.Mvc;
 using FuelStation.Models;
 using FuelStation.ViewModels;
 using FuelStation.Data;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace FuelStation.Controllers
 {
     public class HomeController : Controller
     {
         private FuelsContext _db;
-        public HomeController(FuelsContext db)
+        private IMemoryCache _cache;
+        public HomeController(FuelsContext db, IMemoryCache memoryCache)
             {
             _db = db;
+            _cache = memoryCache;
         }
         public IActionResult Index()
         {
-            var fuels = _db.Fuels.Take(10).ToList();
-            var tanks = _db.Tanks.Take(10).ToList();
-            List<OperationViewModel> operations = _db.Operations
-                .OrderByDescending(d=>d.Date)
-                .Select(t => new OperationViewModel { OperationID = t.OperationID, FuelType = t.Fuel.FuelType, TankType = t.Tank.TankType, Inc_Exp = t.Inc_Exp, Date = t.Date })
-                .Take(10)
-                .ToList();
+            HomeViewModel cacheEntry = _cache.Get<HomeViewModel>("Operations 10");
 
-            HomeViewModel homeViewModel = new HomeViewModel { Tanks=tanks, Fuels=fuels, Operations= operations};
-            return View(homeViewModel);
+            return View(cacheEntry);
         }
 
         public IActionResult About()
@@ -45,9 +41,6 @@ namespace FuelStation.Controllers
             return View();
         }
 
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        
     }
 }

@@ -6,9 +6,9 @@ namespace FuelStation.Models
         //ID операции
         public int OperationID { get; set; }
         //ID топлива
-        public int? FuelID { get; set; }
+        public int FuelID { get; set; }
         //ID емкости
-        public int? TankID { get; set; }
+        public int TankID { get; set; }
         //Приход/Расход
         public float? Inc_Exp { get; set; }
         //Дата операции
