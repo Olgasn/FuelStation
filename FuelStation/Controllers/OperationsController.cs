@@ -11,6 +11,11 @@ namespace FuelStation.Controllers
     public class OperationsController : Controller
     {
         private readonly FuelsContext _context;
+        private OperationViewModel _operation = new OperationViewModel
+        {
+            FuelType = "",
+            TankType = ""
+        };
 
         public OperationsController(FuelsContext context)
         {
@@ -18,19 +23,20 @@ namespace FuelStation.Controllers
         }
 
         // GET: Operations
+        [GetFromSession("Operation")]
         public IActionResult Index()
         {
-            var fuelsContext = _context.Operations.Include(o => o.Fuel).Include(o => o.Tank);
-            OperationViewModel operation = new OperationViewModel
-            {
-                FuelType = "",
-                TankType=""
-            };
+            var fuelsContext = _context.Operations
+                .Include(o => o.Fuel)
+                .Include(o => o.Tank)
+                .Where(o => o.Tank.TankType.Contains(_operation.TankType ?? "")
+                        & o.Fuel.FuelType.Contains(_operation.FuelType ?? ""));
+
 
             OperationsViewModel operations = new OperationsViewModel
             {
                 Operations = fuelsContext,
-                OperationViewModel=operation
+                OperationViewModel=_operation
 
             };
             return View(operations);

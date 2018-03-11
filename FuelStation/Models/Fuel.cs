@@ -6,6 +6,7 @@ namespace FuelStation.Models
     public class Fuel
     {
         //Id Топлива
+        [Display(Name = "Код топлива")]
         public int FuelID { get; set; }
         //Название вида топлива
         [Display(Name = "Топливо")]
