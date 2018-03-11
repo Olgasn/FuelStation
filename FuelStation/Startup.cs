@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using FuelStation.Middleware;
 using FuelStation.Data;
 using FuelStation.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FuelStation
 {
@@ -31,7 +32,20 @@ namespace FuelStation
             services.AddDistributedMemoryCache();
             services.AddSession();
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.CacheProfiles.Add("Caching",
+                    new CacheProfile()
+                    {
+                        Duration = 30
+                    });
+                options.CacheProfiles.Add("NoCaching",
+                    new CacheProfile()
+                    {
+                        Location = ResponseCacheLocation.None,
+                        NoStore = true
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,12 +68,13 @@ namespace FuelStation
             app.UseDbInitializer();
             // реализуем кэширование
             app.UseOperatinCache();
-            app.UseMvc(routes =>
+            app.UseMvc((routes) =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            }
+            );
 
         }
     }

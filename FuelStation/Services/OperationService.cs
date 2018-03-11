@@ -1,10 +1,7 @@
 ﻿using FuelStation.Data;
-using FuelStation.Models;
 using FuelStation.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 
 namespace FuelStation.Services

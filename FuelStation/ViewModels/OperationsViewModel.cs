@@ -7,6 +7,9 @@ namespace FuelStation.ViewModels
     public class OperationsViewModel
     {
         public IEnumerable<Operation> Operations { get;set;}
+        
+        //Свойство для фильтрации
+        public OperationViewModel OperationViewModel { get; set; }
         //Свойство для навигации по страницам
         public PageViewModel PageViewModel { get; set; }
         //Список отчетных годов

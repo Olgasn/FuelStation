@@ -10,7 +10,6 @@ namespace FuelStation.ViewModels
         public IEnumerable<OperationViewModel> Operations { get; set; }
 
 
-
     }
 
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace FuelStation.Models
 {
@@ -7,8 +8,10 @@ namespace FuelStation.Models
         //Id Топлива
         public int FuelID { get; set; }
         //Название вида топлива
+        [Display(Name = "Топливо")]
         public string FuelType { get; set; }
         //Плотность вида топлива
+        [Display(Name = "Плотность топлива")]
         public float FuelDensity { get; set; }
         public virtual ICollection<Operation> Operations { get; set; }
         public Fuel()
