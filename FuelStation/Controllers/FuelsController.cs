@@ -1,12 +1,12 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FuelStation.Data;
-using FuelStation.Models;
+using FuelStation.Infrastructure.Filters;
 
 namespace FuelStation.Controllers
 {
+    [TypeFilter(typeof(TimingLogAttribute))]
     public class FuelsController : Controller
     {
         private readonly FuelsContext _context;

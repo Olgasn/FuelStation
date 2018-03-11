@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
-using FuelStation.Infrastucture;
 
 namespace FuelStation.Infrastructure.Filters
 {
+    //Фильтр действий
     public class SetToSessionAttribute : Attribute, IActionFilter
     {
         private string _name;
@@ -20,7 +20,7 @@ namespace FuelStation.Infrastructure.Filters
             {
                 dict.Add(item.Key, item.Value.AttemptedValue);
             }
-            context.HttpContext.Session.Set<Dictionary<string, string>>(_name, dict);
+            context.HttpContext.Session.Set(_name, dict);
         }
 
         public void OnActionExecuting(ActionExecutingContext context)

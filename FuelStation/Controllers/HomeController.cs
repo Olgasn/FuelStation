@@ -3,9 +3,12 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using FuelStation.ViewModels;
 using FuelStation.Data;
+using FuelStation.Infrastructure.Filters;
 
 namespace FuelStation.Controllers
 {
+    [ExceptionFilter]
+    [TypeFilter(typeof(TimingLogAttribute))]
     public class HomeController : Controller
     {
         private FuelsContext _db;

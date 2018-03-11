@@ -7,6 +7,9 @@ using FuelStation.Middleware;
 using FuelStation.Data;
 using FuelStation.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System.IO;
+using FuelStation.Infrastructure;
 
 namespace FuelStation
 {
@@ -49,7 +52,7 @@ namespace FuelStation
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, FuelsContext context)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, FuelsContext context, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -60,7 +63,6 @@ namespace FuelStation
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
             app.UseStaticFiles();
             // добавляем поддержку сессий
             app.UseSession();
@@ -68,6 +70,7 @@ namespace FuelStation
             app.UseDbInitializer();
             // реализуем кэширование
             app.UseOperatinCache();
+            // запись журнала операций в файл
             app.UseMvc((routes) =>
             {
                 routes.MapRoute(
