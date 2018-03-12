@@ -8,7 +8,7 @@ using FuelStation.ViewModels;
 
 namespace FuelStation.Middleware
 {
-    // You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
+    //Компонента middleware для выполнения кэширования
     public class DbCacheMiddleware
     {
         private readonly RequestDelegate _next;
@@ -39,7 +39,7 @@ namespace FuelStation.Middleware
         }
     }
 
-    // Extension method used to add the middleware to the HTTP request pipeline.
+    // Метод расширения, используемый для добавления промежуточного программного обеспечения в конвейер HTTP-запроса.
     public static class DbCacheMiddlewareExtensions
     {
         public static IApplicationBuilder UseOperatinCache(this IApplicationBuilder builder)

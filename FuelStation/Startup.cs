@@ -7,9 +7,6 @@ using FuelStation.Middleware;
 using FuelStation.Data;
 using FuelStation.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System.IO;
-using FuelStation.Infrastructure;
 
 namespace FuelStation
 {
@@ -22,7 +19,7 @@ namespace FuelStation
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        // Этот метод вызывается во время выполнения. Используйте этот метод для добавления сервисов в контейнер.
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
@@ -37,6 +34,7 @@ namespace FuelStation
 
             services.AddMvc(options =>
             {
+                //определение профилей кэширования
                 options.CacheProfiles.Add("Caching",
                     new CacheProfile()
                     {
@@ -51,8 +49,8 @@ namespace FuelStation
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, FuelsContext context, ILoggerFactory loggerFactory)
+        // Этот метод вызывается во время выполнения. Используйте этот метод для настройки конвейера HTTP-запросов.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, FuelsContext context)
         {
             if (env.IsDevelopment())
             {
@@ -63,14 +61,16 @@ namespace FuelStation
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            //поддержка статических файлов
             app.UseStaticFiles();
             // добавляем поддержку сессий
             app.UseSession();
-            // добавляем компонента miidleware по инициализации базы данных
+            // добавляем компонента middleware по инициализации базы данных
             app.UseDbInitializer();
-            // реализуем кэширование
+            // добавляем компонента middleware по реализации кэширования
             app.UseOperatinCache();
-            // запись журнала операций в файл
+
             app.UseMvc((routes) =>
             {
                 routes.MapRoute(
