@@ -7,11 +7,9 @@ namespace FuelStation.Controllers
 {
     public class CashedHomeController : Controller
     {
-        private FuelsContext _db;
         private IMemoryCache _cache;
-        public CashedHomeController(FuelsContext db, IMemoryCache memoryCache)
-            {
-            _db = db;
+        public CashedHomeController(IMemoryCache memoryCache)
+        {
             _cache = memoryCache;
         }
         public IActionResult Index()

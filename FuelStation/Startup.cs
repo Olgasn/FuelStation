@@ -50,7 +50,7 @@ namespace FuelStation
         }
 
         // Этот метод вызывается во время выполнения. Используйте этот метод для настройки конвейера HTTP-запросов.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, FuelsContext context)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
