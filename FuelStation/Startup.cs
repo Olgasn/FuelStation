@@ -28,13 +28,13 @@ namespace FuelStation
             services.AddTransient<OperationService>();
             // добавление кэширования
             services.AddMemoryCache();
-            //добавление сессии
+            // добавление поддержки сессии
             services.AddDistributedMemoryCache();
             services.AddSession();
 
             services.AddMvc(options =>
             {
-                //определение профилей кэширования
+                // определение профилей кэширования
                 options.CacheProfiles.Add("Caching",
                     new CacheProfile()
                     {
@@ -62,14 +62,14 @@ namespace FuelStation
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            //поддержка статических файлов
+            // добавляем поддержку статических файлов
             app.UseStaticFiles();
             // добавляем поддержку сессий
             app.UseSession();
-            // добавляем компонента middleware по инициализации базы данных
+            // добавляем компонент middleware по инициализации базы данных и производим инициализацию базы
             app.UseDbInitializer();
-            // добавляем компонента middleware по реализации кэширования
-            app.UseOperatinCache();
+            // добавляем компонент middleware для реализации кэширования и записывем данные в кэш
+            app.UseOperatinCache("Operations 10");
 
             app.UseMvc((routes) =>
             {

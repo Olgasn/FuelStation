@@ -14,6 +14,7 @@ namespace FuelStation.Controllers
         }
         public IActionResult Index()
         {
+            //считывание данных из кэша
             HomeViewModel cacheEntry = _cache.Get<HomeViewModel>("Operations 10");
 
             return View("~/Views/Home/Index.cshtml", cacheEntry);

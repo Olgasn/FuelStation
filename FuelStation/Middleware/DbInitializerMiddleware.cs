@@ -1,4 +1,5 @@
 ﻿using FuelStation.Data;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Linq;
@@ -26,6 +27,14 @@ namespace FuelStation.Middleware
             // Call the next delegate/middleware in the pipeline
             return _next.Invoke(context);
         }
+    }
+    public static class DbInitializerExtensions
+    {
+        public static IApplicationBuilder UseDbInitializer(this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<DbInitializerMiddleware>();
+        }
+
     }
 
 }

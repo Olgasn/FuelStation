@@ -9,7 +9,7 @@ namespace FuelStation.Infrastructure.Filters
     {
         public void OnException(ExceptionContext context)
         {
-            string actionName = context.ActionDescriptor.DisplayName;
+            string actionName = context.ActionDescriptor.DisplayName; //имя метода действия
             string exceptionStack = context.Exception.StackTrace;
             string exceptionMessage = context.Exception.Message;
             context.Result = new ContentResult
