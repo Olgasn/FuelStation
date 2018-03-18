@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace FuelStation.ViewModels
@@ -7,10 +8,10 @@ namespace FuelStation.ViewModels
     {
         //ID операции
         public int OperationID { get; set; }
-        //ID топлива
+        //название топлива
         [Display(Name = "Топливо")]
         public string FuelType { get; set; }
-        //ID емкости
+        //название емкости
         [Display(Name = "Емкость")]
         public string TankType { get; set; }
         //Приход/Расход
@@ -20,6 +21,7 @@ namespace FuelStation.ViewModels
         [Display(Name = "Дата операции")]
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
-
+        // Порядок сортировки
+        public SortViewModel SortViewModel { get; set; }
     }
 }

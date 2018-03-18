@@ -10,7 +10,7 @@ namespace FuelStation.Infrastructure.Filters
         ILogger _logger;
         public TimingLogAttribute(ILoggerFactory loggerFactory)
         {
-            //loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "logger.txt"));
+            //loggerFactory.AddFile(Path.Combine(Directory.GetCurrentDirectory(), "logger.txt"));//Запись в файл
             _logger = loggerFactory.CreateLogger("TimingResourceFilter");
         }
         public void OnResourceExecuted(ResourceExecutedContext context)

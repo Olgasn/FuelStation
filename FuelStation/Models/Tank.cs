@@ -23,6 +23,11 @@ namespace FuelStation.Models
         [Display(Name = "Изображение")]
         public string TankPicture { get; set; }
         public virtual ICollection<Operation> Operations { get; set; }
+        public Tank()        
+        {
+            Operations = new List<Operation>();
 
-    }
+        }
+
+}
 }

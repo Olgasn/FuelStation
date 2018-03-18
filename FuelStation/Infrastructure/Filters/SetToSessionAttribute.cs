@@ -16,12 +16,17 @@ namespace FuelStation.Infrastructure.Filters
         // Выполняется после выполнения метода контроллера
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            Dictionary<string, string> dict = new Dictionary<string, string>();            
-            foreach (var item in context.ModelState)
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            // считывание данных из ModelState и запись в сессию
+            if (context.ModelState != null)
             {
-                dict.Add(item.Key, item.Value.AttemptedValue);
+                foreach (var item in context.ModelState)
+                {
+                    dict.Add(item.Key, item.Value.AttemptedValue);
+                }
+                context.HttpContext.Session.Set(_name, dict);
             }
-            context.HttpContext.Session.Set(_name, dict);
+
         }
         // Выполняется до выполнения метода контроллера, но после привязки данных передаваемых в контроллер
         public void OnActionExecuting(ActionExecutingContext context)

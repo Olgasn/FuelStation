@@ -22,7 +22,8 @@ namespace FuelStation
         // Этот метод вызывается во время выполнения. Используйте этот метод для добавления сервисов в контейнер.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection = Configuration.GetConnectionString("DefaultConnection");
+            // внерение зависимости для доступа к БД с использ EF
+            string connection = Configuration.GetConnectionString("SqlServerConnection");
             services.AddDbContext<FuelsContext>(options => options.UseSqlServer(connection));
             // внедрение зависимости OperationService
             services.AddTransient<OperationService>();
@@ -63,11 +64,14 @@ namespace FuelStation
             }
 
             // добавляем поддержку статических файлов
-            app.UseStaticFiles();
+            //app.UseStaticFiles();
+
             // добавляем поддержку сессий
             app.UseSession();
+
             // добавляем компонент middleware по инициализации базы данных и производим инициализацию базы
             app.UseDbInitializer();
+
             // добавляем компонент middleware для реализации кэширования и записывем данные в кэш
             app.UseOperatinCache("Operations 10");
 

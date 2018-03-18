@@ -8,7 +8,7 @@ using FuelStation.ViewModels;
 
 namespace FuelStation.Middleware
 {
-    //Компонента middleware для выполнения кэширования
+    //Компонент middleware для выполнения кэширования
     public class DbCacheMiddleware
     {
         private readonly RequestDelegate _next;
