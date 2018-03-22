@@ -10,8 +10,8 @@ using FuelStation.Models;
 
 namespace FuelStation.Controllers
 {
-    [TypeFilter(typeof(TimingLogAttribute))] // Фильтр
-    [ExceptionFilter] // Фильтр
+    [TypeFilter(typeof(TimingLogAttribute))] // Фильтр ресурсов
+    [ExceptionFilter] // Фильтр исключений
     public class OperationsController : Controller
     {
         private readonly FuelsContext _context;
@@ -27,7 +27,7 @@ namespace FuelStation.Controllers
         }
 
         // GET: Operations
-        [SetToSession("SortState")] //Фильтр для сохранение в сессию состояния сортировки
+        [SetToSession("SortState")] //Фильтр действий для сохранение в сессию состояния сортировки
         public IActionResult Index(SortState sortOrder)
         {
             // Считывание данных из сессии
@@ -53,7 +53,7 @@ namespace FuelStation.Controllers
         }
         // Post: Operations
         [HttpPost]
-        [SetToSession("Operation")] //Фильтр для сохранение в сессию параметров отбора
+        [SetToSession("Operation")] //Фильтр действий для сохранение в сессию параметров отбора
         public IActionResult Index(OperationViewModel operation)
         {
             // Считывание данных из сессии
