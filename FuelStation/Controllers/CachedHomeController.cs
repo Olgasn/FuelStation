@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using FuelStation.ViewModels;
-using FuelStation.Data;
 using Microsoft.Extensions.Caching.Memory;
+using FuelStation.Infrastructure.Filters;
+using System;
 
 namespace FuelStation.Controllers
 {
-    public class CashedHomeController : Controller
+    public class CachedHomeController : Controller
     {
         private IMemoryCache _cache;
-        public CashedHomeController(IMemoryCache memoryCache)
+        public CachedHomeController(IMemoryCache memoryCache)
         {
             _cache = memoryCache;
         }
@@ -20,6 +21,8 @@ namespace FuelStation.Controllers
             return View("~/Views/Home/Index.cshtml", cacheEntry);
         }
 
-        
+
+
+
     }
 }

@@ -13,6 +13,13 @@ namespace FuelStation.Infrastructure.Filters
         {
             _name = name;
         }
+
+        // Выполняется до выполнения метода контроллера, но после привязки данных передаваемых в контроллер
+        public void OnActionExecuting(ActionExecutingContext context)
+        {
+
+        }
+
         // Выполняется после выполнения метода контроллера
         public void OnActionExecuted(ActionExecutedContext context)
         {
@@ -26,11 +33,6 @@ namespace FuelStation.Infrastructure.Filters
                 }
                 context.HttpContext.Session.Set(_name, dict);
             }
-
-        }
-        // Выполняется до выполнения метода контроллера, но после привязки данных передаваемых в контроллер
-        public void OnActionExecuting(ActionExecutingContext context)
-        {
 
         }
     }

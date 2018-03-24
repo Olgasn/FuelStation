@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace FuelStation.ViewModels
+﻿namespace FuelStation.ViewModels
 {
     public enum SortState
     {
