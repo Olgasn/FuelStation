@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using FuelStation.ViewModels;
 using Microsoft.Extensions.Caching.Memory;
-using FuelStation.Infrastructure.Filters;
-using System;
 
 namespace FuelStation.Controllers
 {
+    // Выборка кэшированых данных из IMemoryCache
     public class CachedHomeController : Controller
     {
         private IMemoryCache _cache;

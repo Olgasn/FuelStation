@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using FuelStation.ViewModels;
 using FuelStation.Infrastructure.Filters;
-using System;
 using FuelStation.Data;
 using System.Linq;
 using System.Collections.Generic;
 
 namespace FuelStation.Controllers
 {
+
     public class CachedController : Controller
     {
         private FuelsContext _context;
@@ -15,6 +15,7 @@ namespace FuelStation.Controllers
         {
             _context = context;
         }
+        // Кэширование с использования фильтра ресурсов
         [TypeFilter(typeof(CacheResourceFilterAttribute))]
         public IActionResult Index()
         {
