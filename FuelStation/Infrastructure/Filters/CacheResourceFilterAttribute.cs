@@ -9,12 +9,13 @@ namespace FuelStation.Infrastructure.Filters
     public class CacheResourceFilterAttribute : Attribute, IResourceFilter
     {
         private static readonly Dictionary<string, object> _cache
-            = new Dictionary<string, object>(); // Объект словаря, в который будем кэшировать данные
-        private string _cacheKey; // ключ
+            = new Dictionary<string, object>(); // Коллекция в виде словаря, в которую будем кэшировать данные
+        private string _cacheKey; // ключ доступа
 
-        // Выполняется до выполнения метода контроллера, но после привязки данных передаваемых в контроллер
+        // Выполняется до выполнения метода контроллера
         public void OnResourceExecuting(ResourceExecutingContext context)
         {
+            // считывание представление из коллекции
             _cacheKey = context.HttpContext.Request.Path.ToString();
             if (_cache.ContainsKey(_cacheKey))
             {
@@ -26,8 +27,10 @@ namespace FuelStation.Infrastructure.Filters
             }
         }
 
+        // Выполняется после выполнения метода контроллера
         public void OnResourceExecuted(ResourceExecutedContext context)
         {
+            // запись представления в коллекцию
             if (!String.IsNullOrEmpty(_cacheKey) &&
             !_cache.ContainsKey(_cacheKey))
             {
