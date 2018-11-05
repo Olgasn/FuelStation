@@ -22,7 +22,7 @@
                     <td>@fuel.FuelID</td>
                     <td>@fuel.FuelType</td>
                     <td>@fuel.FuelDensity</td>
-                    <td><a href="~/Home/Edit/@fuel.FuelID">Редактировать</a></td>
+                    <td><a href="~/Fuels/Edit/@fuel.FuelID">Редактировать</a></td>
                 </tr>
             }
         </table>
@@ -45,7 +45,7 @@
                     <td>@tank.TankID</td>
                     <td>@tank.TankType</td>
                     <td>@tank.TankWeight</td>
-                    <td><a href="~/Home/Edit/@tank.TankID">Редактировать</a></td>
+                    <td><a href="~/Tanks/Edit/@tank.TankID">Редактировать</a></td>
                 </tr>
             }
         </table>
@@ -72,8 +72,7 @@
             <td>@operation.FuelType</td>
             <td>@operation.Inc_Exp</td>
             <td>@operation.Date.Date</td>
-
-            <td><a href="~/Home/Edit/@operation.OperationID">Редактировать</a></td>
+            <td><a href="~/Operations/Edit/@operation.OperationID">Редактировать</a></td>
         </tr>
     }
 </table>

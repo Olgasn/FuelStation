@@ -1,0 +1,55 @@
+﻿@model FuelStation.Models.Tank
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Редактировать</h2>
+
+<h4>Tank</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TankID" />
+            <div class="form-group">
+                <label asp-for="TankType" class="control-label"></label>
+                <input asp-for="TankType" class="form-control" />
+                <span asp-validation-for="TankType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TankWeight" class="control-label"></label>
+                <input asp-for="TankWeight" class="form-control" />
+                <span asp-validation-for="TankWeight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TankVolume" class="control-label"></label>
+                <input asp-for="TankVolume" class="form-control" />
+                <span asp-validation-for="TankVolume" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TankMaterial" class="control-label"></label>
+                <input asp-for="TankMaterial" class="form-control" />
+                <span asp-validation-for="TankMaterial" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TankPicture" class="control-label"></label>
+                <input asp-for="TankPicture" class="form-control" />
+                <span asp-validation-for="TankPicture" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Вернуться к списку</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

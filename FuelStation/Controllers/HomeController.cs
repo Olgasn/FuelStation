@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-
-using FuelStation.Models;
 using FuelStation.ViewModels;
 using FuelStation.Data;
 
@@ -30,20 +27,7 @@ namespace FuelStation.Controllers
             return View(homeViewModel);
         }
 
-        public IActionResult About()
-        { 
-        
-            ViewData["Message"] = "Your application description page.";
 
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
 
     }
 }

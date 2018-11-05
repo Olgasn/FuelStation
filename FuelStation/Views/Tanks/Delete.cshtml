@@ -1,0 +1,52 @@
+﻿@model FuelStation.Models.Tank
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы уверены, что хотите удалить это?</h3>
+<div>
+    <h4>Tank</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TankType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TankType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TankWeight)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TankWeight)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TankVolume)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TankVolume)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TankMaterial)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TankMaterial)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TankPicture)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TankPicture)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="TankID" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Вернуться к списку</a>
+    </form>
+</div>
