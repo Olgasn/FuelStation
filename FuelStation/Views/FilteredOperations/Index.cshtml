@@ -6,7 +6,7 @@
 }
 <h2>Операции</h2>
 
-@using (Html.BeginForm("Index", "Operations", FormMethod.Post))
+@using (Html.BeginForm("Index", "FilteredOperations", FormMethod.Post))
 {
     <fieldset>
         Наименование топлива: @Html.TextBox("FuelType", Model.OperationViewModel.FuelType)

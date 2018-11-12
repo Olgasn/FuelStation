@@ -10,8 +10,7 @@ using FuelStation.Models;
 
 namespace FuelStation.Controllers
 {
-    [TypeFilter(typeof(TimingLogAttribute))] // Фильтр ресурсов
-    [ExceptionFilter] // Фильтр исключений
+    //[ExceptionFilter] // Фильтр исключений
     public class FilteredOperationsController : Controller
     {
         private readonly FuelsContext _context;
