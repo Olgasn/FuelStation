@@ -17,9 +17,12 @@ namespace FuelStation.Controllers
         }
 
         // GET: Tanks
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string TankTypeFind = "")
         {
-            return View(await _context.Tanks.ToListAsync());
+            var tanks = from m in _context.Tanks
+                        where m.TankType.StartsWith(TankTypeFind)
+                        select m;
+            return View(await tanks.ToListAsync());
         }
 
         // GET: Tanks/Details/5

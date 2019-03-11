@@ -10,7 +10,7 @@ namespace FuelStation.Controllers
     {
         private FuelsContext _db;
         public HomeController(FuelsContext db)
-            {
+        {
             _db = db;
         }
         public IActionResult Index()
