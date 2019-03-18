@@ -31,12 +31,12 @@
                 @Html.DisplayNameFor(model => model.OperationViewModel.Date)
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder=@Model.SortViewModel.FuelTypeSort>
+                <a asp-action="Index" asp-route-sortOrder=@Model.SortViewModel.FuelTypeSort asp-route-TankType="@TankType" asp-route-FuelType="@FuelType">
                     @Html.DisplayNameFor(model => model.OperationViewModel.FuelType)
                 </a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder=@Model.SortViewModel.TankTypeSort>
+                <a asp-action="Index" asp-route-sortOrder=@Model.SortViewModel.TankTypeSort asp-route-TankType="@TankType" asp-route-FuelType="@FuelType">
                     @Html.DisplayNameFor(model => model.OperationViewModel.TankType)
                 </a>
             <th></th>
@@ -68,6 +68,6 @@
     </tbody>
 </table>
 <page-link page-model="Model.PageViewModel" page-action="Index"
-           page-url-FuelType="FuelType"
-           page-url-TankType="TankType"
+           page-url-FuelType="@FuelType"
+           page-url-TankType="@TankType"
            page-url-sortOrder="@(Model.SortViewModel.CurrentState)"></page-link>
