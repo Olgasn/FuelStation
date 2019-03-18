@@ -20,8 +20,7 @@ namespace FuelStation.ViewModels
         [Display(Name = "Дата операции")]
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
-        // Порядок сортировки
-        public SortViewModel SortViewModel { get; set; }
+
 
     }
 }

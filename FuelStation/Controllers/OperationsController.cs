@@ -5,12 +5,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FuelStation.Data;
 using FuelStation.Models;
+using FuelStation.ViewModels;
 
 namespace FuelStation.Controllers
 {
     public class OperationsController : Controller
     {
         private readonly FuelsContext _context;
+        private int pageSize = 10;   // количество элементов на странице
+
+        private OperationViewModel _operation = new OperationViewModel
+        {
+            FuelType = "",
+            TankType = ""
+        };
 
         public OperationsController(FuelsContext context)
         {
@@ -18,11 +26,31 @@ namespace FuelStation.Controllers
         }
 
         // GET: Operations
-        public async Task<IActionResult> Index()
+        public IActionResult Index(OperationViewModel operation, SortState sortOrder, int page = 1)
         {
-            var fuelsContext = _context.Operations.Include(o => o.Fuel).Include(o => o.Tank);
-            return View(await fuelsContext.ToListAsync());
+
+            // Сортировка и фильтрация данных
+
+            IQueryable<Operation> fuelsContext = _context.Operations;
+            fuelsContext = Sort_Search(fuelsContext, sortOrder, operation.TankType ?? "", operation.FuelType ?? "");
+
+            // Разбиение на страницы
+            var count = fuelsContext.Count();
+            fuelsContext = fuelsContext.Skip((page - 1) * pageSize).Take(pageSize);
+
+            // Формирование модели для передачи представлению
+            OperationsViewModel operations = new OperationsViewModel
+            {
+                Operations = fuelsContext,
+                PageViewModel= new PageViewModel(count, page, pageSize),
+                SortViewModel = new SortViewModel(sortOrder),
+                OperationViewModel = operation
+            };
+            return View(operations);
+
+
         }
+
 
         // GET: Operations/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -155,6 +183,31 @@ namespace FuelStation.Controllers
         private bool OperationExists(int id)
         {
             return _context.Operations.Any(e => e.OperationID == id);
+        }
+        private IQueryable<Operation> Sort_Search(IQueryable<Operation> operations, SortState sortOrder, string searchTankType, string searchFuelType)
+        {
+            switch (sortOrder)
+            {
+                case SortState.FuelTypeAsc:
+                    operations = operations.OrderBy(s => s.Fuel.FuelType);
+                    break;
+                case SortState.FuelTypeDesc:
+                    operations = operations.OrderByDescending(s => s.Fuel.FuelType);
+                    break;
+                case SortState.TankTypeAsc:
+                    operations = operations.OrderBy(s => s.Tank.TankType);
+                    break;
+                case SortState.TankTypeDesc:
+                    operations = operations.OrderByDescending(s => s.Tank.TankType);
+                    break;
+            }
+            operations = operations.Include(o => o.Fuel).Include(o => o.Tank)
+                .Where(o => o.Tank.TankType.Contains(searchTankType ?? "")
+                & o.Fuel.FuelType.Contains(searchFuelType ?? ""));
+
+
+
+            return operations;
         }
     }
 }

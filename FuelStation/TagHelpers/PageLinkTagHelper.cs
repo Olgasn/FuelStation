@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.AspNetCore.Mvc;
 using FuelStation.ViewModels;
-
+using System.Collections.Generic;
 
 namespace FuelStation.TagHelpers
 {
@@ -20,6 +20,9 @@ namespace FuelStation.TagHelpers
         public ViewContext ViewContext { get; set; }
         public PageViewModel PageModel { get; set; }
         public string PageAction { get; set; }
+
+        [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]
+        public Dictionary<string, object> PageUrlValues { get; set; } = new Dictionary<string, object>();
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
@@ -60,7 +63,8 @@ namespace FuelStation.TagHelpers
             }
             else
             {
-                link.Attributes["href"] = urlHelper.Action(PageAction, new { page = pageNumber });
+                PageUrlValues["page"] = pageNumber;
+                link.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
             }
             link.InnerHtml.Append(pageNumber.ToString());
             item.InnerHtml.AppendHtml(link);

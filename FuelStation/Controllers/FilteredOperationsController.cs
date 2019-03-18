@@ -42,11 +42,12 @@ namespace FuelStation.Controllers
             fuelsContext = Sort_Search(fuelsContext, sortOrder, _operation.TankType ?? "", _operation.FuelType ?? "");
 
             // Формирование модели для передачи представлению
-            _operation.SortViewModel = new SortViewModel(sortOrder);
+          
             OperationsViewModel operations = new OperationsViewModel
             {
                 Operations = fuelsContext,
-                OperationViewModel=_operation
+                SortViewModel = new SortViewModel(sortOrder),
+                OperationViewModel =_operation
             };
             return View(operations);
         }
@@ -66,10 +67,10 @@ namespace FuelStation.Controllers
             fuelsContext = Sort_Search(fuelsContext, sortOrder, operation.TankType ?? "", operation.FuelType ?? "");
 
             // Формирование модели для передачи представлению
-            operation.SortViewModel = new SortViewModel(sortOrder);
             OperationsViewModel operations = new OperationsViewModel
             {
                 Operations=fuelsContext,
+                SortViewModel = new SortViewModel(sortOrder),
                 OperationViewModel = operation
             };
 

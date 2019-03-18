@@ -24,12 +24,12 @@
                 @Html.DisplayNameFor(model => model.OperationViewModel.Date)
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder=@Model.OperationViewModel.SortViewModel.FuelTypeSort>
+                <a asp-action="Index" asp-route-sortOrder=@Model.SortViewModel.FuelTypeSort>
                     @Html.DisplayNameFor(model => model.OperationViewModel.FuelType)
                 </a>
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder=@Model.OperationViewModel.SortViewModel.TankTypeSort>
+                <a asp-action="Index" asp-route-sortOrder=@Model.SortViewModel.TankTypeSort>
                     @Html.DisplayNameFor(model => model.OperationViewModel.TankType)
                 </a>
 

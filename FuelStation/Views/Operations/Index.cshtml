@@ -1,54 +1,73 @@
-﻿@model IEnumerable<FuelStation.Models.Operation>
+﻿@using  FuelStation.ViewModels
+@model OperationsViewModel
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string FuelType = Model.OperationViewModel.FuelType;
+    string TankType = Model.OperationViewModel.TankType;
 }
 
-<h2>Index</h2>
+<h2>Операции с топливом</h2>
 
 <p>
     <a asp-action="Create">Создать</a>
 </p>
+@using (Html.BeginForm("Index", "Operations", FormMethod.Get))
+{
+    <fieldset>
+        Наименование топлива: @Html.TextBox("FuelType", FuelType)
+        Наименование емкости: @Html.TextBox("TankType", TankType)
+        <input type="submit" value="Найти" />
+    </fieldset>
+}
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Inc_Exp)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Date)
-                </th>
             <th>
-                @Html.DisplayNameFor(model => model.Fuel.FuelType)
+                @Html.DisplayNameFor(model => model.Operations.FirstOrDefault().Inc_Exp)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Tank.TankType)
+                @Html.DisplayNameFor(model => model.OperationViewModel.Date)
             </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder=@Model.SortViewModel.FuelTypeSort>
+                    @Html.DisplayNameFor(model => model.OperationViewModel.FuelType)
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder=@Model.SortViewModel.TankTypeSort>
+                    @Html.DisplayNameFor(model => model.OperationViewModel.TankType)
+                </a>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Inc_Exp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fuel.FuelType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tank.TankType)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.OperationID">Редактировать</a> |
-                <a asp-action="Details" asp-route-id="@item.OperationID">Подробно</a> |
-                <a asp-action="Delete" asp-route-id="@item.OperationID">Удалить</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Operations)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Inc_Exp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fuel.FuelType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tank.TankType)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.OperationID">Редактировать</a> |
+                    <a asp-action="Details" asp-route-id="@item.OperationID">Подробно</a> |
+                    <a asp-action="Delete" asp-route-id="@item.OperationID">Удалить</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<page-link page-model="Model.PageViewModel" page-action="Index"
+           page-url-FuelType="FuelType"
+           page-url-TankType="TankType"
+           page-url-sortOrder="@(Model.SortViewModel.CurrentState)"></page-link>
