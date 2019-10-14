@@ -6,8 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using FuelStation.Middleware;
 using FuelStation.Data;
 using FuelStation.Services;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
+using FuelStation.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace FuelStation
 {
@@ -40,7 +42,10 @@ namespace FuelStation
             // добавление поддержки сессии
             services.AddDistributedMemoryCache();
             services.AddSession();
-            services.AddControllersWithViews();
+            // внедрение зависимости CachedTanksService
+            services.AddTransient<CachedTanksService>();
+
+            //services.AddControllersWithViews();
 
         }
 
@@ -68,16 +73,63 @@ namespace FuelStation
             // добавляем компонент middleware для реализации кэширования и записывем данные в кэш
             app.UseOperatinCache("Operations 10");
 
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
+            app.Map("/form", (appBuilder) =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                appBuilder.Run(async (context) => {
+
+                    string firstname = "";
+                    firstname = context.Request.Query["firstname"];
+                    string strresponse = "<html><body><form action ='/form' / >" +
+                    "First name:<br><input type = 'text' name = 'firstname' value = " + firstname + ">" +
+                    "<br>Last name:<br><input type = 'text' name = 'lastname' value = 'Mouse' >" +
+                    "<br><br><input type = 'submit' value = 'Submit' ></form></body></html>";
+
+                    await context.Response.WriteAsync(strresponse);
+                });
             });
+
+
+            app.Run((context) =>
+            {
+                CachedTanksService cachedTanksService = context.RequestServices.GetService<CachedTanksService>();
+                IEnumerable<Tank> tanks = cachedTanksService.GetTanks("Tanks20");
+                string HtmlString = "<HTML><HEAD>" +
+                "<TITLE>Емкости</TITLE></HEAD>" +
+                "<META http-equiv='Content-Type' content='text/html; charset=utf-8 />'" +
+                "<BODY><H1>Список емкостей</H1>" +
+                "<TABLE BORDER=1>";
+                HtmlString += "<TH>";
+                HtmlString += "<TD>Код</TD>";
+                HtmlString += "<TD>Материал</TD>";
+                HtmlString += "<TD>Тип</TD>";
+                HtmlString += "<TD>Объем</TD>";
+                HtmlString += "</TH>";
+                foreach (var tank in tanks)
+                {
+                    HtmlString += "<TR>";
+                    HtmlString += "<TD>" + tank.TankID + "</TD>";
+                    HtmlString += "<TD>" + tank.TankMaterial + "</TD>";
+                    HtmlString += "<TD>" + tank.TankType + "</TD>";
+                    HtmlString += "<TD>" + tank.TankVolume + "</TD>";
+                    HtmlString += "</TR>";
+                }
+                HtmlString += "</TABLE></BODY></HTML>";
+
+                return context.Response.WriteAsync(HtmlString);
+
+            });
+
+
+            //app.UseRouting();
+
+            //app.UseAuthorization();
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllerRoute(
+            //        name: "default",
+            //        pattern: "{controller=Home}/{action=Index}/{id?}");
+            //});
 
         }
     }
