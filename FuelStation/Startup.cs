@@ -108,6 +108,22 @@ namespace FuelStation
                     await context.Response.WriteAsync(strResponse);
                 });
             });
+            app.Map("/info", (appBuilder) =>
+            {
+                appBuilder.Run(async (context) => {
+
+
+                    // Формирование строки для вывода 
+                    string strResponse = "<HTML><HEAD>" +
+                    "<TITLE>Информация</TITLE></HEAD>" +
+                    "<META http-equiv='Content-Type' content='text/html; charset=utf-8 />'" +
+                    "<BODY><H1>Нет информации о клиенте</H1></BODY></HTML>";                   
+
+
+                    // Вывода данных
+                    await context.Response.WriteAsync(strResponse);
+                });
+            });
 
             //Вывод записей таблицы с использованием кэширования 
             app.Run((context) =>
