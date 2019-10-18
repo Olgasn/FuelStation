@@ -9,6 +9,7 @@ using FuelStation.Services;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
 using FuelStation.Models;
+using FuelStation.Infrastructure;
 using Microsoft.AspNetCore.Http;
 
 namespace FuelStation
@@ -35,13 +36,17 @@ namespace FuelStation
             // внедрение зависимости для доступа к БД с использованием EF
             string connection = Configuration.GetConnectionString("SqlServerConnection");
             services.AddDbContext<FuelsContext>(options => options.UseSqlServer(connection));
+
             // внедрение зависимости OperationService
-            services.AddTransient<OperationService>();
+            //services.AddTransient<OperationService>();
+
             // добавление кэширования
             services.AddMemoryCache();
+
             // добавление поддержки сессии
             services.AddDistributedMemoryCache();
             services.AddSession();
+
             // внедрение зависимости CachedTanksService
             services.AddTransient<CachedTanksService>();
 
@@ -71,30 +76,48 @@ namespace FuelStation
             app.UseDbInitializer();
 
             // добавляем компонент middleware для реализации кэширования и записывем данные в кэш
-            app.UseOperatinCache("Operations 10");
+            //app.UseOperatinCache("Operations 10");
 
+            
+            //Запоминание в Session значений, введенных в форме
             app.Map("/form", (appBuilder) =>
             {
                 appBuilder.Run(async (context) => {
 
-                    string firstname = "";
-                    firstname = context.Request.Query["firstname"];
-                    string strresponse = "<html><body><form action ='/form' / >" +
-                    "First name:<br><input type = 'text' name = 'firstname' value = " + firstname + ">" +
-                    "<br>Last name:<br><input type = 'text' name = 'lastname' value = 'Mouse' >" +
-                    "<br><br><input type = 'submit' value = 'Submit' ></form></body></html>";
 
-                    await context.Response.WriteAsync(strresponse);
+                    // Считывание из сессии объекта User
+                    User user = context.Session.Get<User>("user")?? new User();
+
+                    // Формирование строки для вывода динамической HTML формы
+                    string strResponse = "<HTML><HEAD>" +
+                    "<TITLE>Емкости</TITLE></HEAD>" +
+                    "<META http-equiv='Content-Type' content='text/html; charset=utf-8 />'" +
+                    "<BODY><FORM action ='/form' / >" +
+                    "First name:<BR><INPUT type = 'text' name = 'FirstName' value = " + user.FirstName + ">" +
+                    "<BR>Last name:<BR><INPUT type = 'text' name = 'LastName' value = " + user.LastName + " >" +
+                    "<BR><BR><INPUT type = 'submit' value = 'Submit' >" +
+                    "</FORM></BODY></HTML>";
+
+
+                    // Запись в сессию объекта User
+                    string FirstName = context.Request.Query["FirstName"];
+                    string LastName = context.Request.Query["LastName"];
+                    user.FirstName = FirstName;
+                    user.LastName = LastName;
+                    context.Session.Set<User>("user", user);
+
+
+                    // Вывода динамической HTML формы
+                    await context.Response.WriteAsync(strResponse);
                 });
             });
 
-
+            //Вывод записей таблицы с использованием кэширования 
             app.Run((context) =>
             {
                 CachedTanksService cachedTanksService = context.RequestServices.GetService<CachedTanksService>();
                 IEnumerable<Tank> tanks = cachedTanksService.GetTanks("Tanks20");
-                string HtmlString = "<HTML><HEAD>" +
-                "<TITLE>Емкости</TITLE></HEAD>" +
+                string HtmlString = "<HTML><HEAD><TITLE>Емкости</TITLE></HEAD>" +
                 "<META http-equiv='Content-Type' content='text/html; charset=utf-8 />'" +
                 "<BODY><H1>Список емкостей</H1>" +
                 "<TABLE BORDER=1>";
@@ -119,11 +142,9 @@ namespace FuelStation
 
             });
 
-
+            //Использование MVC - отключено
             //app.UseRouting();
-
             //app.UseAuthorization();
-
             //app.UseEndpoints(endpoints =>
             //{
             //    endpoints.MapControllerRoute(
