@@ -37,8 +37,6 @@ namespace FuelStation
             string connection = Configuration.GetConnectionString("SqlServerConnection");
             services.AddDbContext<FuelsContext>(options => options.UseSqlServer(connection));
 
-            // внедрение зависимости OperationService
-            //services.AddTransient<OperationService>();
 
             // добавление кэширования
             services.AddMemoryCache();
@@ -120,7 +118,7 @@ namespace FuelStation
                     "<BODY><H1>Нет информации о клиенте</H1></BODY></HTML>";                   
 
 
-                    // Вывода данных
+                    // Вывод данных
                     await context.Response.WriteAsync(strResponse);
                 });
             });
