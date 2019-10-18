@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace FuelStation.Models
+﻿namespace FuelStation.Models
 {
     public class User
     {

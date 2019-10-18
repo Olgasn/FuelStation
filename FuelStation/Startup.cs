@@ -26,12 +26,6 @@ namespace FuelStation
         // Этот метод вызывается во время выполнения. Используйте этот метод для добавления сервисов в контейнер.
         public void ConfigureServices(IServiceCollection services)
         {
-            // внедрение зависимости для доступа к БД c учетными записями с использованием EF
-            //services.AddDbContext<ApplicationContext>(options =>
-            //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddIdentity<User, IdentityRole>()
-            //    .AddEntityFrameworkStores<ApplicationContext>();
-
 
             // внедрение зависимости для доступа к БД с использованием EF
             string connection = Configuration.GetConnectionString("SqlServerConnection");
@@ -106,6 +100,14 @@ namespace FuelStation
                     await context.Response.WriteAsync(strResponse);
                 });
             });
+
+
+
+            //Запоминание в Сookies значений, введенных в форме
+            //..
+
+
+            // Вывод информации о клиенте
             app.Map("/info", (appBuilder) =>
             {
                 appBuilder.Run(async (context) => {
@@ -123,7 +125,7 @@ namespace FuelStation
                 });
             });
 
-            //Вывод записей таблицы с использованием кэширования 
+            //Вывод записей таблицы Tanks с использованием кэширования 
             app.Run((context) =>
             {
                 CachedTanksService cachedTanksService = context.RequestServices.GetService<CachedTanksService>();
