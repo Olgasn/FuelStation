@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace FuelStation.Infrastructure
 {
-    // Методы расширения для ISession
+    // Методы расширения для ISession для работы с произвольными объектами и объектами типа Dictionary<string, string>
     public static class SessionExtensions
     {
-        //Запись параметризованного объекта  в сессию
+        //Запись приизвольного объекта  в сессию
         public static void Set<T>(this ISession session, string key, T value)
         {
             session.SetString(key, JsonConvert.SerializeObject(value));

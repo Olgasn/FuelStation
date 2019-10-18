@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace FuelStation.Infrastructure
 {
-    //Преобразование словаря в объект
+    //Преобразование объекта типа Dictionary<string, string> в объект
     public static class Transformations
     {
         public static T DictionaryToObject<T>(IDictionary<string, string> dict) where T : new()

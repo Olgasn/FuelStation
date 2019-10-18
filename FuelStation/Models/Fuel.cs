@@ -14,7 +14,7 @@ namespace FuelStation.Models
         //Плотность вида топлива
         [Display(Name = "Плотность топлива")]
         public float FuelDensity { get; set; }
-        public virtual ICollection<Operation> Operations { get; set; }
+        public ICollection<Operation> Operations { get; set; }
         public Fuel()
         {
             Operations = new List<Operation>();

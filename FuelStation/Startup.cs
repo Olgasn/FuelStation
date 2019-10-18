@@ -75,9 +75,6 @@ namespace FuelStation
             // добавляем компонент middleware по инициализации базы данных и производим инициализацию базы
             app.UseDbInitializer();
 
-            // добавляем компонент middleware для реализации кэширования и записывем данные в кэш
-            //app.UseOperatinCache("Operations 10");
-
             
             //Запоминание в Session значений, введенных в форме
             app.Map("/form", (appBuilder) =>
@@ -85,12 +82,12 @@ namespace FuelStation
                 appBuilder.Run(async (context) => {
 
 
-                    // Считывание из сессии объекта User
+                    // Считывание из Session объекта User
                     User user = context.Session.Get<User>("user")?? new User();
 
                     // Формирование строки для вывода динамической HTML формы
                     string strResponse = "<HTML><HEAD>" +
-                    "<TITLE>Емкости</TITLE></HEAD>" +
+                    "<TITLE>Пользователь</TITLE></HEAD>" +
                     "<META http-equiv='Content-Type' content='text/html; charset=utf-8 />'" +
                     "<BODY><FORM action ='/form' / >" +
                     "First name:<BR><INPUT type = 'text' name = 'FirstName' value = " + user.FirstName + ">" +
@@ -99,7 +96,7 @@ namespace FuelStation
                     "</FORM></BODY></HTML>";
 
 
-                    // Запись в сессию объекта User
+                    // Запись в Session данных объекта User
                     string FirstName = context.Request.Query["FirstName"];
                     string LastName = context.Request.Query["LastName"];
                     user.FirstName = FirstName;
