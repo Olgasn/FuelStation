@@ -82,10 +82,11 @@ namespace FuelStation
                     "<TITLE>Пользователь</TITLE></HEAD>" +
                     "<META http-equiv='Content-Type' content='text/html; charset=utf-8 />'" +
                     "<BODY><FORM action ='/form' / >" +
-                    "First name:<BR><INPUT type = 'text' name = 'FirstName' value = " + user.FirstName + ">" +
-                    "<BR>Last name:<BR><INPUT type = 'text' name = 'LastName' value = " + user.LastName + " >" +
-                    "<BR><BR><INPUT type = 'submit' value = 'Submit' >" +
-                    "</FORM></BODY></HTML>";
+                    "Имя:<BR><INPUT type = 'text' name = 'FirstName' value = " + user.FirstName + ">" +
+                    "<BR>Фамилия:<BR><INPUT type = 'text' name = 'LastName' value = " + user.LastName + " >" +
+                    "<BR><BR><INPUT type ='submit' value='Сохранить'><INPUT type ='submit' value='Показать'></FORM>";
+                    strResponse += "<BR><A href='/'>Главная</A>";
+                    strResponse += "</BODY></HTML>";
 
 
                     // Запись в Session данных объекта User
@@ -149,7 +150,12 @@ namespace FuelStation
                     HtmlString += "<TD>" + tank.TankVolume + "</TD>";
                     HtmlString += "</TR>";
                 }
-                HtmlString += "</TABLE></BODY></HTML>";
+                HtmlString += "</TABLE>";
+
+                HtmlString += "<BR><A href='/'>Главная</A></BR>";
+                HtmlString += "<BR><A href='/form'>Данные пользователя</A></BR>";
+
+                HtmlString += "</TABLE></HTML>";
 
                 return context.Response.WriteAsync(HtmlString);
 
