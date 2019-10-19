@@ -80,11 +80,11 @@ namespace FuelStation
                     // Формирование строки для вывода динамической HTML формы
                     string strResponse = "<HTML><HEAD>" +
                     "<TITLE>Пользователь</TITLE></HEAD>" +
-                    "<META http-equiv='Content-Type' content='text/html; charset=utf-8 />'" +
+                    "<META http-equiv='Content-Type' content='text/html; charset=utf-8'/>" +
                     "<BODY><FORM action ='/form' / >" +
                     "Имя:<BR><INPUT type = 'text' name = 'FirstName' value = " + user.FirstName + ">" +
                     "<BR>Фамилия:<BR><INPUT type = 'text' name = 'LastName' value = " + user.LastName + " >" +
-                    "<BR><BR><INPUT type ='submit' value='Сохранить'><INPUT type ='submit' value='Показать'></FORM>";
+                    "<BR><BR><INPUT type ='submit' value='Сохранить в Session'><INPUT type ='submit' value='Показать'></FORM>";
                     strResponse += "<BR><A href='/'>Главная</A>";
                     strResponse += "</BODY></HTML>";
 
@@ -117,7 +117,7 @@ namespace FuelStation
                     // Формирование строки для вывода 
                     string strResponse = "<HTML><HEAD>" +
                     "<TITLE>Информация</TITLE></HEAD>" +
-                    "<META http-equiv='Content-Type' content='text/html; charset=utf-8 />'" +
+                    "<META http-equiv='Content-Type' content='text/html; charset=utf-8'/>" +
                     "<BODY><H1>Нет информации о клиенте</H1></BODY></HTML>";                   
 
 
@@ -132,7 +132,7 @@ namespace FuelStation
                 CachedTanksService cachedTanksService = context.RequestServices.GetService<CachedTanksService>();
                 IEnumerable<Tank> tanks = cachedTanksService.GetTanks("Tanks20");
                 string HtmlString = "<HTML><HEAD><TITLE>Емкости</TITLE></HEAD>" +
-                "<META http-equiv='Content-Type' content='text/html; charset=utf-8 />'" +
+                "<META http-equiv='Content-Type' content='text/html; charset=utf-8'/>" +
                 "<BODY><H1>Список емкостей</H1>" +
                 "<TABLE BORDER=1>";
                 HtmlString += "<TH>";
