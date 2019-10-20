@@ -42,6 +42,7 @@ namespace FuelStation
             // внедрение зависимости CachedTanksService
             services.AddTransient<CachedTanksService>();
 
+            //Использование MVC - отключено
             //services.AddControllersWithViews();
 
         }
@@ -58,13 +59,13 @@ namespace FuelStation
                 app.UseExceptionHandler("/Home/Error");
             }
 
-                // добавляем поддержку статических файлов
-                app.UseStaticFiles();
+            // добавляем поддержку статических файлов
+            app.UseStaticFiles();
 
             // добавляем поддержку сессий
             app.UseSession();
 
-            // добавляем компонент middleware по инициализации базы данных и производим инициализацию базы
+            // добавляем собствкенный компонент middleware по инициализации базы данных и производим инициализацию базы
             app.UseDbInitializer();
 
             

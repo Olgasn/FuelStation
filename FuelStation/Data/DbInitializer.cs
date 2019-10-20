@@ -10,15 +10,15 @@ namespace FuelStation.Data
         {
             db.Database.EnsureCreated();
 
-            // Проверка занесены ли виды топлива
-            if (db.Fuels.Any())
+            // Проверка занесены ли емкости
+            if (db.Tanks.Any())
             {
                 return;   // База данных инициализирована
             }
 
-            int tanks_number = 35;
-            int fuels_number = 35;
-            int operations_number = 300;
+            int tanks_number = 55;
+            int fuels_number = 55;
+            int operations_number = 600;
             string tankType;
             string tankMaterial;
             float tankWeight;
@@ -29,8 +29,8 @@ namespace FuelStation.Data
             Random randObj = new Random(1);
 
             //Заполнение таблицы емкостей
-            string[] tank_voc = { "Цистерна_", "Ведро_", "Бак_", "Фляга_", "Цистерна_" };//словарь названий емкостей
-            string[] material_voc = { "Сталь", "Платина", "Алюминий", "ПЭТ", "Чугун", "Алюминий", "Сталь" };//словарь названий видов топлива
+            string[] tank_voc = { "Цистерна_", "Ведро_", "Бак_", "Фляга_", "Стакан_", "Танкер_" };//словарь названий емкостей
+            string[] material_voc = { "Сталь", "Платина", "Алюминий", "ПЭТ", "Чугун", "Алюминий", "Сталь", "Дерево" };//словарь названий видов топлива
             int count_tank_voc = tank_voc.GetLength(0);
             int count_material_voc = material_voc.GetLength(0);
             for (int tankID = 1; tankID <= tanks_number; tankID++)
@@ -45,7 +45,7 @@ namespace FuelStation.Data
             db.SaveChanges();
 
             //Заполнение таблицы видов топлива
-            string[] fuel_voc = { "Нефть_", "Бензин_", "Керосин_", "Мазут_", "Спирт_" };
+            string[] fuel_voc = { "Нефть_", "Бензин_", "Керосин_", "Мазут_", "Спирт_", "Дизель_" };
             int count_fuel_voc = fuel_voc.GetLength(0);
             for (int fuelID = 1; fuelID <= fuels_number; fuelID++)
             {
