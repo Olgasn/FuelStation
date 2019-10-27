@@ -1,6 +1,7 @@
 ﻿using FuelStation.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,9 +12,11 @@ namespace FuelStation.ViewModels
         public IEnumerable<Fuel> Fuels { get; set; }
         //Свойство для фильтрации
         //название топлива
+        [Display(Name = "Топливо")]
         public string FuelType { get; set; }
         //Плотность вида топлива
-       public float FuelDensity { get; set; }
+        [Display(Name = "Плотность ")]
+        public float FuelDensity { get; set; }
 
         //Свойство для навигации по страницам
         public PageViewModel PageViewModel { get; set; }

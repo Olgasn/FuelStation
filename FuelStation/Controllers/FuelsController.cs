@@ -26,7 +26,7 @@ namespace FuelStation.Controllers
             // Сортировка и фильтрация данных
 
             IQueryable<Fuel> fuelsContext = _context.Fuels;
-            fuelsContext = Sort_Search(fuelsContext, sortOrder,FuelType ?? "");
+            fuelsContext = Sort_Search(fuelsContext, sortOrder, FuelType ?? "");
 
             // Разбиение на страницы
             var count = fuelsContext.Count();
@@ -174,7 +174,13 @@ namespace FuelStation.Controllers
                 case SortState.FuelTypeDesc:
                     fuels = fuels.OrderByDescending(s => s.FuelType);
                     break;
-                
+                case SortState.FuelDensityAsc:
+                    fuels = fuels.OrderBy(s => s.FuelDensity);
+                    break;
+                case SortState.FuelDensityDesc:
+                    fuels = fuels.OrderByDescending(s => s.FuelDensity);
+                    break;
+
             }
             fuels = fuels.Where(o=> o.FuelType.Contains(FuelType ?? ""));
             return fuels;

@@ -4,6 +4,8 @@
     ViewData["Title"] = "Топливо";
     Layout = "~/Views/Shared/_Layout.cshtml";
     string FuelType = Model.FuelType;
+    float FuelDensity = Model.FuelDensity;
+
 }
 <h2>Виды топлива</h2>
 <p>
@@ -21,10 +23,14 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Fuels.FirstOrDefault().FuelType)
+                <a asp-action="Index" asp-route-sortOrder=@Model.SortViewModel.FuelTypeSort asp-route-FuelType="@FuelType">
+                    @Html.DisplayNameFor(model => model.FuelType)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Fuels.FirstOrDefault().FuelDensity)
+                <a asp-action="Index" asp-route-sortOrder=@Model.SortViewModel.FuelDensitySort asp-route-FuelType="@FuelType">
+                    @Html.DisplayNameFor(model => model.FuelDensity)
+                </a>
             </th>
             <th></th>
         </tr>
