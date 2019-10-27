@@ -14,6 +14,7 @@ namespace FuelStation.Controllers
     [ExceptionFilter] // Фильтр исключений
     public class OperationsController : Controller
     {
+        private int pageSize = 10;   // количество элементов на странице
         private readonly FuelsContext _context;
         private OperationViewModel _operation=new OperationViewModel
         {
@@ -28,7 +29,7 @@ namespace FuelStation.Controllers
 
         // GET: Operations
         [SetToSession("SortState")] //Фильтр действий для сохранение в сессию состояния сортировки
-        public IActionResult Index(SortState sortOrder)
+        public IActionResult Index(SortState sortOrder, int page=1)
         {
             // Считывание данных из сессии
             var sessionOperation = HttpContext.Session.Get("Operation");
@@ -42,19 +43,24 @@ namespace FuelStation.Controllers
             IQueryable<Operation> fuelsContext = _context.Operations;
             fuelsContext = Sort_Search(fuelsContext, sortOrder, _operation.TankType ?? "", _operation.FuelType ?? "");
 
+            // Разбиение на страницы
+            var count = fuelsContext.Count();
+            fuelsContext = fuelsContext.Skip((page - 1) * pageSize).Take(pageSize);
+
             // Формирование модели для передачи представлению
             _operation.SortViewModel = new SortViewModel(sortOrder);
             OperationsViewModel operations = new OperationsViewModel
             {
                 Operations = fuelsContext,
-                OperationViewModel=_operation
+                PageViewModel = new PageViewModel(count, page, pageSize),
+                OperationViewModel =_operation
             };
             return View(operations);
         }
         // Post: Operations
         [HttpPost]
         [SetToSession("Operation")] //Фильтр действий для сохранение в сессию параметров отбора
-        public IActionResult Index(OperationViewModel operation)
+        public IActionResult Index(OperationViewModel operation, int page=1)
         {
             // Считывание данных из сессии
             var sessionSortState = HttpContext.Session.Get("SortState");
@@ -65,12 +71,15 @@ namespace FuelStation.Controllers
             // Сортировка и фильтрация данных
             IQueryable<Operation> fuelsContext = _context.Operations;
             fuelsContext = Sort_Search(fuelsContext, sortOrder, operation.TankType ?? "", operation.FuelType ?? "");
-
+            // Разбиение на страницы
+            var count = fuelsContext.Count();
+            fuelsContext = fuelsContext.Skip((page - 1) * pageSize).Take(pageSize);
             // Формирование модели для передачи представлению
             operation.SortViewModel = new SortViewModel(sortOrder);
             OperationsViewModel operations = new OperationsViewModel
             {
                 Operations=fuelsContext,
+                PageViewModel = new PageViewModel(count, page, pageSize),
                 OperationViewModel = operation
             };
 

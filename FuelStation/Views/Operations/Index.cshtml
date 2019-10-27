@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Операции";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string FuelType = Model.OperationViewModel.FuelType;
+    string TankType = Model.OperationViewModel.TankType;
 }
 <h2>Операции</h2>
 
@@ -57,3 +59,7 @@
         }
     </tbody>
 </table>
+<page-link page-model="Model.PageViewModel" page-action="Index"
+           page-url-FuelType="@FuelType"
+           page-url-TankType="@TankType"
+           page-url-sortOrder="@(Model.OperationViewModel.SortViewModel.CurrentState)"></page-link>
