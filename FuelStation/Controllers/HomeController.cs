@@ -17,9 +17,9 @@ namespace FuelStation.Controllers
         {
             var fuels = _db.Fuels.Take(15).ToList();
             var tanks = _db.Tanks.Take(15).ToList();
-            List<OperationViewModel> operations = _db.Operations
+            List<FilterOperationViewModel> operations = _db.Operations
                 .OrderByDescending(d=>d.Date)
-                .Select(t => new OperationViewModel { OperationID = t.OperationID, FuelType = t.Fuel.FuelType, TankType = t.Tank.TankType, Inc_Exp = t.Inc_Exp, Date = t.Date })
+                .Select(t => new FilterOperationViewModel { OperationID = t.OperationID, FuelType = t.Fuel.FuelType, TankType = t.Tank.TankType, Inc_Exp = t.Inc_Exp, Date = t.Date })
                 .Take(15)
                 .ToList();
 

@@ -7,7 +7,7 @@ namespace FuelStation.ViewModels
     {
         public IEnumerable<Tank> Tanks { get; set; }
         public IEnumerable<Fuel> Fuels { get; set; }
-        public IEnumerable<OperationViewModel> Operations { get; set; }
+        public IEnumerable<FilterOperationViewModel> Operations { get; set; }
 
     }
 

@@ -4,11 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FuelStation.Data;
 using FuelStation.Models;
+using FuelStation.ViewModels;
 
 namespace FuelStation.Controllers
 {
     public class FuelsController : Controller
     {
+        private int pageSize = 10;   // количество элементов на странице
+
+
         private readonly FuelsContext _context;
 
         public FuelsController(FuelsContext context)
@@ -17,9 +21,27 @@ namespace FuelStation.Controllers
         }
 
         // GET: Fuels
-        public async Task<IActionResult> Index()
+        public IActionResult Index(string FuelType, SortState sortOrder, int page = 1)
         {
-            return View(await _context.Fuels.ToListAsync());
+            // Сортировка и фильтрация данных
+
+            IQueryable<Fuel> fuelsContext = _context.Fuels;
+            fuelsContext = Sort_Search(fuelsContext, sortOrder,FuelType ?? "");
+
+            // Разбиение на страницы
+            var count = fuelsContext.Count();
+            fuelsContext = fuelsContext.Skip((page - 1) * pageSize).Take(pageSize);
+
+            // Формирование модели для передачи представлению
+            FuelsViewModel fuels = new FuelsViewModel
+            {
+                Fuels = fuelsContext,
+                PageViewModel = new PageViewModel(count, page, pageSize),
+                SortViewModel = new SortViewModel(sortOrder),
+                FuelType = FuelType
+            };
+
+            return View(fuels);
         }
 
         // GET: Fuels/Details/5
@@ -141,6 +163,21 @@ namespace FuelStation.Controllers
         private bool FuelExists(int id)
         {
             return _context.Fuels.Any(e => e.FuelID == id);
+        }
+        private IQueryable<Fuel> Sort_Search(IQueryable<Fuel> fuels, SortState sortOrder, string FuelType)
+        {
+            switch (sortOrder)
+            {
+                case SortState.FuelTypeAsc:
+                    fuels = fuels.OrderBy(s => s.FuelType);
+                    break;
+                case SortState.FuelTypeDesc:
+                    fuels = fuels.OrderByDescending(s => s.FuelType);
+                    break;
+                
+            }
+            fuels = fuels.Where(o=> o.FuelType.Contains(FuelType ?? ""));
+            return fuels;
         }
     }
 }

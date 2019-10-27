@@ -14,7 +14,7 @@ namespace FuelStation.Controllers
         private readonly FuelsContext _context;
         private int pageSize = 10;   // количество элементов на странице
 
-        private OperationViewModel _operation = new OperationViewModel
+        private FilterOperationViewModel _operation = new FilterOperationViewModel
         {
             FuelType = "",
             TankType = ""
@@ -26,7 +26,7 @@ namespace FuelStation.Controllers
         }
 
         // GET: Operations
-        public IActionResult Index(OperationViewModel operation, SortState sortOrder, int page = 1)
+        public IActionResult Index(FilterOperationViewModel operation, SortState sortOrder, int page = 1)
         {
 
             // Сортировка и фильтрация данных
@@ -44,7 +44,7 @@ namespace FuelStation.Controllers
                 Operations = fuelsContext,
                 PageViewModel= new PageViewModel(count, page, pageSize),
                 SortViewModel = new SortViewModel(sortOrder),
-                OperationViewModel = operation
+                FilterOperationViewModel = operation
             };
             return View(operations);
 

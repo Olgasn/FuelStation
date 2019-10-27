@@ -2,10 +2,10 @@
 @model OperationsViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Операции";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    string FuelType = Model.OperationViewModel.FuelType;
-    string TankType = Model.OperationViewModel.TankType;
+    string FuelType = Model.FilterOperationViewModel.FuelType;
+    string TankType = Model.FilterOperationViewModel.TankType;
 }
 
 <h2>Операции с топливом</h2>
@@ -28,16 +28,16 @@
                 @Html.DisplayNameFor(model => model.Operations.FirstOrDefault().Inc_Exp)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OperationViewModel.Date)
+                @Html.DisplayNameFor(model => model.Operations.FirstOrDefault().Date)
             </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder=@Model.SortViewModel.FuelTypeSort asp-route-TankType="@TankType" asp-route-FuelType="@FuelType">
-                    @Html.DisplayNameFor(model => model.OperationViewModel.FuelType)
+                    @Html.DisplayNameFor(model => model.FilterOperationViewModel.FuelType)
                 </a>
             </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder=@Model.SortViewModel.TankTypeSort asp-route-TankType="@TankType" asp-route-FuelType="@FuelType">
-                    @Html.DisplayNameFor(model => model.OperationViewModel.TankType)
+                    @Html.DisplayNameFor(model => model.FilterOperationViewModel.TankType)
                 </a>
             <th></th>
         </tr>

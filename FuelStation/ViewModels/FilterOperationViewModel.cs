@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FuelStation.ViewModels
 {
-    public class OperationViewModel
+    public class FilterOperationViewModel
     {
         //ID операции
         public int OperationID { get; set; }

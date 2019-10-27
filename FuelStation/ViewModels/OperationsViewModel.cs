@@ -8,7 +8,7 @@ namespace FuelStation.ViewModels
     {
         public IEnumerable<Operation> Operations { get;set;}        
         //Свойство для фильтрации
-        public OperationViewModel OperationViewModel { get; set; }
+        public FilterOperationViewModel FilterOperationViewModel { get; set; }
         //Свойство для навигации по страницам
         public PageViewModel PageViewModel { get; set; }
         // Порядок сортировки

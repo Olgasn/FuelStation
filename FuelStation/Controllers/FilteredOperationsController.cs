@@ -14,7 +14,7 @@ namespace FuelStation.Controllers
     public class FilteredOperationsController : Controller
     {
         private readonly FuelsContext _context;
-        private OperationViewModel _operation=new OperationViewModel
+        private FilterOperationViewModel _operation=new FilterOperationViewModel
         {
             FuelType="",
             TankType=""            
@@ -33,7 +33,7 @@ namespace FuelStation.Controllers
             var sessionOperation = HttpContext.Session.Get("Operation");
             var sessionSortState = HttpContext.Session.Get("SortState");
             if (sessionOperation != null)
-                _operation = Transformations.DictionaryToObject<OperationViewModel>(sessionOperation);
+                _operation = Transformations.DictionaryToObject<FilterOperationViewModel>(sessionOperation);
             if ((sessionSortState != null))
                 if ((sessionSortState.Count>0)&(sortOrder == SortState.No)) sortOrder = (SortState) Enum.Parse(typeof(SortState),sessionSortState["sortOrder"]);
             
@@ -47,14 +47,14 @@ namespace FuelStation.Controllers
             {
                 Operations = fuelsContext,
                 SortViewModel = new SortViewModel(sortOrder),
-                OperationViewModel =_operation
+                FilterOperationViewModel =_operation
             };
             return View(operations);
         }
         // Post: Operations
         [HttpPost]
         [SetToSession("Operation")] //Фильтр действий для сохранение в сессию параметров отбора
-        public IActionResult Index(OperationViewModel operation)
+        public IActionResult Index(FilterOperationViewModel operation)
         {
             // Считывание данных из сессии
             var sessionSortState = HttpContext.Session.Get("SortState");
@@ -71,7 +71,7 @@ namespace FuelStation.Controllers
             {
                 Operations=fuelsContext,
                 SortViewModel = new SortViewModel(sortOrder),
-                OperationViewModel = operation
+                FilterOperationViewModel = operation
             };
 
             return View(operations);

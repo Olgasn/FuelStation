@@ -9,8 +9,8 @@
 @using (Html.BeginForm("Index", "FilteredOperations", FormMethod.Post))
 {
     <fieldset>
-        Наименование топлива: @Html.TextBox("FuelType", Model.OperationViewModel.FuelType)
-        Наименование емкости: @Html.TextBox("TankType", Model.OperationViewModel.TankType)
+        Наименование топлива: @Html.TextBox("FuelType", Model.FilterOperationViewModel.FuelType)
+        Наименование емкости: @Html.TextBox("TankType", Model.FilterOperationViewModel.TankType)
         <input type="submit" value="Найти" />
     </fieldset>
 }
@@ -21,16 +21,16 @@
                 @Html.DisplayNameFor(model => model.Operations.FirstOrDefault().Inc_Exp)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OperationViewModel.Date)
+                @Html.DisplayNameFor(model => model.Operations.FirstOrDefault().Date)
             </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder=@Model.SortViewModel.FuelTypeSort>
-                    @Html.DisplayNameFor(model => model.OperationViewModel.FuelType)
+                    @Html.DisplayNameFor(model => model.FilterOperationViewModel.FuelType)
                 </a>
             </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder=@Model.SortViewModel.TankTypeSort>
-                    @Html.DisplayNameFor(model => model.OperationViewModel.TankType)
+                    @Html.DisplayNameFor(model => model.FilterOperationViewModel.TankType)
                 </a>
 
             </th>

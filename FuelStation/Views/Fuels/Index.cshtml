@@ -1,42 +1,54 @@
-﻿@model IEnumerable<FuelStation.Models.Fuel>
-
+﻿@using  FuelStation.ViewModels
+@model FuelsViewModel
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Топливо";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string FuelType = Model.FuelType;
 }
-
 <h2>Виды топлива</h2>
-
 <p>
     <a asp-action="Create">Создать</a>
 </p>
+
+@using (Html.BeginForm("Index", "Fuels", FormMethod.Get))
+{
+    <fieldset>
+        Наименование топлива: @Html.TextBox("FuelType", FuelType)
+        <input type="submit" value="Найти" />
+    </fieldset>
+}
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.FuelType)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FuelDensity)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fuels.FirstOrDefault().FuelType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fuels.FirstOrDefault().FuelDensity)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FuelType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FuelDensity)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.FuelID">Редактировать</a> |
-                <a asp-action="Details" asp-route-id="@item.FuelID">Подробно</a> |
-                <a asp-action="Delete" asp-route-id="@item.FuelID">Удалить</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Fuels)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FuelType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FuelDensity)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.FuelID">Редактировать</a> |
+                    <a asp-action="Details" asp-route-id="@item.FuelID">Подробно</a> |
+                    <a asp-action="Delete" asp-route-id="@item.FuelID">Удалить</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<page-link page-model="Model.PageViewModel" page-action="Index"
+           page-url-FuelType="@FuelType"
+           page-url-sortOrder="@(Model.SortViewModel.CurrentState)"></page-link>
+
