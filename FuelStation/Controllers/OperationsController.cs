@@ -6,19 +6,16 @@ using Microsoft.EntityFrameworkCore;
 using FuelStation.Data;
 using FuelStation.Models;
 using FuelStation.ViewModels;
+using FuelStation.Infrastructure;
+using FuelStation.Infrastructure.Filters;
+using System;
 
 namespace FuelStation.Controllers
 {
     public class OperationsController : Controller
     {
         private readonly FuelsContext _context;
-        private int pageSize = 10;   // количество элементов на странице
-
-        private FilterOperationViewModel _operation = new FilterOperationViewModel
-        {
-            FuelType = "",
-            TankType = ""
-        };
+        private int pageSize = 15;   // количество элементов на странице
 
         public OperationsController(FuelsContext context)
         {
@@ -26,8 +23,17 @@ namespace FuelStation.Controllers
         }
 
         // GET: Operations
+        [SetToSession("Operation")] //Фильтр действий для сохранение в сессию параметров отбора
         public IActionResult Index(FilterOperationViewModel operation, SortState sortOrder, int page = 1)
         {
+            if (operation.FuelType==null & operation.TankType==null)
+            {
+                // Считывание данных из сессии
+                var sessionOperation = HttpContext.Session.Get("Operation");
+                if (sessionOperation != null)
+                    operation = Transformations.DictionaryToObject<FilterOperationViewModel>(sessionOperation);
+
+            }
 
             // Сортировка и фильтрация данных
 
