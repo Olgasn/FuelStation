@@ -21,7 +21,7 @@
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
+                    <span class="sr-only">Переключить</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -29,6 +29,8 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Топливная база</a>
             </div>
             <div class="navbar-collapse collapse">
+                <partial name="_LoginPartial" />
+
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">База</a></li>
                     <li><a asp-area="" asp-controller="Operations" asp-action="Index">Операции</a></li>
@@ -42,7 +44,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2017 - Fuels</p>
+            <p>&copy; 2019 - FuelBase</p>
         </footer>
     </div>
 

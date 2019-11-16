@@ -8,7 +8,6 @@ using FuelStation.Models;
 using FuelStation.ViewModels;
 using FuelStation.Infrastructure;
 using FuelStation.Infrastructure.Filters;
-using System;
 
 namespace FuelStation.Controllers
 {

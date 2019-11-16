@@ -11,15 +11,16 @@ namespace FuelStation.Middleware
         private readonly RequestDelegate _next;
         public DbInitializerMiddleware(RequestDelegate next)
         {
-            // инициализация базы данных по университетам
+            // инициализация базы данных 
             _next = next;
 
         }
-        public  Task Invoke(HttpContext context, IServiceProvider serviceProvider, FuelsContext dbContext)
+        public  Task Invoke(HttpContext context)
         {
             if (!(context.Session.Keys.Contains("starting")))
             {
-                DbInitializer.Initialize(dbContext);
+                DbUserInitializer.Initialize(context).Wait();
+                DbInitializer.Initialize(context);
                 context.Session.SetString("starting", "Yes");
             }
 

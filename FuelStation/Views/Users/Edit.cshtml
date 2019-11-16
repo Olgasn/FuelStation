@@ -1,0 +1,41 @@
+﻿@model FuelStation.ViewModels.Users.EditUserViewModel
+@{
+    ViewBag.Title = "Редактирование пользователя";
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Редактировать</h2>
+
+<form asp-action="Edit" asp-controller="Home">
+    <h4>Пользователь</h4>
+    <hr />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <input type="hidden" asp-for="Id" />
+    </div>
+    <div class="form-group">
+        <label asp-for="UserName" class="control-label  col-md-2">Имя пользователя</label>
+        <input type="text" asp-for="UserName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Email" class="control-label  col-md-2">Email</label>
+        <input type="text" asp-for="Email" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="RegistrationDate" class="control-label  col-md-2">Дата регистрации</label>
+        <input type="date" asp-for="RegistrationDate" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="UserRole" class="control-label col-md-2"></label>
+        <select asp-for="UserRole" class="form-control" asp-items="ViewBag.UserRole"></select>
+        <span asp-validation-for="UserRole" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Сохранить" class="btn btn-warning" />
+    </div>
+</form>
+<div>
+    <a asp-action="Index" class="btn btn-sm btn-primary">Вернуться</a>
+</div>
