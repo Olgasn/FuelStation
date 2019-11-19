@@ -25,7 +25,7 @@ namespace FuelStation.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
             _emailSender = emailSender;
         }
-
+        [Display(Name = "Имя")]
         public string Username { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
@@ -43,7 +43,7 @@ namespace FuelStation.Areas.Identity.Pages.Account.Manage
             public string Email { get; set; }
 
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Номер телефона")]
             public string PhoneNumber { get; set; }
         }
 
