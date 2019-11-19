@@ -37,7 +37,7 @@ namespace FuelStation
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            string connectionDB = Configuration.GetConnectionString("DefaultConnection");
+            string connectionDB = Configuration.GetConnectionString("SqlServerConnection");
             services.AddDbContext<FuelsContext>(options => options.UseSqlServer(connectionDB));
             string connectionUsers = Configuration.GetConnectionString("IdentityConnection");
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionUsers));
