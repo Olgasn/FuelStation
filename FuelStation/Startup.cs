@@ -7,7 +7,6 @@ using FuelStation.Middleware;
 using FuelStation.Data;
 using FuelStation.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

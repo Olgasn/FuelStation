@@ -88,6 +88,12 @@ namespace FuelStation.Controllers
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
                 }
+               
+                var role = model.UserRole;
+                if (role.Count() > 0)
+                {
+                    await _userManager.AddToRoleAsync(user, role);
+                }
             }
             return View(model);
         }
