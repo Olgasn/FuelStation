@@ -2,9 +2,6 @@
 @{
     ViewBag.Title = "Добавление пользователя";
 }
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
 <h2>Добавить</h2>
 <form asp-action="Create" asp-controller="Users">
     <h4>Пользователь</h4>
@@ -15,16 +12,18 @@
         <input type="text" asp-for="UserName" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="Email" class="col-md-2 control-label">Email</label>
-        <input type="text" asp-for="Email" class="form-control" />
+        <label asp-for="Email" class="control-label  col-md-2">Email</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Password" class="col-md-2 control-label">Пароль</label>
-        <input type="text" asp-for="Password" class="form-control" />
+        <input asp-for="Password" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="RegistrationDate" class="col-md-2 control-label">Дата регистрации</label>
-        <input type="date" asp-for="RegistrationDate" class="form-control" />
+        <label asp-for="RegistrationDate" class="control-label  col-md-2">Дата регистрации</label>
+        <input asp-for="RegistrationDate" class="form-control" />
+        <span asp-validation-for="RegistrationDate" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="UserRole" class="control-label col-md-2"></label>

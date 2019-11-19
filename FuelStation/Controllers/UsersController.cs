@@ -57,10 +57,11 @@ namespace FuelStation.Controllers
         public IActionResult Create()
         {
             var allRoles = _roleManager.Roles.ToList();
+            CreateUserViewModel user = new CreateUserViewModel();
 
             ViewData["UserRole"] = new SelectList(allRoles, "Name", "Name");
 
-            return View();
+            return View(user);
 
         }
 

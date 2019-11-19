@@ -12,7 +12,6 @@ namespace FuelStation.ViewModels.Users
         [Display(Name = "Пароль")]
         public string Password { get; set; }
         [Display(Name = "Дата регистрации")]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public DateTime RegistrationDate { get; set; }
 
@@ -21,6 +20,7 @@ namespace FuelStation.ViewModels.Users
         public CreateUserViewModel()
         {
             UserRole = "user";
+            RegistrationDate = DateTime.Now.Date;
         }
 
     }
