@@ -50,6 +50,8 @@ namespace FuelStation
         // Этот метод вызывается во время выполнения. Используйте этот метод для настройки конвейера HTTP-запросов.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -74,29 +76,22 @@ namespace FuelStation
             {
                 appBuilder.Run(async (context) => {
 
-
                     // Считывание из Session объекта User
                     User user = context.Session.Get<User>("user")?? new User();
 
                     // Формирование строки для вывода динамической HTML формы
-                    string strResponse = "<HTML><HEAD>" +
-                    "<TITLE>Пользователь</TITLE></HEAD>" +
+                    string strResponse = "<HTML><HEAD><TITLE>Пользователь</TITLE></HEAD>" +
                     "<META http-equiv='Content-Type' content='text/html; charset=utf-8'/>" +
                     "<BODY><FORM action ='/form' / >" +
                     "Имя:<BR><INPUT type = 'text' name = 'FirstName' value = " + user.FirstName + ">" +
                     "<BR>Фамилия:<BR><INPUT type = 'text' name = 'LastName' value = " + user.LastName + " >" +
                     "<BR><BR><INPUT type ='submit' value='Сохранить в Session'><INPUT type ='submit' value='Показать'></FORM>";
-                    strResponse += "<BR><A href='/'>Главная</A>";
-                    strResponse += "</BODY></HTML>";
-
+                    strResponse += "<BR><A href='/'>Главная</A></BODY></HTML>";
 
                     // Запись в Session данных объекта User
-                    string FirstName = context.Request.Query["FirstName"];
-                    string LastName = context.Request.Query["LastName"];
-                    user.FirstName = FirstName;
-                    user.LastName = LastName;
+                    user.FirstName = context.Request.Query["FirstName"];
+                    user.LastName = context.Request.Query["LastName"];
                     context.Session.Set<User>("user", user);
-
 
                     // Вывода динамической HTML формы
                     await context.Response.WriteAsync(strResponse);
@@ -113,15 +108,11 @@ namespace FuelStation
             app.Map("/info", (appBuilder) =>
             {
                 appBuilder.Run(async (context) => {
-
-
                     // Формирование строки для вывода 
-                    string strResponse = "<HTML><HEAD>" +
-                    "<TITLE>Информация</TITLE></HEAD>" +
+                    string strResponse = "<HTML><HEAD><TITLE>Информация</TITLE></HEAD>" +
                     "<META http-equiv='Content-Type' content='text/html; charset=utf-8'/>" +
-                    "<BODY><H1>Нет информации о клиенте</H1></BODY></HTML>";                   
-
-
+                    "<BODY><H1>Нет информации о клиенте</H1>";
+                    strResponse += "<BR><A href='/'>Главная</A></BODY></HTML>";
                     // Вывод данных
                     await context.Response.WriteAsync(strResponse);
                 });
@@ -136,12 +127,12 @@ namespace FuelStation
                 "<META http-equiv='Content-Type' content='text/html; charset=utf-8'/>" +
                 "<BODY><H1>Список емкостей</H1>" +
                 "<TABLE BORDER=1>";
-                HtmlString += "<TH>";
-                HtmlString += "<TD>Код</TD>";
-                HtmlString += "<TD>Материал</TD>";
-                HtmlString += "<TD>Тип</TD>";
-                HtmlString += "<TD>Объем</TD>";
-                HtmlString += "</TH>";
+                HtmlString += "<TR>";
+                HtmlString += "<TH>Код</TH>";
+                HtmlString += "<TH>Материал</TH>";
+                HtmlString += "<TH>Тип</TH>";
+                HtmlString += "<TH>Объем</TH>";
+                HtmlString += "</TR>";
                 foreach (var tank in tanks)
                 {
                     HtmlString += "<TR>";
@@ -152,10 +143,8 @@ namespace FuelStation
                     HtmlString += "</TR>";
                 }
                 HtmlString += "</TABLE>";
-
                 HtmlString += "<BR><A href='/'>Главная</A></BR>";
                 HtmlString += "<BR><A href='/form'>Данные пользователя</A></BR>";
-
                 HtmlString += "</TABLE></HTML>";
 
                 return context.Response.WriteAsync(HtmlString);

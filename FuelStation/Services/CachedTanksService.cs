@@ -13,11 +13,11 @@ namespace FuelStation.Services
         private IMemoryCache cache;
         private int _rowsNumber;
 
-        public CachedTanksService(FuelsContext context, IMemoryCache memoryCache)
+        public CachedTanksService(FuelsContext context, IMemoryCache memoryCache, int rowsNumber=20)
         {
             db = context;
             cache = memoryCache;
-            _rowsNumber = 20;
+            _rowsNumber = rowsNumber;
         }
 
         public IEnumerable<Tank> GetTanks()
