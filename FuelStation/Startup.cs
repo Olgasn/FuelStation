@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using FuelStation.Models;
 using FuelStation.Infrastructure;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace FuelStation
 {
