@@ -6,7 +6,7 @@ namespace FuelStation.Models
     public class Tank
     {
         //ID емкости
-        public int TankID { get; set; }
+        public int TankId { get; set; }
         //Тип емкости
         [Display(Name = "Емкость")]
         public string TankType { get; set; }

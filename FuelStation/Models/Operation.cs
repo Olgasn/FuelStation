@@ -8,13 +8,13 @@ namespace FuelStation.Models
         //ID операции
         [Key]
         [Display(Name = "Код операции")]
-        public int OperationID { get; set; }
+        public int OperationId { get; set; }
         //ID топлива
         [Display(Name = "Код топлива")]
-        public int FuelID { get; set; }
+        public int FuelId { get; set; }
         //ID емкости
         [Display(Name = "Код емкости")]
-        public int TankID { get; set; }
+        public int TankId { get; set; }
         //Приход/Расход
         [Display(Name = "+Приход/-Расход")]
         public float? Inc_Exp { get; set; }

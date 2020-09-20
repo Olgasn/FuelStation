@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using FuelStation.Models;
 using FuelStation.Infrastructure;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace FuelStation
 {
@@ -101,7 +102,7 @@ namespace FuelStation
 
 
             //Запоминание в Сookies значений, введенных в форме
-            //..
+            //.
 
 
             // Вывод информации о клиенте
@@ -111,7 +112,10 @@ namespace FuelStation
                     // Формирование строки для вывода 
                     string strResponse = "<HTML><HEAD><TITLE>Информация</TITLE></HEAD>" +
                     "<META http-equiv='Content-Type' content='text/html; charset=utf-8'/>" +
-                    "<BODY><H1>Нет информации о клиенте</H1>";
+                    "<BODY><H1>Информация:</H1>";
+                    strResponse += "<BR> Сервер: " + context.Request.Host;
+                    strResponse += "<BR> Путь: " + context.Request.PathBase;
+                    strResponse += "<BR> Протокол: " + context.Request.Protocol;
                     strResponse += "<BR><A href='/'>Главная</A></BODY></HTML>";
                     // Вывод данных
                     await context.Response.WriteAsync(strResponse);
@@ -136,7 +140,7 @@ namespace FuelStation
                 foreach (var tank in tanks)
                 {
                     HtmlString += "<TR>";
-                    HtmlString += "<TD>" + tank.TankID + "</TD>";
+                    HtmlString += "<TD>" + tank.TankId + "</TD>";
                     HtmlString += "<TD>" + tank.TankMaterial + "</TD>";
                     HtmlString += "<TD>" + tank.TankType + "</TD>";
                     HtmlString += "<TD>" + tank.TankVolume + "</TD>";
