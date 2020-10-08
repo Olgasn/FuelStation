@@ -40,7 +40,7 @@ namespace FuelStation
             services.AddSession();
 
             // внедрение зависимости CachedTanksService
-            services.AddTransient<CachedTanksService>();
+            services.AddScoped<CachedTanksService>();
 
             //Использование MVC - отключено
             //services.AddControllersWithViews();
@@ -67,10 +67,10 @@ namespace FuelStation
             // добавляем поддержку сессий
             app.UseSession();
 
-            // добавляем собствкенный компонент middleware по инициализации базы данных и производим инициализацию базы
+            // добавляем собственный компонент middleware по инициализации базы данных и производим инициализацию базы
             app.UseDbInitializer();
 
-            
+           
             //Запоминание в Session значений, введенных в форме
             app.Map("/form", (appBuilder) =>
             {
@@ -121,34 +121,57 @@ namespace FuelStation
                 });
             });
 
-            //Вывод записей таблицы Tanks с использованием кэширования 
+
+            app.Map("/tanks", (appBuilder) =>
+            {
+                appBuilder.Run(async (context) => {
+                    CachedTanksService cachedTanksService = context.RequestServices.GetService<CachedTanksService>();
+                    IEnumerable<Tank> tanks = cachedTanksService.GetTanks("Tanks20");
+                    string HtmlString = "<HTML><HEAD><TITLE>Емкости</TITLE></HEAD>" +
+                    "<META http-equiv='Content-Type' content='text/html; charset=utf-8'/>" +
+                    "<BODY><H1>Список емкостей</H1>" +
+                    "<TABLE BORDER=1>";
+                    HtmlString += "<TR>";
+                    HtmlString += "<TH>Код</TH>";
+                    HtmlString += "<TH>Материал</TH>";
+                    HtmlString += "<TH>Тип</TH>";
+                    HtmlString += "<TH>Объем</TH>";
+                    HtmlString += "</TR>";
+                    foreach (var tank in tanks)
+                    {
+                        HtmlString += "<TR>";
+                        HtmlString += "<TD>" + tank.TankId + "</TD>";
+                        HtmlString += "<TD>" + tank.TankMaterial + "</TD>";
+                        HtmlString += "<TD>" + tank.TankType + "</TD>";
+                        HtmlString += "<TD>" + tank.TankVolume + "</TD>";
+                        HtmlString += "</TR>";
+                    }
+                    HtmlString += "</TABLE>";
+                    HtmlString += "<BR><A href='/'>Главная</A></BR>";
+                    HtmlString += "<BR><A href='/tanks'>Емкости</A></BR>";
+                    HtmlString += "<BR><A href='/form'>Данные пользователя</A></BR>";
+                    HtmlString += "</BODY></HTML>";
+
+                    // Вывод данных
+                    await context.Response.WriteAsync(HtmlString);
+                });
+            });
+
+
+
+            // Стартовая страница 
             app.Run((context) =>
             {
                 CachedTanksService cachedTanksService = context.RequestServices.GetService<CachedTanksService>();
-                IEnumerable<Tank> tanks = cachedTanksService.GetTanks("Tanks20");
+                cachedTanksService.AddTanks("Tanks20");
                 string HtmlString = "<HTML><HEAD><TITLE>Емкости</TITLE></HEAD>" +
                 "<META http-equiv='Content-Type' content='text/html; charset=utf-8'/>" +
-                "<BODY><H1>Список емкостей</H1>" +
-                "<TABLE BORDER=1>";
-                HtmlString += "<TR>";
-                HtmlString += "<TH>Код</TH>";
-                HtmlString += "<TH>Материал</TH>";
-                HtmlString += "<TH>Тип</TH>";
-                HtmlString += "<TH>Объем</TH>";
-                HtmlString += "</TR>";
-                foreach (var tank in tanks)
-                {
-                    HtmlString += "<TR>";
-                    HtmlString += "<TD>" + tank.TankId + "</TD>";
-                    HtmlString += "<TD>" + tank.TankMaterial + "</TD>";
-                    HtmlString += "<TD>" + tank.TankType + "</TD>";
-                    HtmlString += "<TD>" + tank.TankVolume + "</TD>";
-                    HtmlString += "</TR>";
-                }
-                HtmlString += "</TABLE>";
+                "<BODY><H1>Главная</H1>";
+                HtmlString += "<H2>Данные записаны в кэш</H2>";
                 HtmlString += "<BR><A href='/'>Главная</A></BR>";
+                HtmlString += "<BR><A href='/tanks'>Емкости</A></BR>";
                 HtmlString += "<BR><A href='/form'>Данные пользователя</A></BR>";
-                HtmlString += "</TABLE></HTML>";
+                HtmlString += "</BODY></HTML>";
 
                 return context.Response.WriteAsync(HtmlString);
 

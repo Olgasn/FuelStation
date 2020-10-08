@@ -12,7 +12,6 @@ namespace FuelStation.Middleware
         private readonly RequestDelegate _next;
         public DbInitializerMiddleware(RequestDelegate next)
         {
-            // инициализация базы данных
             _next = next;
 
         }
@@ -20,6 +19,7 @@ namespace FuelStation.Middleware
         {
             if (!(context.Session.Keys.Contains("starting")))
             {
+                // инициализация базы данных
                 DbInitializer.Initialize(dbContext);
                 context.Session.SetString("starting", "Yes");
             }
