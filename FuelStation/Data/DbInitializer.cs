@@ -73,5 +73,5 @@ namespace FuelStation.Data
     }
 
 }
-    
+
 

@@ -1,16 +1,16 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using FuelStation.Data;
+using FuelStation.Infrastructure;
+using FuelStation.Middleware;
+using FuelStation.Models;
+using FuelStation.Services;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
-using FuelStation.Middleware;
-using FuelStation.Data;
-using FuelStation.Services;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
-using FuelStation.Models;
-using FuelStation.Infrastructure;
-using Microsoft.AspNetCore.Http;
 
 namespace FuelStation
 {
@@ -40,7 +40,7 @@ namespace FuelStation
             services.AddSession();
 
             // внедрение зависимости CachedTanksService
-            services.AddScoped<ICachedTanksService,CachedTanksService>();
+            services.AddScoped<ICachedTanksService, CachedTanksService>();
 
             //Использование MVC - отключено
             //services.AddControllersWithViews();
@@ -70,14 +70,15 @@ namespace FuelStation
             // добавляем собственный компонент middleware по инициализации базы данных и производим инициализацию базы
             app.UseDbInitializer();
 
-           
+
             //Запоминание в Session значений, введенных в форме
             app.Map("/form", (appBuilder) =>
             {
-                appBuilder.Run(async (context) => {
+                appBuilder.Run(async (context) =>
+                {
 
                     // Считывание из Session объекта User
-                    User user = context.Session.Get<User>("user")?? new User();
+                    User user = context.Session.Get<User>("user") ?? new User();
 
                     // Формирование строки для вывода динамической HTML формы
                     string strResponse = "<HTML><HEAD><TITLE>Пользователь</TITLE></HEAD>" +
@@ -107,7 +108,8 @@ namespace FuelStation
             // Вывод информации о клиенте
             app.Map("/info", (appBuilder) =>
             {
-                appBuilder.Run(async (context) => {
+                appBuilder.Run(async (context) =>
+                {
                     // Формирование строки для вывода 
                     string strResponse = "<HTML><HEAD><TITLE>Информация</TITLE></HEAD>" +
                     "<META http-equiv='Content-Type' content='text/html; charset=utf-8'/>" +
@@ -124,7 +126,8 @@ namespace FuelStation
             // Вывод кэшированной информации из таблицы базы данных
             app.Map("/tanks", (appBuilder) =>
             {
-                appBuilder.Run(async (context) => {
+                appBuilder.Run(async (context) =>
+                {
                     ICachedTanksService cachedTanksService = context.RequestServices.GetService<ICachedTanksService>();
                     IEnumerable<Tank> tanks = cachedTanksService.GetTanks("Tanks20");
                     string HtmlString = "<HTML><HEAD><TITLE>Емкости</TITLE></HEAD>" +
