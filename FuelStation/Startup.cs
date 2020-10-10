@@ -40,7 +40,7 @@ namespace FuelStation
             services.AddSession();
 
             // внедрение зависимости CachedTanksService
-            services.AddScoped<CachedTanksService>();
+            services.AddScoped<ICachedTanksService,CachedTanksService>();
 
             //Использование MVC - отключено
             //services.AddControllersWithViews();
@@ -93,7 +93,7 @@ namespace FuelStation
                     user.LastName = context.Request.Query["LastName"];
                     context.Session.Set<User>("user", user);
 
-                    // Вывода динамической HTML формы
+                    // Асинхронный вывод динамической HTML формы
                     await context.Response.WriteAsync(strResponse);
                 });
             });
@@ -101,7 +101,7 @@ namespace FuelStation
 
 
             //Запоминание в Сookies значений, введенных в форме
-            //.
+            //...
 
 
             // Вывод информации о клиенте
@@ -121,11 +121,11 @@ namespace FuelStation
                 });
             });
 
-
+            // Вывод кэшированной информации из таблицы базы данных
             app.Map("/tanks", (appBuilder) =>
             {
                 appBuilder.Run(async (context) => {
-                    CachedTanksService cachedTanksService = context.RequestServices.GetService<CachedTanksService>();
+                    ICachedTanksService cachedTanksService = context.RequestServices.GetService<ICachedTanksService>();
                     IEnumerable<Tank> tanks = cachedTanksService.GetTanks("Tanks20");
                     string HtmlString = "<HTML><HEAD><TITLE>Емкости</TITLE></HEAD>" +
                     "<META http-equiv='Content-Type' content='text/html; charset=utf-8'/>" +
@@ -159,10 +159,10 @@ namespace FuelStation
 
 
 
-            // Стартовая страница 
+            // Стартовая страница и кэширование
             app.Run((context) =>
             {
-                CachedTanksService cachedTanksService = context.RequestServices.GetService<CachedTanksService>();
+                ICachedTanksService cachedTanksService = context.RequestServices.GetService<ICachedTanksService>();
                 cachedTanksService.AddTanks("Tanks20");
                 string HtmlString = "<HTML><HEAD><TITLE>Емкости</TITLE></HEAD>" +
                 "<META http-equiv='Content-Type' content='text/html; charset=utf-8'/>" +

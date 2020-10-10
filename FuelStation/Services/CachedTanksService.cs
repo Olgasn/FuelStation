@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace FuelStation.Services
 {
-    public class CachedTanksService
+    public class CachedTanksService: ICachedTanksService
     {
         private FuelsContext db;
         private IMemoryCache cache;
