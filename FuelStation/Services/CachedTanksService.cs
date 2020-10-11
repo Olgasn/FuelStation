@@ -11,25 +11,23 @@ namespace FuelStation.Services
     {
         private FuelsContext db;
         private IMemoryCache cache;
-        private int _rowsNumber;
 
         public CachedTanksService(FuelsContext context, IMemoryCache memoryCache)
         {
             db = context;
             cache = memoryCache;
-            _rowsNumber = 20;
         }
         // получение списка емкостей из базы
-        public IEnumerable<Tank> GetTanks()
+        public IEnumerable<Tank> GetTanks(int rowsNumber = 20)
         {
-            return db.Tanks.Take(_rowsNumber).ToList();
+            return db.Tanks.Take(rowsNumber).ToList();
         }
 
         // добавление списка емкостей в кэш
-        public void AddTanks(string cacheKey)
+        public void AddTanks(string cacheKey, int rowsNumber = 20)
         {
             IEnumerable<Tank> tanks = null;
-            tanks = db.Tanks.Take(_rowsNumber).ToList();
+            tanks = db.Tanks.Take(rowsNumber).ToList();
             if (tanks != null)
             {
                 cache.Set(cacheKey, tanks, new MemoryCacheEntryOptions
@@ -41,12 +39,12 @@ namespace FuelStation.Services
 
         }
         // получение списка емкостей из кэша или из базы, если нет в кэше
-        public IEnumerable<Tank> GetTanks(string cacheKey)
+        public IEnumerable<Tank> GetTanks(string cacheKey, int rowsNumber = 20)
         {
             IEnumerable<Tank> tanks = null;
             if (!cache.TryGetValue(cacheKey, out tanks))
             {
-                tanks = db.Tanks.Take(_rowsNumber).ToList();
+                tanks = db.Tanks.Take(rowsNumber).ToList();
                 if (tanks != null)
                 {
                     cache.Set(cacheKey, tanks,

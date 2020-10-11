@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace FuelStation
 {
@@ -31,7 +32,6 @@ namespace FuelStation
             string connection = Configuration.GetConnectionString("SqlServerConnection");
             services.AddDbContext<FuelsContext>(options => options.UseSqlServer(connection));
 
-
             // добавление кэширования
             services.AddMemoryCache();
 
@@ -51,7 +51,6 @@ namespace FuelStation
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -67,7 +66,7 @@ namespace FuelStation
             // добавляем поддержку сессий
             app.UseSession();
 
-            // добавляем собственный компонент middleware по инициализации базы данных и производим инициализацию базы
+            // добавляем собственный компонент middleware по инициализации базы данных и производим ее инициализацию
             app.UseDbInitializer();
 
 
@@ -128,6 +127,7 @@ namespace FuelStation
             {
                 appBuilder.Run(async (context) =>
                 {
+                    //обращение к сервису
                     ICachedTanksService cachedTanksService = context.RequestServices.GetService<ICachedTanksService>();
                     IEnumerable<Tank> tanks = cachedTanksService.GetTanks("Tanks20");
                     string HtmlString = "<HTML><HEAD><TITLE>Емкости</TITLE></HEAD>" +
@@ -162,15 +162,16 @@ namespace FuelStation
 
 
 
-            // Стартовая страница и кэширование
+            // Стартовая страница и кэширование данных таблицы на web-сервере
             app.Run((context) =>
             {
+                //обращение к сервису
                 ICachedTanksService cachedTanksService = context.RequestServices.GetService<ICachedTanksService>();
                 cachedTanksService.AddTanks("Tanks20");
                 string HtmlString = "<HTML><HEAD><TITLE>Емкости</TITLE></HEAD>" +
                 "<META http-equiv='Content-Type' content='text/html; charset=utf-8'/>" +
                 "<BODY><H1>Главная</H1>";
-                HtmlString += "<H2>Данные записаны в кэш</H2>";
+                HtmlString += "<H2>Данные записаны в кэш сервера</H2>";
                 HtmlString += "<BR><A href='/'>Главная</A></BR>";
                 HtmlString += "<BR><A href='/tanks'>Емкости</A></BR>";
                 HtmlString += "<BR><A href='/form'>Данные пользователя</A></BR>";
