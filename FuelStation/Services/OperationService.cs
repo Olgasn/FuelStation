@@ -7,7 +7,7 @@ using System.Linq;
 namespace FuelStation.Services
 {
     // Класс выборки 10 записей из всех таблиц 
-    public class OperationService
+    public class OperationService: IOperationService
     {
         private FuelsContext _context;
         public OperationService(FuelsContext context)

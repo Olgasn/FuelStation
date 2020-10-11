@@ -22,7 +22,7 @@ namespace FuelStation.Middleware
             _cacheKey = cacheKey;
         }
 
-        public Task Invoke(HttpContext httpContext, OperationService operationService)
+        public Task Invoke(HttpContext httpContext, IOperationService operationService)
         {
             HomeViewModel homeViewModel;
             // пытаемся получить элемент из кэша

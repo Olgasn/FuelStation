@@ -33,7 +33,7 @@ namespace FuelStation
             string connection = Configuration.GetConnectionString("SqlServerConnection");
             services.AddDbContext<FuelsContext>(options => options.UseSqlServer(connection));
             // внедрение зависимости OperationService
-            services.AddTransient<OperationService>();
+            services.AddTransient<IOperationService, OperationService>();
             // добавление кэширования
             services.AddMemoryCache();
             // добавление поддержки сессии
