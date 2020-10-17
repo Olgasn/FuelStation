@@ -107,8 +107,6 @@ namespace FuelStation.Controllers
                 .Where(o => o.Tank.TankType.Contains(searchTankType ?? "")
                 & o.Fuel.FuelType.Contains(searchFuelType ?? ""));
 
-
-
             return operations;
         }
 

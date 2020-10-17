@@ -4,7 +4,7 @@ namespace FuelStation.Services
 {
     public interface IOperationService
     {
-        HomeViewModel GetHomeViewModel();
+        HomeViewModel GetHomeViewModel(int numberRows=10);
         
 
     }

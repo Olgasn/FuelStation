@@ -6,8 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using FuelStation.Middleware;
 using FuelStation.Data;
 using FuelStation.Services;
-using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.Extensions.Hosting;
 namespace FuelStation
 {
     public class Startup
@@ -40,30 +39,16 @@ namespace FuelStation
             services.AddDistributedMemoryCache();
             services.AddSession();
 
-            services.AddMvc(options =>
-            {
-                // определение профилей кэширования
-                options.CacheProfiles.Add("Caching",
-                    new CacheProfile()
-                    {
-                        Duration = 30
-                    });
-                options.CacheProfiles.Add("NoCaching",
-                    new CacheProfile()
-                    {
-                        Location = ResponseCacheLocation.None,
-                        NoStore = true
-                    });
-            });
+            //Использование MVC
+            services.AddControllersWithViews();
         }
 
         // Этот метод вызывается во время выполнения. Используйте этот метод для настройки конвейера HTTP-запросов.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
             }
             else
             {
@@ -82,13 +67,15 @@ namespace FuelStation
             // добавляем компонент middleware для реализации кэширования и записывем данные в кэш
             app.UseOperatinCache("Operations 10");
 
-            app.UseMvc((routes) =>
+            //Использование MVC - отключено
+            app.UseRouting();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            }
-            );
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
 
         }
     }

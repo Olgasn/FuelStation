@@ -9,15 +9,15 @@ namespace FuelStation.Services
     // Класс выборки 10 записей из всех таблиц 
     public class OperationService: IOperationService
     {
-        private FuelsContext _context;
+        private readonly FuelsContext _context;
         public OperationService(FuelsContext context)
         {
             _context = context;
         }
-        public HomeViewModel GetHomeViewModel()
+        public HomeViewModel GetHomeViewModel(int numberRows=10)
             {
-            var fuels = _context.Fuels.Take(10).ToList();
-            var tanks = _context.Tanks.Take(10).ToList();
+            var fuels = _context.Fuels.Take(numberRows).ToList();
+            var tanks = _context.Tanks.Take(numberRows).ToList();
             List<OperationViewModel> operations = _context.Operations
                 .OrderByDescending(d => d.Date)
                 .Select(t => new OperationViewModel

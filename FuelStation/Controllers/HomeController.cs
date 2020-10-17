@@ -18,12 +18,13 @@ namespace FuelStation.Controllers
         }
         public IActionResult Index()
         {
-            var fuels = _db.Fuels.Take(10).ToList();
-            var tanks = _db.Tanks.Take(10).ToList();
+            int numberRows = 10;
+            var fuels = _db.Fuels.Take(numberRows).ToList();
+            var tanks = _db.Tanks.Take(numberRows).ToList();
             List<OperationViewModel> operations = _db.Operations
                 .OrderByDescending(d => d.Date)
                 .Select(t => new OperationViewModel { OperationID = t.OperationID, FuelType = t.Fuel.FuelType, TankType = t.Tank.TankType, Inc_Exp = t.Inc_Exp, Date = t.Date })
-                .Take(10)
+                .Take(numberRows)
                 .ToList();
 
             HomeViewModel homeViewModel = new HomeViewModel { Tanks = tanks, Fuels = fuels, Operations = operations };

@@ -1,16 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using FuelStation.ViewModels;
+﻿using FuelStation.Data;
 using FuelStation.Infrastructure.Filters;
-using FuelStation.Data;
-using System.Linq;
+using FuelStation.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FuelStation.Controllers
 {
 
     public class CachedController : Controller
     {
-        private FuelsContext _context;
+        private readonly FuelsContext _context;
         public CachedController(FuelsContext context)
         {
             _context = context;
@@ -19,8 +19,9 @@ namespace FuelStation.Controllers
         [TypeFilter(typeof(CacheResourceFilterAttribute))]
         public IActionResult Index()
         {
-            var fuels = _context.Fuels.Take(10).ToList();
-            var tanks = _context.Tanks.Take(10).ToList();
+            int numberRows = 10;
+            var fuels = _context.Fuels.Take(numberRows).ToList();
+            var tanks = _context.Tanks.Take(numberRows).ToList();
             List<OperationViewModel> operations = _context.Operations
                 .OrderByDescending(d => d.Date)
                 .Select(t => new OperationViewModel
@@ -31,7 +32,7 @@ namespace FuelStation.Controllers
                     Inc_Exp = t.Inc_Exp,
                     Date = t.Date
                 })
-                .Take(10)
+                .Take(numberRows)
                 .ToList();
 
             HomeViewModel homeViewModel = new HomeViewModel
