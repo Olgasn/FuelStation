@@ -28,7 +28,7 @@ namespace FuelStation.Services
                     Inc_Exp = t.Inc_Exp,
                     Date = t.Date
                 })
-                .Take(10)
+                .Take(numberRows)
                 .ToList();
 
             HomeViewModel homeViewModel = new HomeViewModel
