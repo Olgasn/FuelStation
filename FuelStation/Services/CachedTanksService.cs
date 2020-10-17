@@ -9,28 +9,27 @@ namespace FuelStation.Services
 {
     public class CachedTanksService : ICachedTanksService
     {
-        private FuelsContext db;
-        private IMemoryCache cache;
+        private readonly FuelsContext _dbContext;
+        private readonly IMemoryCache _memoryCache;
 
-        public CachedTanksService(FuelsContext context, IMemoryCache memoryCache)
+        public CachedTanksService(FuelsContext dbContext, IMemoryCache memoryCache)
         {
-            db = context;
-            cache = memoryCache;
+            _dbContext = dbContext;
+            _memoryCache = memoryCache;
         }
         // получение списка емкостей из базы
         public IEnumerable<Tank> GetTanks(int rowsNumber = 20)
         {
-            return db.Tanks.Take(rowsNumber).ToList();
+            return _dbContext.Tanks.Take(rowsNumber).ToList();
         }
 
         // добавление списка емкостей в кэш
         public void AddTanks(string cacheKey, int rowsNumber = 20)
         {
-            IEnumerable<Tank> tanks = null;
-            tanks = db.Tanks.Take(rowsNumber).ToList();
+            IEnumerable<Tank> tanks = _dbContext.Tanks.Take(rowsNumber).ToList();
             if (tanks != null)
             {
-                cache.Set(cacheKey, tanks, new MemoryCacheEntryOptions
+                _memoryCache.Set(cacheKey, tanks, new MemoryCacheEntryOptions
                 {
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
                 });
@@ -41,13 +40,13 @@ namespace FuelStation.Services
         // получение списка емкостей из кэша или из базы, если нет в кэше
         public IEnumerable<Tank> GetTanks(string cacheKey, int rowsNumber = 20)
         {
-            IEnumerable<Tank> tanks = null;
-            if (!cache.TryGetValue(cacheKey, out tanks))
+            IEnumerable<Tank> tanks;
+            if (!_memoryCache.TryGetValue(cacheKey, out tanks))
             {
-                tanks = db.Tanks.Take(rowsNumber).ToList();
+                tanks = _dbContext.Tanks.Take(rowsNumber).ToList();
                 if (tanks != null)
                 {
-                    cache.Set(cacheKey, tanks,
+                    _memoryCache.Set(cacheKey, tanks,
                     new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(5)));
                 }
             }

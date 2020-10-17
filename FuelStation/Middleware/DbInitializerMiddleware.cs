@@ -15,12 +15,12 @@ namespace FuelStation.Middleware
             _next = next;
 
         }
-        public Task Invoke(HttpContext context, FuelsContext dbContext)
+        public Task Invoke(HttpContext context, FuelsContext db)
         {
             if (!(context.Session.Keys.Contains("starting")))
             {
                 // инициализация базы данных
-                DbInitializer.Initialize(dbContext);
+                DbInitializer.Initialize(db);
                 context.Session.SetString("starting", "Yes");
             }
 
