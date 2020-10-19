@@ -14,7 +14,7 @@ namespace FuelStation.Controllers
     [ExceptionFilter] // Фильтр исключений
     public class OperationsController : Controller
     {
-        private int pageSize = 10;   // количество элементов на странице
+        private readonly int pageSize = 10;   // количество элементов на странице
         private readonly FuelsContext _context;
         private OperationViewModel _operation=new OperationViewModel
         {
@@ -72,7 +72,7 @@ namespace FuelStation.Controllers
             IQueryable<Operation> fuelsContext = _context.Operations;
             fuelsContext = Sort_Search(fuelsContext, sortOrder, operation.TankType ?? "", operation.FuelType ?? "");
             // Разбиение на страницы
-            var count = fuelsContext.Count();
+            int count = fuelsContext.Count();
             fuelsContext = fuelsContext.Skip((page - 1) * pageSize).Take(pageSize);
             // Формирование модели для передачи представлению
             operation.SortViewModel = new SortViewModel(sortOrder);

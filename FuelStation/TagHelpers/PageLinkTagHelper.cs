@@ -10,7 +10,7 @@ namespace FuelStation.TagHelpers
 {
     public class PageLinkTagHelper : TagHelper
     {
-        private IUrlHelperFactory urlHelperFactory;
+        private readonly IUrlHelperFactory urlHelperFactory;
         public PageLinkTagHelper(IUrlHelperFactory helperFactory)
         {
             urlHelperFactory = helperFactory;

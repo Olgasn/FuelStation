@@ -1,5 +1,6 @@
 ﻿using FuelStation.Data;
 using FuelStation.Infrastructure.Filters;
+using FuelStation.Models;
 using FuelStation.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -20,8 +21,8 @@ namespace FuelStation.Controllers
         public IActionResult Index()
         {
             int numberRows = 10;
-            var fuels = _context.Fuels.Take(numberRows).ToList();
-            var tanks = _context.Tanks.Take(numberRows).ToList();
+            List<Fuel> fuels = _context.Fuels.Take(numberRows).ToList();
+            List<Tank> tanks = _context.Tanks.Take(numberRows).ToList();
             List<OperationViewModel> operations = _context.Operations
                 .OrderByDescending(d => d.Date)
                 .Select(t => new OperationViewModel

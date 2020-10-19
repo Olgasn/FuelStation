@@ -15,7 +15,7 @@ namespace FuelStation.Services
             _context = context;
         }
         public HomeViewModel GetHomeViewModel(int numberRows=10)
-            {
+        {
             var fuels = _context.Fuels.Take(numberRows).ToList();
             var tanks = _context.Tanks.Take(numberRows).ToList();
             List<OperationViewModel> operations = _context.Operations

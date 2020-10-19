@@ -21,13 +21,7 @@ namespace FuelStation
         // Этот метод вызывается во время выполнения. Используйте этот метод для добавления сервисов в контейнер.
         public void ConfigureServices(IServiceCollection services)
         {
-            // внедрение зависимости для доступа к БД c учетными записями с использованием EF
-            //services.AddDbContext<ApplicationContext>(options =>
-            //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddIdentity<User, IdentityRole>()
-            //    .AddEntityFrameworkStores<ApplicationContext>();
-
-
+ 
             // внедрение зависимости для доступа к БД с использованием EF
             string connection = Configuration.GetConnectionString("SqlServerConnection");
             services.AddDbContext<FuelsContext>(options => options.UseSqlServer(connection));
@@ -67,9 +61,7 @@ namespace FuelStation
             // добавляем компонент middleware для реализации кэширования и записывем данные в кэш
             app.UseOperatinCache("Operations 10");
 
-            //Использование MVC - отключено
             app.UseRouting();
-            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
