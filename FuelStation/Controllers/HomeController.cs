@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+﻿using FuelStation.Data;
 using FuelStation.ViewModels;
-using FuelStation.Data;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FuelStation.Controllers
 {
@@ -18,12 +18,12 @@ namespace FuelStation.Controllers
             var fuels = _db.Fuels.Take(15).ToList();
             var tanks = _db.Tanks.Take(15).ToList();
             List<FilterOperationViewModel> operations = _db.Operations
-                .OrderByDescending(d=>d.Date)
+                .OrderByDescending(d => d.Date)
                 .Select(t => new FilterOperationViewModel { OperationID = t.OperationID, FuelType = t.Fuel.FuelType, TankType = t.Tank.TankType, Inc_Exp = t.Inc_Exp, Date = t.Date })
                 .Take(15)
                 .ToList();
 
-            HomeViewModel homeViewModel = new HomeViewModel { Tanks=tanks, Fuels=fuels, Operations= operations};
+            HomeViewModel homeViewModel = new HomeViewModel { Tanks = tanks, Fuels = fuels, Operations = operations };
             return View(homeViewModel);
         }
 

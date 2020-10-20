@@ -1,19 +1,19 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
-using FuelStation.Models;
+﻿using FuelStation.Models;
 using FuelStation.ViewModels.Users;
 using Microsoft.AspNetCore.Authorization;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FuelStation.Controllers
 {
     [Authorize(Roles = "admin")]
     public class UsersController : Controller
     {
-     
+
         UserManager<ApplicationUser> _userManager;
         RoleManager<IdentityRole> _roleManager;
 
@@ -88,7 +88,7 @@ namespace FuelStation.Controllers
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
                 }
-               
+
                 var role = model.UserRole;
                 if (role.Count() > 0)
                 {

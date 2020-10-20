@@ -1,9 +1,9 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using FuelStation.Data;
+using FuelStation.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using FuelStation.Data;
-using FuelStation.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FuelStation.Controllers
 {

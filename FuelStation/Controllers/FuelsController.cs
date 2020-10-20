@@ -1,10 +1,10 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using FuelStation.Data;
+﻿using FuelStation.Data;
 using FuelStation.Models;
 using FuelStation.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FuelStation.Controllers
 {
@@ -182,7 +182,7 @@ namespace FuelStation.Controllers
                     break;
 
             }
-            fuels = fuels.Where(o=> o.FuelType.Contains(FuelType ?? ""));
+            fuels = fuels.Where(o => o.FuelType.Contains(FuelType ?? ""));
             return fuels;
         }
     }

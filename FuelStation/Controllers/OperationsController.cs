@@ -1,13 +1,13 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using FuelStation.Data;
+using FuelStation.Infrastructure;
+using FuelStation.Infrastructure.Filters;
+using FuelStation.Models;
+using FuelStation.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using FuelStation.Data;
-using FuelStation.Models;
-using FuelStation.ViewModels;
-using FuelStation.Infrastructure;
-using FuelStation.Infrastructure.Filters;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FuelStation.Controllers
 {
@@ -25,7 +25,7 @@ namespace FuelStation.Controllers
         [SetToSession("Operation")] //Фильтр действий для сохранение в сессию параметров отбора
         public IActionResult Index(FilterOperationViewModel operation, SortState sortOrder, int page = 1)
         {
-            if (operation.FuelType==null & operation.TankType==null)
+            if (operation.FuelType == null & operation.TankType == null)
             {
                 // Считывание данных из сессии
                 var sessionOperation = HttpContext.Session.Get("Operation");
@@ -47,7 +47,7 @@ namespace FuelStation.Controllers
             OperationsViewModel operations = new OperationsViewModel
             {
                 Operations = fuelsContext,
-                PageViewModel= new PageViewModel(count, page, pageSize),
+                PageViewModel = new PageViewModel(count, page, pageSize),
                 SortViewModel = new SortViewModel(sortOrder),
                 FilterOperationViewModel = operation
             };

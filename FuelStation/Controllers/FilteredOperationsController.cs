@@ -1,12 +1,12 @@
-﻿using System.Linq;
+﻿using FuelStation.Data;
+using FuelStation.Infrastructure;
+using FuelStation.Infrastructure.Filters;
+using FuelStation.Models;
+using FuelStation.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using FuelStation.Data;
-using FuelStation.ViewModels;
-using FuelStation.Infrastructure.Filters;
-using FuelStation.Infrastructure;
 using System;
-using FuelStation.Models;
+using System.Linq;
 
 namespace FuelStation.Controllers
 {
@@ -14,10 +14,10 @@ namespace FuelStation.Controllers
     public class FilteredOperationsController : Controller
     {
         private readonly FuelsContext _context;
-        private FilterOperationViewModel _operation=new FilterOperationViewModel
+        private FilterOperationViewModel _operation = new FilterOperationViewModel
         {
-            FuelType="",
-            TankType=""            
+            FuelType = "",
+            TankType = ""
         };
 
         public FilteredOperationsController(FuelsContext context)
@@ -35,19 +35,19 @@ namespace FuelStation.Controllers
             if (sessionOperation != null)
                 _operation = Transformations.DictionaryToObject<FilterOperationViewModel>(sessionOperation);
             if ((sessionSortState != null))
-                if ((sessionSortState.Count>0)&(sortOrder == SortState.No)) sortOrder = (SortState) Enum.Parse(typeof(SortState),sessionSortState["sortOrder"]);
-            
+                if ((sessionSortState.Count > 0) & (sortOrder == SortState.No)) sortOrder = (SortState)Enum.Parse(typeof(SortState), sessionSortState["sortOrder"]);
+
             // Сортировка и фильтрация данных
             IQueryable<Operation> fuelsContext = _context.Operations;
             fuelsContext = Sort_Search(fuelsContext, sortOrder, _operation.TankType ?? "", _operation.FuelType ?? "");
 
             // Формирование модели для передачи представлению
-          
+
             OperationsViewModel operations = new OperationsViewModel
             {
                 Operations = fuelsContext,
                 SortViewModel = new SortViewModel(sortOrder),
-                FilterOperationViewModel =_operation
+                FilterOperationViewModel = _operation
             };
             return View(operations);
         }
@@ -58,8 +58,8 @@ namespace FuelStation.Controllers
         {
             // Считывание данных из сессии
             var sessionSortState = HttpContext.Session.Get("SortState");
-            var sortOrder=new SortState();
-            if (sessionSortState.Count>0)
+            var sortOrder = new SortState();
+            if (sessionSortState.Count > 0)
                 sortOrder = (SortState)Enum.Parse(typeof(SortState), sessionSortState["sortOrder"]);
 
             // Сортировка и фильтрация данных
@@ -69,7 +69,7 @@ namespace FuelStation.Controllers
             // Формирование модели для передачи представлению
             OperationsViewModel operations = new OperationsViewModel
             {
-                Operations=fuelsContext,
+                Operations = fuelsContext,
                 SortViewModel = new SortViewModel(sortOrder),
                 FilterOperationViewModel = operation
             };

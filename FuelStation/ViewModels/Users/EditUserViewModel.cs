@@ -13,7 +13,7 @@ namespace FuelStation.ViewModels.Users
         [Display(Name = "Дата регистрации")]
         [DataType(DataType.Date)]
         public DateTime RegistrationDate { get; set; }
-       
+
         [Display(Name = "Роль")]
         public string UserRole { get; set; }
         public EditUserViewModel()

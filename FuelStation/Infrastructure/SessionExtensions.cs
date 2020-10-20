@@ -30,6 +30,6 @@ namespace FuelStation.Infrastructure
             return value == null ? default(Dictionary<string, string>) : JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
         }
 
- 
+
     }
 }

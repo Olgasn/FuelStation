@@ -7,7 +7,7 @@ namespace FuelStation.Infrastructure.Filters
     //Фильтр действий для запись в сессию данных из ModelState
     public class SetToSessionAttribute : Attribute, IActionFilter
     {
-        
+
         private string _name;//имя ключа
         public SetToSessionAttribute(string name)
         {
