@@ -1,4 +1,4 @@
-using FuelStation.Models;
+using FuelStation.DataLayer.Models;
 using System.Collections.Generic;
 
 namespace FuelStation.ViewModels

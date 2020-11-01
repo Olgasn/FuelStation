@@ -1,4 +1,4 @@
-﻿using FuelStation.Models;
+﻿using FuelStation.DataLayer.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 

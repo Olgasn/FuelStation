@@ -1,5 +1,5 @@
-﻿using FuelStation.Data;
-using FuelStation.Models;
+﻿using FuelStation.DataLayer.Data;
+using FuelStation.DataLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -20,7 +20,7 @@ namespace FuelStation.Controllers
         public async Task<IActionResult> Index(string TankTypeFind = "")
         {
             var tanks = from m in _context.Tanks
-                        where m.TankType.StartsWith(TankTypeFind)
+                        where m.TankType.Contains(TankTypeFind??"")
                         select m;
             return View(await tanks.ToListAsync());
         }

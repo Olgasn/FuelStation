@@ -1,7 +1,7 @@
-﻿using FuelStation.Data;
+﻿using FuelStation.DataLayer.Data;
+using FuelStation.DataLayer.Models;
 using FuelStation.Infrastructure;
 using FuelStation.Infrastructure.Filters;
-using FuelStation.Models;
 using FuelStation.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

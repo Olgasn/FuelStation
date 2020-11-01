@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http;
 using FuelStation.Models;
 using Microsoft.AspNetCore.Identity;
+using FuelStation.DataLayer.Data;
 
 namespace FuelStation
 {
@@ -47,7 +48,12 @@ namespace FuelStation
 
             //добавление сессии
             services.AddDistributedMemoryCache();
-            services.AddSession();
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".Fuel.Session";
+                options.IdleTimeout = System.TimeSpan.FromSeconds(3600);
+                options.Cookie.IsEssential = true;
+            });
 
             //Использование MVC
             services.AddControllersWithViews();

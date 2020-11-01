@@ -1,16 +1,13 @@
-﻿using FuelStation.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
+﻿using FuelStation.DataLayer.Models;
 using System;
 using System.Linq;
 //Класс для инициализации базы данных путем заполнения ее таблиц тестовым набором записей
-namespace FuelStation.Data
+namespace FuelStation.DataLayer.Data
 {
     public static class DbInitializer
     {
-        public static void Initialize(HttpContext context)
+        public static void Initialize(FuelsContext db)
         {
-            FuelsContext db = context.RequestServices.GetRequiredService<FuelsContext>();
             db.Database.EnsureCreated();
 
             // Проверка занесены ли виды топлива

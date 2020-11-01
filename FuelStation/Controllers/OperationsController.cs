@@ -1,7 +1,7 @@
-﻿using FuelStation.Data;
+﻿using FuelStation.DataLayer.Data;
+using FuelStation.DataLayer.Models;
 using FuelStation.Infrastructure;
 using FuelStation.Infrastructure.Filters;
-using FuelStation.Models;
 using FuelStation.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,7 +14,7 @@ namespace FuelStation.Controllers
     public class OperationsController : Controller
     {
         private readonly FuelsContext _context;
-        private int pageSize = 15;   // количество элементов на странице
+        private readonly int pageSize = 15;   // количество элементов на странице
 
         public OperationsController(FuelsContext context)
         {
@@ -31,7 +31,6 @@ namespace FuelStation.Controllers
                 var sessionOperation = HttpContext.Session.Get("Operation");
                 if (sessionOperation != null)
                     operation = Transformations.DictionaryToObject<FilterOperationViewModel>(sessionOperation);
-
             }
 
             // Сортировка и фильтрация данных

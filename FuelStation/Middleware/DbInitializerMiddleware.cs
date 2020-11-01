@@ -1,5 +1,7 @@
 ﻿using FuelStation.Data;
+using FuelStation.DataLayer.Data;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,18 +15,17 @@ namespace FuelStation.Middleware
         {
             // инициализация базы данных 
             _next = next;
-
         }
         public Task Invoke(HttpContext context)
         {
             if (!(context.Session.Keys.Contains("starting")))
             {
                 DbUserInitializer.Initialize(context).Wait();
-                DbInitializer.Initialize(context);
+                DbInitializer.Initialize(context.RequestServices.GetRequiredService<FuelsContext>());
                 context.Session.SetString("starting", "Yes");
             }
 
-            // Call the next delegate/middleware in the pipeline
+            // Вызов следующего делегата / компонента middleware в конвейере
             return _next.Invoke(context);
         }
     }

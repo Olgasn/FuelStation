@@ -1,5 +1,5 @@
-﻿using FuelStation.Data;
-using FuelStation.Models;
+﻿using FuelStation.DataLayer.Data;
+using FuelStation.DataLayer.Models;
 using FuelStation.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +10,7 @@ namespace FuelStation.Controllers
 {
     public class FuelsController : Controller
     {
-        private int pageSize = 10;   // количество элементов на странице
+        private readonly int pageSize = 10;   // количество элементов на странице
 
 
         private readonly FuelsContext _context;

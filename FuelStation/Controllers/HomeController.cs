@@ -1,4 +1,4 @@
-﻿using FuelStation.Data;
+﻿using FuelStation.DataLayer.Data;
 using FuelStation.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ namespace FuelStation.Controllers
 {
     public class HomeController : Controller
     {
-        private FuelsContext _db;
+        private readonly FuelsContext _db;
         public HomeController(FuelsContext db)
         {
             _db = db;

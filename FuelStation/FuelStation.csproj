@@ -25,6 +25,9 @@
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\js\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FuelStation.DataLayer\FuelStation.DataLayer.csproj" />
+  </ItemGroup>
 
   <ProjectExtensions>
     <VisualStudio>
