@@ -1,14 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29503.13
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FuelStation", "FuelStation\FuelStation.csproj", "{8AD3B736-7A29-49EB-8D00-2164201605D0}"
 	ProjectSection(ProjectDependencies) = postProject
 		{876BE443-928A-4CD7-AD7F-4B0126D301F9} = {876BE443-928A-4CD7-AD7F-4B0126D301F9}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuelStation.DataLayer", "FuelStation.DataLayer\FuelStation.DataLayer.csproj", "{876BE443-928A-4CD7-AD7F-4B0126D301F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FuelStation.DataLayer", "FuelStation.DataLayer\FuelStation.DataLayer.csproj", "{876BE443-928A-4CD7-AD7F-4B0126D301F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
