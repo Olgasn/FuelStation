@@ -25,7 +25,7 @@ namespace FuelStation.Infrastructure.Filters
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
             // считывание данных из ModelState и запись в сессию
-            if (context.ModelState.Count>0)
+            if (context.ModelState.Count > 0)
             {
                 foreach (var item in context.ModelState)
                 {

@@ -20,7 +20,7 @@ namespace FuelStation.Controllers
         public async Task<IActionResult> Index(string TankTypeFind = "")
         {
             var tanks = from m in _context.Tanks
-                        where m.TankType.Contains(TankTypeFind??"")
+                        where m.TankType.Contains(TankTypeFind ?? "")
                         select m;
             return View(await tanks.ToListAsync());
         }

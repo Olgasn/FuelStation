@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using FuelStation.Data;
+using FuelStation.DataLayer.Data;
+using FuelStation.Middleware;
+using FuelStation.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
-using FuelStation.Middleware;
-using FuelStation.Data;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Http;
-using FuelStation.Models;
-using Microsoft.AspNetCore.Identity;
-using FuelStation.DataLayer.Data;
 
 namespace FuelStation
 {
