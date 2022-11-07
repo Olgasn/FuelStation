@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using FuelStation.ViewModels;
+﻿using FuelStation.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace FuelStation.Controllers

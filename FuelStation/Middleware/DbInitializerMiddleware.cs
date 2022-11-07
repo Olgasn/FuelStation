@@ -16,7 +16,7 @@ namespace FuelStation.Middleware
             _next = next;
 
         }
-        public  Task Invoke(HttpContext context, IServiceProvider serviceProvider, FuelsContext dbContext)
+        public Task Invoke(HttpContext context, IServiceProvider serviceProvider, FuelsContext dbContext)
         {
             if (!(context.Session.Keys.Contains("starting")))
             {

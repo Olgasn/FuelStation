@@ -7,14 +7,14 @@ using System.Linq;
 namespace FuelStation.Services
 {
     // Класс выборки 10 записей из всех таблиц 
-    public class OperationService: IOperationService
+    public class OperationService : IOperationService
     {
         private readonly FuelsContext _context;
         public OperationService(FuelsContext context)
         {
             _context = context;
         }
-        public HomeViewModel GetHomeViewModel(int numberRows=10)
+        public HomeViewModel GetHomeViewModel(int numberRows = 10)
         {
             var fuels = _context.Fuels.Take(numberRows).ToList();
             var tanks = _context.Tanks.Take(numberRows).ToList();

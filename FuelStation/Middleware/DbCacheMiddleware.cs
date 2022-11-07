@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using FuelStation.Services;
+using FuelStation.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
-using FuelStation.Services;
-using FuelStation.ViewModels;
+using System;
+using System.Threading.Tasks;
 
 namespace FuelStation.Middleware
 {
@@ -15,7 +15,7 @@ namespace FuelStation.Middleware
         private readonly IMemoryCache _memoryCache;
         private string _cacheKey;
 
-        public DbCacheMiddleware(RequestDelegate next, IMemoryCache memoryCache, string cacheKey= "Operations 10")
+        public DbCacheMiddleware(RequestDelegate next, IMemoryCache memoryCache, string cacheKey = "Operations 10")
         {
             _next = next;
             _memoryCache = memoryCache;

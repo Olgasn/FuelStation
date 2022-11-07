@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using FuelStation.Data;
+using FuelStation.Infrastructure.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using FuelStation.Data;
-using FuelStation.Infrastructure.Filters;
+using System.Threading.Tasks;
 
 namespace FuelStation.Controllers
 {

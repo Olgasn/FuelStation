@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using FuelStation.ViewModels;
-using FuelStation.Data;
+﻿using FuelStation.Data;
 using FuelStation.Infrastructure.Filters;
 using FuelStation.Models;
+using FuelStation.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FuelStation.Controllers
 {

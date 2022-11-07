@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FuelStation.Data
 {
-    public class FuelsContext: DbContext
+    public class FuelsContext : DbContext
     {
-        public FuelsContext(DbContextOptions<FuelsContext> options): base(options)
+        public FuelsContext(DbContextOptions<FuelsContext> options) : base(options)
         {
         }
         public DbSet<Fuel> Fuels { get; set; }

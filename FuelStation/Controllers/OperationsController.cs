@@ -1,12 +1,12 @@
-﻿using System.Linq;
+﻿using FuelStation.Data;
+using FuelStation.Infrastructure;
+using FuelStation.Infrastructure.Filters;
+using FuelStation.Models;
+using FuelStation.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using FuelStation.Data;
-using FuelStation.ViewModels;
-using FuelStation.Infrastructure.Filters;
-using FuelStation.Infrastructure;
 using System;
-using FuelStation.Models;
+using System.Linq;
 
 namespace FuelStation.Controllers
 {
@@ -16,10 +16,10 @@ namespace FuelStation.Controllers
     {
         private readonly int pageSize = 10;   // количество элементов на странице
         private readonly FuelsContext _context;
-        private OperationViewModel _operation=new OperationViewModel
+        private OperationViewModel _operation = new OperationViewModel
         {
-            FuelType="",
-            TankType=""            
+            FuelType = "",
+            TankType = ""
         };
 
         public OperationsController(FuelsContext context)
@@ -29,7 +29,7 @@ namespace FuelStation.Controllers
 
         // GET: Operations
         [SetToSession("SortState")] //Фильтр действий для сохранение в сессию состояния сортировки
-        public IActionResult Index(SortState sortOrder, int page=1)
+        public IActionResult Index(SortState sortOrder, int page = 1)
         {
             // Считывание данных из сессии
             var sessionOperation = HttpContext.Session.Get("Operation");
@@ -37,8 +37,8 @@ namespace FuelStation.Controllers
             if (sessionOperation != null)
                 _operation = Transformations.DictionaryToObject<OperationViewModel>(sessionOperation);
             if ((sessionSortState != null))
-                if ((sessionSortState.Count>0)&(sortOrder == SortState.No)) sortOrder = (SortState) Enum.Parse(typeof(SortState),sessionSortState["sortOrder"]);
-            
+                if ((sessionSortState.Count > 0) & (sortOrder == SortState.No)) sortOrder = (SortState)Enum.Parse(typeof(SortState), sessionSortState["sortOrder"]);
+
             // Сортировка и фильтрация данных
             IQueryable<Operation> fuelsContext = _context.Operations;
             fuelsContext = Sort_Search(fuelsContext, sortOrder, _operation.TankType ?? "", _operation.FuelType ?? "");
@@ -53,19 +53,19 @@ namespace FuelStation.Controllers
             {
                 Operations = fuelsContext,
                 PageViewModel = new PageViewModel(count, page, pageSize),
-                OperationViewModel =_operation
+                OperationViewModel = _operation
             };
             return View(operations);
         }
         // Post: Operations
         [HttpPost]
         [SetToSession("Operation")] //Фильтр действий для сохранение в сессию параметров отбора
-        public IActionResult Index(OperationViewModel operation, int page=1)
+        public IActionResult Index(OperationViewModel operation, int page = 1)
         {
             // Считывание данных из сессии
             var sessionSortState = HttpContext.Session.Get("SortState");
-            var sortOrder=new SortState();
-            if (sessionSortState.Count>0)
+            var sortOrder = new SortState();
+            if (sessionSortState.Count > 0)
                 sortOrder = (SortState)Enum.Parse(typeof(SortState), sessionSortState["sortOrder"]);
 
             // Сортировка и фильтрация данных
@@ -78,7 +78,7 @@ namespace FuelStation.Controllers
             operation.SortViewModel = new SortViewModel(sortOrder);
             OperationsViewModel operations = new OperationsViewModel
             {
-                Operations=fuelsContext,
+                Operations = fuelsContext,
                 PageViewModel = new PageViewModel(count, page, pageSize),
                 OperationViewModel = operation
             };
