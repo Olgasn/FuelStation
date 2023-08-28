@@ -1,8 +1,8 @@
-﻿@model IEnumerable<Tank>
-
+﻿@model TanksViewModel
 @{
     ViewData["Title"] = "Емкости";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string TankType = Model.TankType;
 }
 
 <h2>Емкости</h2>
@@ -14,7 +14,7 @@
 {
 
     <fieldset>
-        Наименование емкости: @Html.TextBox("TankTypeFind", "")
+        Наименование емкости: @Html.TextBox("TankType", "")
 
         <input type="submit" value="Найти" />
 
@@ -26,25 +26,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.TankType)
+                @Html.DisplayNameFor(model => model.Tanks.FirstOrDefault().TankType)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TankWeight)
+                @Html.DisplayNameFor(model => model.Tanks.FirstOrDefault().TankWeight)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TankVolume)
+                @Html.DisplayNameFor(model => model.Tanks.FirstOrDefault().TankVolume)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TankMaterial)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TankPicture)
+                @Html.DisplayNameFor(model => model.Tanks.FirstOrDefault().TankMaterial)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Tanks)
         {
             <tr>
                 <td>
@@ -60,9 +57,6 @@
                     @Html.DisplayFor(modelItem => item.TankMaterial)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TankPicture)
-                </td>
-                <td>
                     <a asp-action="Edit" asp-route-id="@item.TankID">Редактировать</a> |
                     <a asp-action="Details" asp-route-id="@item.TankID">Подробно</a> |
                     <a asp-action="Delete" asp-route-id="@item.TankID">Удалить</a>
@@ -71,3 +65,6 @@
         }
     </tbody>
 </table>
+<page-link page-model="Model.PageViewModel" page-action="Index"
+           page-url-FuelType="@TankType"
+           ></page-link>

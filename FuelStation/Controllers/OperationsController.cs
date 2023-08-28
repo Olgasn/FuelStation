@@ -6,6 +6,7 @@ using FuelStation.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,11 +15,12 @@ namespace FuelStation.Controllers
     public class OperationsController : Controller
     {
         private readonly FuelsContext _context;
-        private readonly int pageSize = 15;   // количество элементов на странице
+        private readonly int pageSize = 10;   // количество элементов на странице
 
-        public OperationsController(FuelsContext context)
+        public OperationsController(FuelsContext context, IConfiguration appConfig)
         {
             _context = context;
+            pageSize = int.Parse(appConfig["Parameters:PageSize"]);
         }
 
         // GET: Operations

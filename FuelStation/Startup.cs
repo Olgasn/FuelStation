@@ -15,6 +15,7 @@ namespace FuelStation
 {
     public class Startup
     {
+        // Настройка окружения в контрукторе
         public Startup(IWebHostEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -27,7 +28,7 @@ namespace FuelStation
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        //Этот метод вызывается средой выполнения и используется для добавления служб в контейнер.
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
@@ -60,7 +61,7 @@ namespace FuelStation
             services.AddRazorPages();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // Этот метод вызывается средой выполнения и используется для настройки конвейера HTTP-запросов.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
@@ -86,7 +87,7 @@ namespace FuelStation
             // использование Identity
             app.UseAuthentication();
             app.UseAuthorization();
-
+            // использование обработчика маршрутов
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

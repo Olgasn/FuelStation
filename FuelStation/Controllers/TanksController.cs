@@ -1,7 +1,12 @@
 ﻿using FuelStation.DataLayer.Data;
 using FuelStation.DataLayer.Models;
+using FuelStation.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,19 +15,35 @@ namespace FuelStation.Controllers
     public class TanksController : Controller
     {
         private readonly FuelsContext _context;
+        private readonly int pageSize = 10;   // количество элементов на странице
 
-        public TanksController(FuelsContext context)
+        public TanksController(FuelsContext context, IConfiguration appConfig)
         {
             _context = context;
+            pageSize = int.Parse(appConfig["Parameters:PageSize"]);
         }
 
         // GET: Tanks
-        public async Task<IActionResult> Index(string TankTypeFind = "")
+        public IActionResult Index(string TankType = "", int page=1)
         {
-            var tanks = from m in _context.Tanks
-                        where m.TankType.Contains(TankTypeFind ?? "")
-                        select m;
-            return View(await tanks.ToListAsync());
+
+            // Фильтрация данных
+            IQueryable<Tank> fuelsContext = _context.Tanks.Where(t=>t.TankType.Contains(TankType ?? ""));
+
+            // Разбиение на страницы
+            var count = fuelsContext.Count();
+            fuelsContext = fuelsContext.Skip((page - 1) * pageSize).Take(pageSize);
+
+            // Формирование модели для передачи представлению
+            TanksViewModel fuels = new TanksViewModel
+            {
+                Tanks = fuelsContext,
+                PageViewModel = new PageViewModel(count, page, pageSize),
+                //SortViewModel = new SortViewModel(sortOrder),
+                TankType = TankType
+            };
+
+            return View(fuels);
         }
 
         // GET: Tanks/Details/5

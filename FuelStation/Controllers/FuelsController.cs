@@ -3,6 +3,7 @@ using FuelStation.DataLayer.Models;
 using FuelStation.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,16 +16,16 @@ namespace FuelStation.Controllers
 
         private readonly FuelsContext _context;
 
-        public FuelsController(FuelsContext context)
+        public FuelsController(FuelsContext context, IConfiguration appConfig)
         {
             _context = context;
+            pageSize = int.Parse(appConfig["Parameters:PageSize"]);
         }
 
         // GET: Fuels
         public IActionResult Index(string FuelType, SortState sortOrder, int page = 1)
         {
             // Сортировка и фильтрация данных
-
             IQueryable<Fuel> fuelsContext = _context.Fuels;
             fuelsContext = Sort_Search(fuelsContext, sortOrder, FuelType ?? "");
 
