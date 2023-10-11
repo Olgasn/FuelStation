@@ -1,4 +1,4 @@
-using FuelStation.Data;
+п»їusing FuelStation.Data;
 using FuelStation.Infrastructure;
 using FuelStation.Middleware;
 using FuelStation.Models;
@@ -21,104 +21,104 @@ namespace FuelStationT
             var builder = WebApplication.CreateBuilder(args);
 
             var services = builder.Services;
-            // внедрение зависимости для доступа к БД с использованием EF
+            // РІРЅРµРґСЂРµРЅРёРµ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РґР»СЏ РґРѕСЃС‚СѓРїР° Рє Р‘Р” СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј EF
             string connection = builder.Configuration.GetConnectionString("SqlServerConnection");
             services.AddDbContext<FuelsContext>(options => options.UseSqlServer(connection));
 
-            // добавление кэширования
+            // РґРѕР±Р°РІР»РµРЅРёРµ РєСЌС€РёСЂРѕРІР°РЅРёСЏ
             services.AddMemoryCache();
 
-            // добавление поддержки сессии
+            // РґРѕР±Р°РІР»РµРЅРёРµ РїРѕРґРґРµСЂР¶РєРё СЃРµСЃСЃРёРё
             services.AddDistributedMemoryCache();
             services.AddSession();
 
-            // внедрение зависимости CachedTanksService
+            // РІРЅРµРґСЂРµРЅРёРµ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё CachedTanksService
             services.AddScoped<ICachedTanksService, CachedTanksService>();
 
-            //Использование MVC - отключено
+            //РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ MVC - РѕС‚РєР»СЋС‡РµРЅРѕ
             //services.AddControllersWithViews();
             var app = builder.Build();
 
 
-            // добавляем поддержку статических файлов
+            // РґРѕР±Р°РІР»СЏРµРј РїРѕРґРґРµСЂР¶РєСѓ СЃС‚Р°С‚РёС‡РµСЃРєРёС… С„Р°Р№Р»РѕРІ
             app.UseStaticFiles();
 
-            // добавляем поддержку сессий
+            // РґРѕР±Р°РІР»СЏРµРј РїРѕРґРґРµСЂР¶РєСѓ СЃРµСЃСЃРёР№
             app.UseSession();
 
-            // добавляем собственный компонент middleware по инициализации базы данных и производим ее инициализацию
+            // РґРѕР±Р°РІР»СЏРµРј СЃРѕР±СЃС‚РІРµРЅРЅС‹Р№ РєРѕРјРїРѕРЅРµРЅС‚ middleware РїРѕ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё Р±Р°Р·С‹ РґР°РЅРЅС‹С… Рё РїСЂРѕРёР·РІРѕРґРёРј РµРµ РёРЅРёС†РёР°Р»РёР·Р°С†РёСЋ
             app.UseDbInitializer();
 
 
-            //Запоминание в Session значений, введенных в форме
+            //Р—Р°РїРѕРјРёРЅР°РЅРёРµ РІ Session Р·РЅР°С‡РµРЅРёР№, РІРІРµРґРµРЅРЅС‹С… РІ С„РѕСЂРјРµ
             app.Map("/form", (appBuilder) =>
             {
                 appBuilder.Run(async (context) =>
                 {
 
-                    // Считывание из Session объекта User
+                    // РЎС‡РёС‚С‹РІР°РЅРёРµ РёР· Session РѕР±СЉРµРєС‚Р° User
                     User user = context.Session.Get<User>("user") ?? new User();
 
-                    // Формирование строки для вывода динамической HTML формы
-                    string strResponse = "<HTML><HEAD><TITLE>Пользователь</TITLE></HEAD>" +
+                    // Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ СЃС‚СЂРѕРєРё РґР»СЏ РІС‹РІРѕРґР° РґРёРЅР°РјРёС‡РµСЃРєРѕР№ HTML С„РѕСЂРјС‹
+                    string strResponse = "<HTML><HEAD><TITLE>РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ</TITLE></HEAD>" +
                     "<META http-equiv='Content-Type' content='text/html; charset=utf-8'/>" +
                     "<BODY><FORM action ='/form' / >" +
-                    "Имя:<BR><INPUT type = 'text' name = 'FirstName' value = " + user.FirstName + ">" +
-                    "<BR>Фамилия:<BR><INPUT type = 'text' name = 'LastName' value = " + user.LastName + " >" +
-                    "<BR><BR><INPUT type ='submit' value='Сохранить в Session'><INPUT type ='submit' value='Показать'></FORM>";
-                    strResponse += "<BR><A href='/'>Главная</A></BODY></HTML>";
+                    "РРјСЏ:<BR><INPUT type = 'text' name = 'FirstName' value = " + user.FirstName + ">" +
+                    "<BR>Р¤Р°РјРёР»РёСЏ:<BR><INPUT type = 'text' name = 'LastName' value = " + user.LastName + " >" +
+                    "<BR><BR><INPUT type ='submit' value='РЎРѕС…СЂР°РЅРёС‚СЊ РІ Session'><INPUT type ='submit' value='РџРѕРєР°Р·Р°С‚СЊ'></FORM>";
+                    strResponse += "<BR><A href='/'>Р“Р»Р°РІРЅР°СЏ</A></BODY></HTML>";
 
-                    // Запись в Session данных объекта User
+                    // Р—Р°РїРёСЃСЊ РІ Session РґР°РЅРЅС‹С… РѕР±СЉРµРєС‚Р° User
                     user.FirstName = context.Request.Query["FirstName"];
                     user.LastName = context.Request.Query["LastName"];
                     context.Session.Set<User>("user", user);
 
-                    // Асинхронный вывод динамической HTML формы
+                    // РђСЃРёРЅС…СЂРѕРЅРЅС‹Р№ РІС‹РІРѕРґ РґРёРЅР°РјРёС‡РµСЃРєРѕР№ HTML С„РѕСЂРјС‹
                     await context.Response.WriteAsync(strResponse);
                 });
             });
 
 
 
-            //Запоминание в Сookies значений, введенных в форме
-            //...
+            //Р—Р°РїРѕРјРёРЅР°РЅРёРµ РІ РЎookies Р·РЅР°С‡РµРЅРёР№, РІРІРµРґРµРЅРЅС‹С… РІ С„РѕСЂРјРµ
+            //..
 
 
-            // Вывод информации о клиенте
+            // Р’С‹РІРѕРґ РёРЅС„РѕСЂРјР°С†РёРё Рѕ РєР»РёРµРЅС‚Рµ
             app.Map("/info", (appBuilder) =>
             {
                 appBuilder.Run(async (context) =>
                 {
-                    // Формирование строки для вывода 
-                    string strResponse = "<HTML><HEAD><TITLE>Информация</TITLE></HEAD>" +
+                    // Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ СЃС‚СЂРѕРєРё РґР»СЏ РІС‹РІРѕРґР° 
+                    string strResponse = "<HTML><HEAD><TITLE>РРЅС„РѕСЂРјР°С†РёСЏ</TITLE></HEAD>" +
                     "<META http-equiv='Content-Type' content='text/html; charset=utf-8'/>" +
-                    "<BODY><H1>Информация:</H1>";
-                    strResponse += "<BR> Сервер: " + context.Request.Host;
-                    strResponse += "<BR> Путь: " + context.Request.PathBase;
-                    strResponse += "<BR> Протокол: " + context.Request.Protocol;
-                    strResponse += "<BR><A href='/'>Главная</A></BODY></HTML>";
-                    // Вывод данных
+                    "<BODY><H1>РРЅС„РѕСЂРјР°С†РёСЏ:</H1>";
+                    strResponse += "<BR> РЎРµСЂРІРµСЂ: " + context.Request.Host;
+                    strResponse += "<BR> РџСѓС‚СЊ: " + context.Request.PathBase;
+                    strResponse += "<BR> РџСЂРѕС‚РѕРєРѕР»: " + context.Request.Protocol;
+                    strResponse += "<BR><A href='/'>Р“Р»Р°РІРЅР°СЏ</A></BODY></HTML>";
+                    // Р’С‹РІРѕРґ РґР°РЅРЅС‹С…
                     await context.Response.WriteAsync(strResponse);
                 });
             });
 
-            // Вывод кэшированной информации из таблицы базы данных
+            // Р’С‹РІРѕРґ РєСЌС€РёСЂРѕРІР°РЅРЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРё РёР· С‚Р°Р±Р»РёС†С‹ Р±Р°Р·С‹ РґР°РЅРЅС‹С…
             app.Map("/tanks", (appBuilder) =>
             {
                 appBuilder.Run(async (context) =>
                 {
-                    //обращение к сервису
+                    //РѕР±СЂР°С‰РµРЅРёРµ Рє СЃРµСЂРІРёСЃСѓ
                     ICachedTanksService cachedTanksService = context.RequestServices.GetService<ICachedTanksService>();
                     IEnumerable<Tank> tanks = cachedTanksService.GetTanks("Tanks20");
-                    string HtmlString = "<HTML><HEAD><TITLE>Емкости</TITLE></HEAD>" +
+                    string HtmlString = "<HTML><HEAD><TITLE>Р•РјРєРѕСЃС‚Рё</TITLE></HEAD>" +
                     "<META http-equiv='Content-Type' content='text/html; charset=utf-8'/>" +
-                    "<BODY><H1>Список емкостей</H1>" +
+                    "<BODY><H1>РЎРїРёСЃРѕРє РµРјРєРѕСЃС‚РµР№</H1>" +
                     "<TABLE BORDER=1>";
                     HtmlString += "<TR>";
-                    HtmlString += "<TH>Код</TH>";
-                    HtmlString += "<TH>Материал</TH>";
-                    HtmlString += "<TH>Тип</TH>";
-                    HtmlString += "<TH>Объем</TH>";
+                    HtmlString += "<TH>РљРѕРґ</TH>";
+                    HtmlString += "<TH>РњР°С‚РµСЂРёР°Р»</TH>";
+                    HtmlString += "<TH>РўРёРї</TH>";
+                    HtmlString += "<TH>РћР±СЉРµРј</TH>";
                     HtmlString += "</TR>";
                     foreach (var tank in tanks)
                     {
@@ -130,38 +130,38 @@ namespace FuelStationT
                         HtmlString += "</TR>";
                     }
                     HtmlString += "</TABLE>";
-                    HtmlString += "<BR><A href='/'>Главная</A></BR>";
-                    HtmlString += "<BR><A href='/tanks'>Емкости</A></BR>";
-                    HtmlString += "<BR><A href='/form'>Данные пользователя</A></BR>";
+                    HtmlString += "<BR><A href='/'>Р“Р»Р°РІРЅР°СЏ</A></BR>";
+                    HtmlString += "<BR><A href='/tanks'>Р•РјРєРѕСЃС‚Рё</A></BR>";
+                    HtmlString += "<BR><A href='/form'>Р”Р°РЅРЅС‹Рµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ</A></BR>";
                     HtmlString += "</BODY></HTML>";
 
-                    // Вывод данных
+                    // Р’С‹РІРѕРґ РґР°РЅРЅС‹С…
                     await context.Response.WriteAsync(HtmlString);
                 });
             });
 
 
 
-            // Стартовая страница и кэширование данных таблицы на web-сервере
+            // РЎС‚Р°СЂС‚РѕРІР°СЏ СЃС‚СЂР°РЅРёС†Р° Рё РєСЌС€РёСЂРѕРІР°РЅРёРµ РґР°РЅРЅС‹С… С‚Р°Р±Р»РёС†С‹ РЅР° web-СЃРµСЂРІРµСЂРµ
             app.Run((context) =>
             {
-                //обращение к сервису
+                //РѕР±СЂР°С‰РµРЅРёРµ Рє СЃРµСЂРІРёСЃСѓ
                 ICachedTanksService cachedTanksService = context.RequestServices.GetService<ICachedTanksService>();
                 cachedTanksService.AddTanks("Tanks20");
-                string HtmlString = "<HTML><HEAD><TITLE>Емкости</TITLE></HEAD>" +
+                string HtmlString = "<HTML><HEAD><TITLE>Р•РјРєРѕСЃС‚Рё</TITLE></HEAD>" +
                 "<META http-equiv='Content-Type' content='text/html; charset=utf-8'/>" +
-                "<BODY><H1>Главная</H1>";
-                HtmlString += "<H2>Данные записаны в кэш сервера</H2>";
-                HtmlString += "<BR><A href='/'>Главная</A></BR>";
-                HtmlString += "<BR><A href='/tanks'>Емкости</A></BR>";
-                HtmlString += "<BR><A href='/form'>Данные пользователя</A></BR>";
+                "<BODY><H1>Р“Р»Р°РІРЅР°СЏ</H1>";
+                HtmlString += "<H2>Р”Р°РЅРЅС‹Рµ Р·Р°РїРёСЃР°РЅС‹ РІ РєСЌС€ СЃРµСЂРІРµСЂР°</H2>";
+                HtmlString += "<BR><A href='/'>Р“Р»Р°РІРЅР°СЏ</A></BR>";
+                HtmlString += "<BR><A href='/tanks'>Р•РјРєРѕСЃС‚Рё</A></BR>";
+                HtmlString += "<BR><A href='/form'>Р”Р°РЅРЅС‹Рµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ</A></BR>";
                 HtmlString += "</BODY></HTML>";
 
                 return context.Response.WriteAsync(HtmlString);
 
             });
 
-            //Использование MVC - отключено
+            //РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ MVC - РѕС‚РєР»СЋС‡РµРЅРѕ
             //app.UseRouting();
             //app.UseAuthorization();
             //app.UseEndpoints(endpoints =>
