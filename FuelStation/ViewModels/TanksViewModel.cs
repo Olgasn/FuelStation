@@ -25,7 +25,7 @@ namespace FuelStation.ViewModels
         [Display(Name = "Материал")]
         public string TankMaterial { get; set; }
 
-        
+
 
         //Свойство для навигации по страницам
         public PageViewModel PageViewModel { get; set; }

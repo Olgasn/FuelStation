@@ -36,7 +36,6 @@ namespace FuelStation.Controllers
             }
 
             // Сортировка и фильтрация данных
-
             IQueryable<Operation> fuelsContext = _context.Operations;
             fuelsContext = Sort_Search(fuelsContext, sortOrder, operation.TankType ?? "", operation.FuelType ?? "");
 
@@ -53,7 +52,6 @@ namespace FuelStation.Controllers
                 FilterOperationViewModel = operation
             };
             return View(operations);
-
 
         }
 

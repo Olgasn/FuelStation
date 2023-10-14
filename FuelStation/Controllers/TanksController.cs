@@ -2,11 +2,8 @@
 using FuelStation.DataLayer.Models;
 using FuelStation.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System.Drawing.Printing;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,7 +12,7 @@ namespace FuelStation.Controllers
     public class TanksController : Controller
     {
         private readonly FuelsContext _context;
-        private readonly int pageSize = 10;   // количество элементов на странице
+        private readonly int pageSize = 10;   // количество элементов на странице 
 
         public TanksController(FuelsContext context, IConfiguration appConfig)
         {
@@ -24,11 +21,11 @@ namespace FuelStation.Controllers
         }
 
         // GET: Tanks
-        public IActionResult Index(string TankType = "", int page=1)
+        public IActionResult Index(string TankType = "", int page = 1)
         {
 
             // Фильтрация данных
-            IQueryable<Tank> fuelsContext = _context.Tanks.Where(t=>t.TankType.Contains(TankType ?? ""));
+            IQueryable<Tank> fuelsContext = _context.Tanks.Where(t => t.TankType.Contains(TankType ?? ""));
 
             // Разбиение на страницы
             var count = fuelsContext.Count();
