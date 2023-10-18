@@ -15,8 +15,8 @@ namespace FuelStation
         public static void Main(string[] args)
         {
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+            IServiceCollection services = builder.Services;
 
-            var services = builder.Services;
             // внедрение зависимости для доступа к БД с использованием EF
             string connection = builder.Configuration.GetConnectionString("SqlServerConnection");
             services.AddDbContext<FuelsContext>(options => options.UseSqlServer(connection));
@@ -30,7 +30,7 @@ namespace FuelStation
 
             //Использование MVC
             services.AddControllersWithViews();
-            var app = builder.Build();
+            WebApplication app = builder.Build();
 
             if (app.Environment.IsDevelopment())
             {
@@ -53,6 +53,7 @@ namespace FuelStation
             // добавляем компонент middleware для реализации кэширования и записывем данные в кэш
             app.UseOperatinCache("Operations 10");
 
+            //Маршрутизация
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
@@ -61,12 +62,9 @@ namespace FuelStation
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-
             app.Run();
 
-
         }
-
 
     }
 }
