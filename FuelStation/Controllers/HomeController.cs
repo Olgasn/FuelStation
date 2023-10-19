@@ -28,7 +28,7 @@ namespace FuelStation.Controllers
                 .Take(numberRows)
                 .ToList();
 
-            HomeViewModel homeViewModel = new HomeViewModel { Tanks = tanks, Fuels = fuels, Operations = operations };
+            HomeViewModel homeViewModel = new() { Tanks = tanks, Fuels = fuels, Operations = operations };
             return View(homeViewModel);
         }
 

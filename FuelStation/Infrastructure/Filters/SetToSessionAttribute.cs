@@ -23,7 +23,7 @@ namespace FuelStation.Infrastructure.Filters
         // Выполняется после выполнения метода контроллера
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            Dictionary<string, string> dict = new Dictionary<string, string>();
+            Dictionary<string, string> dict = new();
             // считывание данных из ModelState и запись в сессию
             if (context.ModelState != null)
             {

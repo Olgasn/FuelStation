@@ -13,7 +13,7 @@ namespace FuelStation.Middleware
     {
         private readonly RequestDelegate _next;
         private readonly IMemoryCache _memoryCache;
-        private string _cacheKey;
+        private readonly string _cacheKey;
 
         public DbCacheMiddleware(RequestDelegate next, IMemoryCache memoryCache, string cacheKey = "Operations 10")
         {

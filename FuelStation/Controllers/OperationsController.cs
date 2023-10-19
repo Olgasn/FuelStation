@@ -16,7 +16,7 @@ namespace FuelStation.Controllers
     {
         private readonly int pageSize = 10;   // количество элементов на странице
         private readonly FuelsContext _context;
-        private OperationViewModel _operation = new OperationViewModel
+        private OperationViewModel _operation = new()
         {
             FuelType = "",
             TankType = ""
@@ -49,7 +49,7 @@ namespace FuelStation.Controllers
 
             // Формирование модели для передачи представлению
             _operation.SortViewModel = new SortViewModel(sortOrder);
-            OperationsViewModel operations = new OperationsViewModel
+            OperationsViewModel operations = new()
             {
                 Operations = fuelsContext,
                 PageViewModel = new PageViewModel(count, page, pageSize),
@@ -71,12 +71,14 @@ namespace FuelStation.Controllers
             // Сортировка и фильтрация данных
             IQueryable<Operation> fuelsContext = _context.Operations;
             fuelsContext = Sort_Search(fuelsContext, sortOrder, operation.TankType ?? "", operation.FuelType ?? "");
+            
             // Разбиение на страницы
             int count = fuelsContext.Count();
             fuelsContext = fuelsContext.Skip((page - 1) * pageSize).Take(pageSize);
+            
             // Формирование модели для передачи представлению
             operation.SortViewModel = new SortViewModel(sortOrder);
-            OperationsViewModel operations = new OperationsViewModel
+            OperationsViewModel operations = new()
             {
                 Operations = fuelsContext,
                 PageViewModel = new PageViewModel(count, page, pageSize),
