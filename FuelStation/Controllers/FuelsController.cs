@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -77,13 +78,19 @@ namespace FuelStation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("FuelID,FuelType,FuelDensity")] Fuel fuel)
         {
-            if (ModelState.IsValid)
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            else
             {
                 _context.Add(fuel);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
             }
-            return View(fuel);
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Fuels/Edit/5

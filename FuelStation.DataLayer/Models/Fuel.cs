@@ -12,6 +12,7 @@ namespace FuelStation.DataLayer.Models
 
         //Наименование вида топлива
         [Display(Name = "Наименование топлива")]
+        [Required]
         public string FuelType { get; set; }
 
         //Плотность вида топлива

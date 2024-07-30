@@ -31,5 +31,47 @@ namespace Tests
 
 
         }
+
+        [Fact]
+        public async Task Create_ReturnsBadRequest_GivenInvalidModel()
+        {
+            // Arrange
+            var fuels = TestDataHelper.GetFakeFuelsList();
+            var fuelsContextMock = new Mock<FuelsContext>();
+            fuelsContextMock.Setup(x => x.Fuels).ReturnsDbSet(fuels);
+
+            var controller = new FuelsController(fuelsContextMock.Object);
+            controller.ModelState.AddModelError("error", "some error");
+
+            // Act
+            var result = await controller.Create(fuel:null);
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(result);
+        }
+
+        [Fact]
+        public async Task Create_ReturnsARedirectAndCreate_WhenModelStateIsValid()
+        {
+            // Arrange
+            var fuels = TestDataHelper.GetFakeFuelsList();
+            var fuelsContextMock = new Mock<FuelsContext>();
+            fuelsContextMock.Setup(x => x.Fuels).ReturnsDbSet(fuels);
+
+            var controller = new FuelsController(fuelsContextMock.Object);       
+
+
+            // Act
+            var result = await controller.Create(fuels.First());
+
+            // Assert
+            var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Null(redirectToActionResult.ControllerName);
+            Assert.Equal("Index", redirectToActionResult.ActionName);
+            fuelsContextMock.Verify();
+
+        }
+
     }
+
 }
