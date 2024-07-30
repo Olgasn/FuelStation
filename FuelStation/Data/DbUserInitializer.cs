@@ -28,7 +28,7 @@ namespace FuelStation.Data
             }
             if (await userManager.FindByNameAsync(adminEmail) == null)
             {
-                ApplicationUser admin = new ApplicationUser
+                ApplicationUser admin = new()
                 {
                     Email = adminEmail,
                     UserName = adminName,

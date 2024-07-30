@@ -13,9 +13,8 @@ namespace FuelStation.Controllers
     [Authorize(Roles = "admin")]
     public class UsersController : Controller
     {
-
-        UserManager<ApplicationUser> _userManager;
-        RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        readonly RoleManager<IdentityRole> _roleManager;
 
         public UsersController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
@@ -27,13 +26,13 @@ namespace FuelStation.Controllers
         {
             var users = _userManager.Users.OrderBy(user => user.Id);
 
-            List<UserViewModel> userViewModel = new List<UserViewModel>();
+            List<UserViewModel> userViewModel = [];
 
             string urole = "";
             foreach (var user in users)
             {
                 var userRoles = await _userManager.GetRolesAsync(user);
-                if (userRoles.Count() > 0)
+                if (userRoles.Count > 0)
                 {
                     urole = userRoles[0] ?? "";
                 }
@@ -57,7 +56,7 @@ namespace FuelStation.Controllers
         public IActionResult Create()
         {
             var allRoles = _roleManager.Roles.ToList();
-            CreateUserViewModel user = new CreateUserViewModel();
+            CreateUserViewModel user = new();
 
             ViewData["UserRole"] = new SelectList(allRoles, "Name", "Name");
 
@@ -70,7 +69,7 @@ namespace FuelStation.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = new ApplicationUser
+                ApplicationUser user = new()
                 {
                     Email = model.Email,
                     UserName = model.UserName,
@@ -90,7 +89,7 @@ namespace FuelStation.Controllers
                 }
 
                 var role = model.UserRole;
-                if (role.Count() > 0)
+                if (role.Length > 0)
                 {
                     await _userManager.AddToRoleAsync(user, role);
                 }
@@ -109,12 +108,12 @@ namespace FuelStation.Controllers
             var userRoles = await _userManager.GetRolesAsync(user);
             var allRoles = _roleManager.Roles.ToList();
             string userRole = "";
-            if (userRoles.Count() > 0)
+            if (userRoles.Count > 0)
             {
                 userRole = userRoles[0] ?? "";
             }
 
-            EditUserViewModel model = new EditUserViewModel
+            EditUserViewModel model = new()
             {
                 Id = user.Id,
                 Email = user.Email,
@@ -137,14 +136,14 @@ namespace FuelStation.Controllers
                     // �������� � ������� ������� ���� ������������
                     var oldRoles = await _userManager.GetRolesAsync(user);
 
-                    if (oldRoles.Count() > 0)
+                    if (oldRoles.Count > 0)
                     {
                         await _userManager.RemoveFromRolesAsync(user, oldRoles);
 
                     }
                     // �������� � ������������� ����� ���� ������������
                     var newRole = model.UserRole;
-                    if (newRole.Count() > 0)
+                    if (newRole.Length > 0)
                     {
                         await _userManager.AddToRoleAsync(user, newRole);
                     }

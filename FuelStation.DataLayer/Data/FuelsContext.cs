@@ -8,8 +8,11 @@ namespace FuelStation.DataLayer.Data
         public FuelsContext(DbContextOptions<FuelsContext> options) : base(options)
         {
         }
-        public DbSet<Fuel> Fuels { get; set; }
-        public DbSet<Operation> Operations { get; set; }
-        public DbSet<Tank> Tanks { get; set; }
+        public FuelsContext()
+        {
+        }
+        public virtual DbSet<Fuel> Fuels { get; set; }
+        public virtual DbSet<Operation> Operations { get; set; }
+        public virtual DbSet<Tank> Tanks { get; set; }
     }
 }

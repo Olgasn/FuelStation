@@ -17,13 +17,12 @@ namespace FuelStation.Controllers
         {
             var fuels = _db.Fuels.Take(15).ToList();
             var tanks = _db.Tanks.Take(15).ToList();
-            List<FilterOperationViewModel> operations = _db.Operations
+            List<FilterOperationViewModel> operations = [.. _db.Operations
                 .OrderByDescending(d => d.Date)
                 .Select(t => new FilterOperationViewModel { OperationID = t.OperationID, FuelType = t.Fuel.FuelType, TankType = t.Tank.TankType, Inc_Exp = t.Inc_Exp, Date = t.Date })
-                .Take(15)
-                .ToList();
+                .Take(15)];
 
-            HomeViewModel homeViewModel = new HomeViewModel { Tanks = tanks, Fuels = fuels, Operations = operations };
+            HomeViewModel homeViewModel = new() { Tanks = tanks, Fuels = fuels, Operations = operations };
             return View(homeViewModel);
         }
 

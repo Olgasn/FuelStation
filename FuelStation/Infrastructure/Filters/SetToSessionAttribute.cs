@@ -8,7 +8,7 @@ namespace FuelStation.Infrastructure.Filters
     public class SetToSessionAttribute : Attribute, IActionFilter
     {
 
-        private string _name;//имя ключа
+        private readonly string _name;//имя ключа
         public SetToSessionAttribute(string name)
         {
             _name = name;
@@ -23,7 +23,7 @@ namespace FuelStation.Infrastructure.Filters
         // Выполняется после выполнения метода контроллера
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            Dictionary<string, string> dict = new Dictionary<string, string>();
+            Dictionary<string, string> dict = [];
             // считывание данных из ModelState и запись в сессию
             if (context.ModelState.Count > 0)
             {

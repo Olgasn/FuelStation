@@ -17,10 +17,13 @@ namespace FuelStation.Controllers
         private readonly FuelsContext _context;
         private readonly int pageSize = 10;   // количество элементов на странице
 
-        public OperationsController(FuelsContext context, IConfiguration appConfig)
+        public OperationsController(FuelsContext context, IConfiguration appConfig=null)
         {
             _context = context;
-            pageSize = int.Parse(appConfig["Parameters:PageSize"]);
+            if (appConfig != null)
+            {
+                pageSize = int.Parse(appConfig["Parameters:PageSize"]);
+            }
         }
 
         // GET: Operations
@@ -44,7 +47,7 @@ namespace FuelStation.Controllers
             fuelsContext = fuelsContext.Skip((page - 1) * pageSize).Take(pageSize);
 
             // Формирование модели для передачи представлению
-            OperationsViewModel operations = new OperationsViewModel
+            OperationsViewModel operations = new()
             {
                 Operations = fuelsContext,
                 PageViewModel = new PageViewModel(count, page, pageSize),
@@ -188,7 +191,7 @@ namespace FuelStation.Controllers
         {
             return _context.Operations.Any(e => e.OperationID == id);
         }
-        private IQueryable<Operation> Sort_Search(IQueryable<Operation> operations, SortState sortOrder, string searchTankType, string searchFuelType)
+        private static IQueryable<Operation> Sort_Search(IQueryable<Operation> operations, SortState sortOrder, string searchTankType, string searchFuelType)
         {
             switch (sortOrder)
             {

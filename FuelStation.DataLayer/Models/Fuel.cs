@@ -23,7 +23,7 @@ namespace FuelStation.DataLayer.Models
 
         public Fuel()
         {
-            Operations = new List<Operation>();
+            Operations = [];
 
         }
     }

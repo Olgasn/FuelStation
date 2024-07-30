@@ -14,10 +14,13 @@ namespace FuelStation.Controllers
         private readonly FuelsContext _context;
         private readonly int pageSize = 10;   // количество элементов на странице 
 
-        public TanksController(FuelsContext context, IConfiguration appConfig)
+        public TanksController(FuelsContext context, IConfiguration appConfig=null)
         {
             _context = context;
-            pageSize = int.Parse(appConfig["Parameters:PageSize"]);
+            if (appConfig != null)
+            {
+                pageSize = int.Parse(appConfig["Parameters:PageSize"]);
+            }
         }
 
         // GET: Tanks
@@ -32,7 +35,7 @@ namespace FuelStation.Controllers
             fuelsContext = fuelsContext.Skip((page - 1) * pageSize).Take(pageSize);
 
             // Формирование модели для передачи представлению
-            TanksViewModel fuels = new TanksViewModel
+            TanksViewModel fuels = new()
             {
                 Tanks = fuelsContext,
                 PageViewModel = new PageViewModel(count, page, pageSize),

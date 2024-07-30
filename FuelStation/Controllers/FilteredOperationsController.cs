@@ -14,7 +14,7 @@ namespace FuelStation.Controllers
     public class FilteredOperationsController : Controller
     {
         private readonly FuelsContext _context;
-        private FilterOperationViewModel _operation = new FilterOperationViewModel
+        private FilterOperationViewModel _operation = new()
         {
             FuelType = "",
             TankType = ""
@@ -43,7 +43,7 @@ namespace FuelStation.Controllers
 
             // Формирование модели для передачи представлению
 
-            OperationsViewModel operations = new OperationsViewModel
+            OperationsViewModel operations = new()
             {
                 Operations = fuelsContext,
                 SortViewModel = new SortViewModel(sortOrder),
@@ -67,7 +67,7 @@ namespace FuelStation.Controllers
             fuelsContext = Sort_Search(fuelsContext, sortOrder, operation.TankType ?? "", operation.FuelType ?? "");
 
             // Формирование модели для передачи представлению
-            OperationsViewModel operations = new OperationsViewModel
+            OperationsViewModel operations = new()
             {
                 Operations = fuelsContext,
                 SortViewModel = new SortViewModel(sortOrder),
@@ -77,7 +77,7 @@ namespace FuelStation.Controllers
             return View(operations);
         }
         // Сортировка и фильтрация данных
-        private IQueryable<Operation> Sort_Search(IQueryable<Operation> operations, SortState sortOrder, string searchTankType, string searchFuelType)
+        private static IQueryable<Operation> Sort_Search(IQueryable<Operation> operations, SortState sortOrder, string searchTankType, string searchFuelType)
         {
             switch (sortOrder)
             {

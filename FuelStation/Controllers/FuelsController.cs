@@ -4,6 +4,7 @@ using FuelStation.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,14 +17,16 @@ namespace FuelStation.Controllers
 
         private readonly FuelsContext _context;
 
-        public FuelsController(FuelsContext context, IConfiguration appConfig)
+        public FuelsController(FuelsContext context, IConfiguration appConfig=null)
         {
             _context = context;
-            pageSize = int.Parse(appConfig["Parameters:PageSize"]);
+            if (appConfig != null)  {
+                pageSize = int.Parse(appConfig["Parameters:PageSize"]);
+            }
         }
 
         // GET: Fuels
-        public IActionResult Index(string FuelType, SortState sortOrder, int page = 1)
+        public IActionResult Index(string FuelType="", SortState sortOrder=SortState.No, int page = 1)
         {
             // Сортировка и фильтрация данных
             IQueryable<Fuel> fuelsContext = _context.Fuels;
@@ -34,7 +37,7 @@ namespace FuelStation.Controllers
             fuelsContext = fuelsContext.Skip((page - 1) * pageSize).Take(pageSize);
 
             // Формирование модели для передачи представлению
-            FuelsViewModel fuels = new FuelsViewModel
+            FuelsViewModel fuels = new()
             {
                 Fuels = fuelsContext,
                 PageViewModel = new PageViewModel(count, page, pageSize),
@@ -165,7 +168,7 @@ namespace FuelStation.Controllers
         {
             return _context.Fuels.Any(e => e.FuelID == id);
         }
-        private IQueryable<Fuel> Sort_Search(IQueryable<Fuel> fuels, SortState sortOrder, string FuelType)
+        private static IQueryable<Fuel> Sort_Search(IQueryable<Fuel> fuels, SortState sortOrder, string FuelType)
         {
             switch (sortOrder)
             {
