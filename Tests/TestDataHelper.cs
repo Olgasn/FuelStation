@@ -15,14 +15,20 @@ namespace Tests
             [
                 new() {
                     FuelID=1,
-                    FuelType = "John Doe",
-                    FuelDensity = 2
+                    FuelType = "Petrol",
+                    FuelDensity = 3.14F
 
                 },
                 new() {
                     FuelID=2,
-                    FuelType = "Mark Luther",
-                    FuelDensity = 3
+                    FuelType = "Kerosene",
+                    FuelDensity = 2.14F
+
+                },
+                new() {
+                    FuelID=3,
+                    FuelType = "Oil",
+                    FuelDensity = 3.14F
 
                 }
             ];

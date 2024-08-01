@@ -119,7 +119,11 @@ namespace FuelStation.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+            {
+                return View(fuel);
+            }
+            else
             {
                 try
                 {
@@ -139,7 +143,7 @@ namespace FuelStation.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(fuel);
+
         }
 
         // GET: Fuels/Delete/5
