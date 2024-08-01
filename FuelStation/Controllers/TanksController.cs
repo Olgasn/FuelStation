@@ -75,13 +75,18 @@ namespace FuelStation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TankID,TankType,TankWeight,TankVolume,TankMaterial,TankPicture")] Tank tank)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            else
             {
                 _context.Add(tank);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
             }
-            return View(tank);
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Tanks/Edit/5
@@ -110,7 +115,11 @@ namespace FuelStation.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+            {
+                return View(tank);
+            }
+            else
             {
                 try
                 {
@@ -130,7 +139,6 @@ namespace FuelStation.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(tank);
         }
 
         // GET: Tanks/Delete/5
