@@ -26,7 +26,7 @@ namespace FuelStation.DataLayer.Data
             string fuelType;
             float fuelDensity;
 
-            Random randObj = new Random(1);
+            Random randObj = new(1);
 
             //Заполнение таблицы емкостей
             string[] tank_voc = { "Цистерна_", "Ведро_", "Бак_", "Фляга_", "Цистерна_" };//словарь названий емкостей

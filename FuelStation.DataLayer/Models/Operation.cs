@@ -31,7 +31,7 @@ namespace FuelStation.DataLayer.Models
 
         //ссылка по внешнему ключу FuelID на Fuel
         public virtual Fuel Fuel { get; set; }
-        //ссылка по по внешнему ключу TankID на Tank
+        //ссылка по внешнему ключу TankID на Tank
         public virtual Tank Tank { get; set; }
 
     }

@@ -1,13 +1,7 @@
 using FuelStation.DataLayer.Data;
 using FuelStation.DataLayer.Models;
 using FuelStation.ViewModels;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.Identity.Client;
-using Moq;
 using Moq.EntityFrameworkCore;
 namespace Tests
 {

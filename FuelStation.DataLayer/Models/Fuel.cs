@@ -17,6 +17,7 @@ namespace FuelStation.DataLayer.Models
 
         //Плотность вида топлива
         [Display(Name = "Плотность топлива")]
+        [Required]
         public float FuelDensity { get; set; }
 
         //Коллекция объектов Operation, связанных с моделью
@@ -24,7 +25,7 @@ namespace FuelStation.DataLayer.Models
 
         public Fuel()
         {
-            Operations = [];
+            Operations = new List<Operation>();
 
         }
     }

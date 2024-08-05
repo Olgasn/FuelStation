@@ -21,12 +21,12 @@ namespace Tests
                 new() {
                     FuelID=2,
                     FuelType = "Kerosene",
-                    FuelDensity = 2.14F
+                    FuelDensity = 2.16F
                 },
                 new() {
                     FuelID=3,
                     FuelType = "Oil",
-                    FuelDensity = 3.14F
+                    FuelDensity = 3.2F
                 }
             ];
         }
@@ -58,5 +58,41 @@ namespace Tests
                 }
             ];
         }
+
+
+        public static List<Operation> GetFakeOperationsList()
+        {
+            int operations_number = 9;
+            int tanks_number = GetFakeTanksList().Count;
+            int fuels_number = GetFakeFuelsList().Count;
+            Random randObj = new(1);
+            List<Operation> operations = [];
+
+            //Заполнение таблицы операций
+            for (int operationID = 1; operationID <= operations_number; operationID++)
+            {
+                int tankID = randObj.Next(1, tanks_number);
+                int fuelID = randObj.Next(1, fuels_number);
+                int inc_exp = randObj.Next(200) - 100;
+                DateTime today = DateTime.Now.Date;
+                DateTime operationdate = today.AddDays(-operationID);
+                operations.Add(new Operation
+                { 
+                    OperationID = operationID,
+                    TankID = tankID, 
+                    FuelID = fuelID, 
+                    Inc_Exp = inc_exp, 
+                    Date = operationdate,
+                    Fuel = GetFakeFuelsList().SingleOrDefault(m => m.FuelID == fuelID),
+                    Tank = GetFakeTanksList().SingleOrDefault(m => m.TankID == tankID)
+                });
+            }
+
+
+
+            return operations;
+
+        }
+
     }
 }

@@ -71,7 +71,7 @@
             <td>@operation.TankType</td>
             <td>@operation.FuelType</td>
             <td>@operation.Inc_Exp</td>
-            <td>@operation.Date.Date</td>
+            <td>@Html.DisplayFor(modelItem => operation.Date)</td>
             <td><a href="~/Operations/Edit/@operation.OperationID">Редактировать</a></td>
         </tr>
     }

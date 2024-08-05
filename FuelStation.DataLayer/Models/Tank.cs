@@ -12,6 +12,7 @@ namespace FuelStation.DataLayer.Models
 
         //Наименование емкости
         [Display(Name = "Наименование емкости")]
+        [Required]
         public string TankType { get; set; }
 
         //Вес емкости

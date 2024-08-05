@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -28,14 +29,18 @@ namespace FuelStation.Controllers
 
         // GET: Operations
         [SetToSession("Operation")] //Фильтр действий для сохранение в сессию параметров отбора
-        public IActionResult Index(FilterOperationViewModel operation, SortState sortOrder, int page = 1)
+        public IActionResult Index(FilterOperationViewModel operation, SortState sortOrder = SortState.No, int page = 1)
         {
             if (operation.FuelType == null & operation.TankType == null)
             {
                 // Считывание данных из сессии
-                var sessionOperation = HttpContext.Session.Get("Operation");
-                if (sessionOperation != null)
-                    operation = Transformations.DictionaryToObject<FilterOperationViewModel>(sessionOperation);
+                if (HttpContext != null)
+                {
+                    var sessionOperation = HttpContext.Session.Get("Operation");
+                    if (sessionOperation != null)
+                        operation = Transformations.DictionaryToObject<FilterOperationViewModel>(sessionOperation);
+
+                }                
             }
 
             // Сортировка и фильтрация данных
@@ -55,7 +60,6 @@ namespace FuelStation.Controllers
                 FilterOperationViewModel = operation
             };
             return View(operations);
-
         }
 
 
@@ -82,8 +86,11 @@ namespace FuelStation.Controllers
         // GET: Operations/Create
         public IActionResult Create()
         {
-            ViewData["FuelID"] = new SelectList(_context.Fuels, "FuelID", "FuelType");
-            ViewData["TankID"] = new SelectList(_context.Tanks, "TankID", "TankType");
+            var fuels = _context.Fuels;
+            if (fuels != null) ViewData["FuelID"] = new SelectList(fuels, "FuelID", "FuelType");
+            var tanks = _context.Tanks;
+            if (tanks != null) ViewData["TankID"] = new SelectList(tanks, "TankID", "TankType");
+
             return View();
         }
 
@@ -92,15 +99,19 @@ namespace FuelStation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("OperationID,FuelID,TankID,Inc_Exp,Date")] Operation operation)
         {
-            if (ModelState.IsValid)
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            else
             {
                 _context.Add(operation);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
             }
-            ViewData["FuelID"] = new SelectList(_context.Fuels, "FuelID", "FuelType", operation.FuelID);
-            ViewData["TankID"] = new SelectList(_context.Tanks, "TankID", "TankType", operation.TankID);
-            return View(operation);
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Operations/Edit/5
@@ -111,13 +122,17 @@ namespace FuelStation.Controllers
                 return NotFound();
             }
 
-            var operation = await _context.Operations.SingleOrDefaultAsync(m => m.OperationID == id);
+            var operation =  await _context.Operations.SingleOrDefaultAsync(m => m.OperationID == id);
             if (operation == null)
             {
                 return NotFound();
             }
-            ViewData["FuelID"] = new SelectList(_context.Fuels, "FuelID", "FuelType", operation.FuelID);
-            ViewData["TankID"] = new SelectList(_context.Tanks, "TankID", "TankType", operation.TankID);
+
+            var fuels = _context.Fuels;
+            if (fuels != null) ViewData["FuelID"] = new SelectList(fuels, "FuelID", "FuelType", operation.FuelID);
+            var tanks = _context.Tanks;
+            if (tanks != null) ViewData["TankID"] = new SelectList(tanks, "TankID", "TankType", operation.TankID);
+
             return View(operation);
         }
 
@@ -151,8 +166,11 @@ namespace FuelStation.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FuelID"] = new SelectList(_context.Fuels, "FuelID", "FuelType", operation.FuelID);
-            ViewData["TankID"] = new SelectList(_context.Tanks, "TankID", "TankType", operation.TankID);
+            var fuels = _context.Fuels;
+            if (fuels != null) ViewData["FuelID"] = new SelectList(fuels, "FuelID", "FuelType", operation.FuelID);
+            var tanks = _context.Tanks;
+            if (tanks != null) ViewData["TankID"] = new SelectList(tanks, "TankID", "TankType", operation.TankID);
+
             return View(operation);
         }
 
@@ -211,8 +229,6 @@ namespace FuelStation.Controllers
             operations = operations.Include(o => o.Fuel).Include(o => o.Tank)
                 .Where(o => o.Tank.TankType.Contains(searchTankType ?? "")
                 & o.Fuel.FuelType.Contains(searchFuelType ?? ""));
-
-
 
             return operations;
         }
