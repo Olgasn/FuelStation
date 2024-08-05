@@ -59,7 +59,7 @@ namespace Tests
             controller.ModelState.AddModelError("error", "some error");
 
             // Act
-            var result = await controller.Create(tank:null);
+            var result = await controller.Create(tank: null);
 
             // Assert
             Assert.IsType<BadRequestObjectResult>(result);

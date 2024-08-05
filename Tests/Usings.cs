@@ -1,2 +1,2 @@
-﻿global using Moq;
-global using FuelStation.Controllers;
+﻿global using FuelStation.Controllers;
+global using Moq;

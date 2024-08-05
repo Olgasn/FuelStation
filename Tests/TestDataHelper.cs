@@ -1,9 +1,4 @@
 ﻿using FuelStation.DataLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Tests
 {
@@ -77,11 +72,11 @@ namespace Tests
                 DateTime today = DateTime.Now.Date;
                 DateTime operationdate = today.AddDays(-operationID);
                 operations.Add(new Operation
-                { 
+                {
                     OperationID = operationID,
-                    TankID = tankID, 
-                    FuelID = fuelID, 
-                    Inc_Exp = inc_exp, 
+                    TankID = tankID,
+                    FuelID = fuelID,
+                    Inc_Exp = inc_exp,
                     Date = operationdate,
                     Fuel = GetFakeFuelsList().SingleOrDefault(m => m.FuelID == fuelID),
                     Tank = GetFakeTanksList().SingleOrDefault(m => m.TankID == tankID)

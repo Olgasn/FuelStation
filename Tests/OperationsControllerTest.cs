@@ -15,7 +15,7 @@ namespace Tests
             var fuelsContextMock = new Mock<FuelsContext>();
             var operations = TestDataHelper.GetFakeOperationsList();
             fuelsContextMock.Setup(x => x.Operations).ReturnsDbSet(operations);
-            FilterOperationViewModel operation = new(); 
+            FilterOperationViewModel operation = new();
 
             //Act
             OperationsController OperationsController = new(fuelsContextMock.Object);
@@ -35,10 +35,6 @@ namespace Tests
             // Arrange
             var fuelsContextMock = new Mock<FuelsContext>();
             var operations = TestDataHelper.GetFakeOperationsList();
-            var tanks = TestDataHelper.GetFakeTanksList();
-            var fuels = TestDataHelper.GetFakeFuelsList();
-            fuelsContextMock.Setup(x => x.Tanks).ReturnsDbSet(tanks);
-            fuelsContextMock.Setup(x => x.Fuels).ReturnsDbSet(fuels);
             fuelsContextMock.Setup(x => x.Operations).ReturnsDbSet(operations);
 
             // Act
@@ -65,7 +61,7 @@ namespace Tests
             // Act
             var controller = new OperationsController(fuelsContextMock.Object);
             controller.ModelState.AddModelError("error", "some error");
-            var result = await controller.Create(operation:null);
+            var result = await controller.Create(operation: null);
 
             // Assert
             Assert.IsType<BadRequestObjectResult>(result);
@@ -106,8 +102,6 @@ namespace Tests
         {
             // Arrange
             var operations = TestDataHelper.GetFakeOperationsList();
-            var tanks = TestDataHelper.GetFakeTanksList();
-            var fuels = TestDataHelper.GetFakeFuelsList();
             var fuelsContextMock = new Mock<FuelsContext>();
             fuelsContextMock.Setup(x => x.Operations).ReturnsDbSet(operations);
 

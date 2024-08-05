@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,7 +17,7 @@ namespace FuelStation.Controllers
         private readonly FuelsContext _context;
         private readonly int pageSize = 10;   // количество элементов на странице
 
-        public OperationsController(FuelsContext context, IConfiguration appConfig=null)
+        public OperationsController(FuelsContext context, IConfiguration appConfig = null)
         {
             _context = context;
             if (appConfig != null)
@@ -40,7 +39,7 @@ namespace FuelStation.Controllers
                     if (sessionOperation != null)
                         operation = Transformations.DictionaryToObject<FilterOperationViewModel>(sessionOperation);
 
-                }                
+                }
             }
 
             // Сортировка и фильтрация данных
@@ -122,7 +121,7 @@ namespace FuelStation.Controllers
                 return NotFound();
             }
 
-            var operation =  await _context.Operations.SingleOrDefaultAsync(m => m.OperationID == id);
+            var operation = await _context.Operations.SingleOrDefaultAsync(m => m.OperationID == id);
             if (operation == null)
             {
                 return NotFound();

@@ -3,46 +3,41 @@
     ViewData["Title"] = "Виды топлива";
 }
 <table border="0">
-<tr>   
-
+<tr>
     <td>
         <table border=1>
-            <caption>Виды топлива</caption>
-
+            <caption style="text-align:center">Виды топлива</caption>
             <tr>
-                <th>Код топлива</th>
+                    <th style="display:none;">Код топлива</th>
                 <th>Название топлива</th>
                 <th>Плотность топлива</th>
-                <th></th>
-
+                <th>Действие</th>
             </tr>
             @foreach (var fuel in Model.Fuels)
             {
                 <tr>
-                    <td>@fuel.FuelID</td>
+                    <td style="display:none;">@fuel.FuelID</td>
                     <td>@fuel.FuelType</td>
                     <td>@fuel.FuelDensity</td>
                     <td><a href="~/Fuels/Edit/@fuel.FuelID">Редактировать</a></td>
                 </tr>
             }
         </table>
-    </td>  
-    
+    </td>
+        <td>&nbsp;</td>
     <td>
         <table border=1>
-            <caption>Емкости</caption>
-
+            <caption style="text-align:center">Емкости</caption>
             <tr>
-                <th>Код емкости</th>
+                <th style="display:none;">Код емкости</th>
                 <th>Название емкости</th>
                 <th>Вес емкости</th>
-                <th></th>
-
+                <th>Действие</th>
             </tr>
             @foreach (var tank in Model.Tanks)
             {
                 <tr>
-                    <td>@tank.TankID</td>
+                    <td style="display:none;">@tank.TankID</td>
                     <td>@tank.TankType</td>
                     <td>@tank.TankWeight</td>
                     <td><a href="~/Tanks/Edit/@tank.TankID">Редактировать</a></td>
@@ -53,21 +48,19 @@
     </tr>
 </table>
 <table border=1>
-    <caption>Последние операции</caption>
-
+    <caption style="text-align:center">Последние операции</caption>
     <tr>
-        <th>Код операции</th>
+        <th style="display:none;">Код операции</th>
         <th>Название емкости</th>
         <th>Название топлива</th>
         <th>Приход/Расход</th>
         <th>Дата</th>
-        <th></th>
-
+        <th>Действие</th>
     </tr>
     @foreach (var operation in Model.Operations)
     {
         <tr>
-            <td>@operation.OperationID</td>
+            <td style="display:none;">@operation.OperationID</td>
             <td>@operation.TankType</td>
             <td>@operation.FuelType</td>
             <td>@operation.Inc_Exp</td>

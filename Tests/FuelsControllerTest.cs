@@ -1,13 +1,7 @@
 using FuelStation.DataLayer.Data;
 using FuelStation.DataLayer.Models;
 using FuelStation.ViewModels;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.Identity.Client;
-using Moq;
 using Moq.EntityFrameworkCore;
 namespace Tests
 {
@@ -65,7 +59,7 @@ namespace Tests
             controller.ModelState.AddModelError("error", "some error");
 
             // Act
-            var result = await controller.Create(fuel:null);
+            var result = await controller.Create(fuel: null);
 
             // Assert
             Assert.IsType<BadRequestObjectResult>(result);
@@ -156,7 +150,7 @@ namespace Tests
             // Act
             Fuel fuel = new()
             {
-                FuelID=3,
+                FuelID = 3,
                 FuelType = "Heavy oil",
                 FuelDensity = 3.7141F
 

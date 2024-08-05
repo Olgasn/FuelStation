@@ -14,7 +14,7 @@ namespace FuelStation.Controllers
         private readonly FuelsContext _context;
         private readonly int pageSize = 10;   // количество элементов на странице 
 
-        public TanksController(FuelsContext context, IConfiguration appConfig=null)
+        public TanksController(FuelsContext context, IConfiguration appConfig = null)
         {
             _context = context;
             if (appConfig != null)
