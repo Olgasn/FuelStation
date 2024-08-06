@@ -5,14 +5,11 @@ using System.IO;
 namespace FuelStation.Infrastructure
 {
     //
-    public class FileLogger : ILogger
+    public class FileLogger(string path) : ILogger
     {
-        private string filePath;
-        private object _lock = new object();
-        public FileLogger(string path)
-        {
-            filePath = path;
-        }
+        private readonly string filePath = path;
+        private readonly object _lock = new();
+
         public IDisposable BeginScope<TState>(TState state)
         {
             return null;

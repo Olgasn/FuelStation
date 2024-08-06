@@ -16,7 +16,7 @@ namespace FuelStation.Infrastructure
         public static T Get<T>(this ISession session, string key)
         {
             var value = session.GetString(key);
-            return value == null ? default(T) : JsonConvert.DeserializeObject<T>(value);
+            return value == null ? default : JsonConvert.DeserializeObject<T>(value);
         }
         //Запись объекта типа Dictionary<string, string> в сессию
         public static void Set(this ISession session, string key, Dictionary<string, string> dictionary)
@@ -27,7 +27,7 @@ namespace FuelStation.Infrastructure
         public static Dictionary<string, string> Get(this ISession session, string key)
         {
             var value = session.GetString(key);
-            return value == null ? default(Dictionary<string, string>) : JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
+            return value == null ? default : JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
         }
 
 

@@ -5,13 +5,10 @@ using Microsoft.Extensions.Caching.Memory;
 namespace FuelStation.Controllers
 {
     // Выборка кэшированых данных из IMemoryCache
-    public class CachedHomeController : Controller
+    public class CachedHomeController(IMemoryCache memoryCache) : Controller
     {
-        private readonly IMemoryCache _memoryCache;
-        public CachedHomeController(IMemoryCache memoryCache)
-        {
-            _memoryCache = memoryCache;
-        }
+        private readonly IMemoryCache _memoryCache = memoryCache;
+
         public IActionResult Index()
         {
             //считывание данных из кэша

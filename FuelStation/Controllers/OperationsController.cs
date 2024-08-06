@@ -12,20 +12,15 @@ namespace FuelStation.Controllers
 {
     [TypeFilter(typeof(TimingLogAttribute))] // Фильтр ресурсов
     [ExceptionFilter] // Фильтр исключений
-    public class OperationsController : Controller
+    public class OperationsController(FuelsContext context) : Controller
     {
         private readonly int pageSize = 10;   // количество элементов на странице
-        private readonly FuelsContext _context;
+        private readonly FuelsContext _context = context;
         private OperationViewModel _operation = new()
         {
             FuelType = "",
             TankType = ""
         };
-
-        public OperationsController(FuelsContext context)
-        {
-            _context = context;
-        }
 
         // GET: Operations
         [SetToSession("SortState")] //Фильтр действий для сохранение в сессию состояния сортировки
@@ -71,11 +66,11 @@ namespace FuelStation.Controllers
             // Сортировка и фильтрация данных
             IQueryable<Operation> fuelsContext = _context.Operations;
             fuelsContext = Sort_Search(fuelsContext, sortOrder, operation.TankType ?? "", operation.FuelType ?? "");
-            
+
             // Разбиение на страницы
             int count = fuelsContext.Count();
             fuelsContext = fuelsContext.Skip((page - 1) * pageSize).Take(pageSize);
-            
+
             // Формирование модели для передачи представлению
             operation.SortViewModel = new SortViewModel(sortOrder);
             OperationsViewModel operations = new()
@@ -88,7 +83,7 @@ namespace FuelStation.Controllers
             return View(operations);
         }
         // Сортировка и фильтрация данных
-        private IQueryable<Operation> Sort_Search(IQueryable<Operation> operations, SortState sortOrder, string searchTankType, string searchFuelType)
+        private static IQueryable<Operation> Sort_Search(IQueryable<Operation> operations, SortState sortOrder, string searchTankType, string searchFuelType)
         {
             switch (sortOrder)
             {

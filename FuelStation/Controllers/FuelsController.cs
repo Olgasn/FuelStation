@@ -7,14 +7,9 @@ using System.Threading.Tasks;
 namespace FuelStation.Controllers
 {
     [TypeFilter(typeof(TimingLogAttribute))]
-    public class FuelsController : Controller
+    public class FuelsController(FuelsContext context) : Controller
     {
-        private readonly FuelsContext _context;
-
-        public FuelsController(FuelsContext context)
-        {
-            _context = context;
-        }
+        private readonly FuelsContext _context = context;
 
         // GET: Fuels
         public async Task<IActionResult> Index()

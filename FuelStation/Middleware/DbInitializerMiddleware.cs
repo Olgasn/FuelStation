@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace FuelStation.Middleware
 {
-    public class DbInitializerMiddleware
+    public class DbInitializerMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
-        public DbInitializerMiddleware(RequestDelegate next) => _next = next;
-        public Task Invoke(HttpContext context, IServiceProvider serviceProvider, FuelsContext dbContext)
+        private readonly RequestDelegate _next = next;
+
+        public Task Invoke(HttpContext context, FuelsContext dbContext)
         {
             if (!(context.Session.Keys.Contains("starting")))
             {

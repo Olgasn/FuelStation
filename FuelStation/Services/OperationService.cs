@@ -7,18 +7,15 @@ using System.Linq;
 namespace FuelStation.Services
 {
     // Класс выборки 10 записей из всех таблиц 
-    public class OperationService : IOperationService
+    public class OperationService(FuelsContext context) : IOperationService
     {
-        private readonly FuelsContext _context;
-        public OperationService(FuelsContext context)
-        {
-            _context = context;
-        }
+        private readonly FuelsContext _context = context;
+
         public HomeViewModel GetHomeViewModel(int numberRows = 10)
         {
             var fuels = _context.Fuels.Take(numberRows).ToList();
             var tanks = _context.Tanks.Take(numberRows).ToList();
-            List<OperationViewModel> operations = _context.Operations
+            List<OperationViewModel> operations = [.. _context.Operations
                 .OrderByDescending(d => d.Date)
                 .Select(t => new OperationViewModel
                 {
@@ -28,10 +25,9 @@ namespace FuelStation.Services
                     Inc_Exp = t.Inc_Exp,
                     Date = t.Date
                 })
-                .Take(numberRows)
-                .ToList();
+                .Take(numberRows)];
 
-            HomeViewModel homeViewModel = new HomeViewModel
+            HomeViewModel homeViewModel = new()
             {
                 Tanks = tanks,
                 Fuels = fuels,

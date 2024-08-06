@@ -2,13 +2,10 @@
 
 namespace FuelStation.Infrastructure
 {
-    public class FileLoggerProvider : ILoggerProvider
+    public class FileLoggerProvider(string _path) : ILoggerProvider
     {
-        private string path;
-        public FileLoggerProvider(string _path)
-        {
-            path = _path;
-        }
+        private readonly string path = _path;
+
         public ILogger CreateLogger(string categoryName)
         {
             return new FileLogger(path);

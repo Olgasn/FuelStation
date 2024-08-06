@@ -9,24 +9,16 @@ using System.Threading.Tasks;
 namespace FuelStation.Middleware
 {
     //Компонент middleware для выполнения кэширования
-    public class DbCacheMiddleware
+    public class DbCacheMiddleware(RequestDelegate next, IMemoryCache memoryCache, string cacheKey = "Operations 10")
     {
-        private readonly RequestDelegate _next;
-        private readonly IMemoryCache _memoryCache;
-        private readonly string _cacheKey;
-
-        public DbCacheMiddleware(RequestDelegate next, IMemoryCache memoryCache, string cacheKey = "Operations 10")
-        {
-            _next = next;
-            _memoryCache = memoryCache;
-            _cacheKey = cacheKey;
-        }
+        private readonly RequestDelegate _next = next;
+        private readonly IMemoryCache _memoryCache = memoryCache;
+        private readonly string _cacheKey = cacheKey;
 
         public Task Invoke(HttpContext httpContext, IOperationService operationService)
         {
-            HomeViewModel homeViewModel;
             // пытаемся получить элемент из кэша
-            if (!_memoryCache.TryGetValue(_cacheKey, out homeViewModel))
+            if (!_memoryCache.TryGetValue(_cacheKey, out HomeViewModel homeViewModel))
             {
                 // если в кэше не найден элемент, получаем его от сервиса
                 homeViewModel = operationService.GetHomeViewModel();

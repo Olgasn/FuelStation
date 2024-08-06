@@ -8,13 +8,10 @@ using System.Collections.Generic;
 
 namespace FuelStation.TagHelpers
 {
-    public class PageLinkTagHelper : TagHelper
+    public class PageLinkTagHelper(IUrlHelperFactory helperFactory) : TagHelper
     {
-        private readonly IUrlHelperFactory urlHelperFactory;
-        public PageLinkTagHelper(IUrlHelperFactory helperFactory)
-        {
-            urlHelperFactory = helperFactory;
-        }
+        private readonly IUrlHelperFactory urlHelperFactory = helperFactory;
+
         [ViewContext]
         [HtmlAttributeNotBound]
         public ViewContext ViewContext { get; set; }
@@ -22,7 +19,7 @@ namespace FuelStation.TagHelpers
         public string PageAction { get; set; }
 
         [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]
-        public Dictionary<string, object> PageUrlValues { get; set; } = new Dictionary<string, object>();
+        public Dictionary<string, object> PageUrlValues { get; set; } = [];
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
@@ -30,7 +27,7 @@ namespace FuelStation.TagHelpers
             output.TagName = "div";
 
             // набор ссылок будет представлять список ul
-            TagBuilder tag = new TagBuilder("ul");
+            TagBuilder tag = new("ul");
             tag.AddCssClass("pagination");
 
             // формируем три ссылки - на текущую, предыдущую и следующую
@@ -55,8 +52,8 @@ namespace FuelStation.TagHelpers
 
         TagBuilder CreateTag(int pageNumber, IUrlHelper urlHelper)
         {
-            TagBuilder item = new TagBuilder("li");
-            TagBuilder link = new TagBuilder("a");
+            TagBuilder item = new("li");
+            TagBuilder link = new("a");
             if (pageNumber == this.PageModel.PageNumber)
             {
                 item.AddCssClass("active");
