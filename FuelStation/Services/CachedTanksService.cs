@@ -7,16 +7,11 @@ using System.Linq;
 
 namespace FuelStation.Services
 {
-    public class CachedTanksService : ICachedTanksService
+    public class CachedTanksService(FuelsContext dbContext, IMemoryCache memoryCache) : ICachedTanksService
     {
-        private readonly FuelsContext _dbContext;
-        private readonly IMemoryCache _memoryCache;
+        private readonly FuelsContext _dbContext = dbContext;
+        private readonly IMemoryCache _memoryCache = memoryCache;
 
-        public CachedTanksService(FuelsContext dbContext, IMemoryCache memoryCache)
-        {
-            _dbContext = dbContext;
-            _memoryCache = memoryCache;
-        }
         // получение списка емкостей из базы
         public IEnumerable<Tank> GetTanks(int rowsNumber = 20)
         {
@@ -40,8 +35,7 @@ namespace FuelStation.Services
         // получение списка емкостей из кэша или из базы, если нет в кэше
         public IEnumerable<Tank> GetTanks(string cacheKey, int rowsNumber = 20)
         {
-            IEnumerable<Tank> tanks;
-            if (!_memoryCache.TryGetValue(cacheKey, out tanks))
+            if (!_memoryCache.TryGetValue(cacheKey, out IEnumerable<Tank> tanks))
             {
                 tanks = _dbContext.Tanks.Take(rowsNumber).ToList();
                 if (tanks != null)
