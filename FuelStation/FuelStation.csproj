@@ -26,6 +26,11 @@
   <ItemGroup>
     <ProjectReference Include="..\FuelStation.DataLayer\FuelStation.DataLayer.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="users.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
   <ProjectExtensions>
     <VisualStudio>

@@ -18,7 +18,7 @@ namespace FuelStation.DataLayer.Data
 
             int tanks_number = 35;
             int fuels_number = 35;
-            int operations_number = 300;
+            int operations_number = 3000;
             string tankType;
             string tankMaterial;
             float tankWeight;
@@ -29,8 +29,8 @@ namespace FuelStation.DataLayer.Data
             Random randObj = new(1);
 
             //Заполнение таблицы емкостей
-            string[] tank_voc = { "Цистерна_", "Ведро_", "Бак_", "Фляга_", "Цистерна_" };//словарь названий емкостей
-            string[] material_voc = { "Сталь", "Платина", "Алюминий", "ПЭТ", "Чугун", "Алюминий", "Сталь" };//словарь названий видов топлива
+            string[] tank_voc = ["Цистерна_", "Ведро_", "Бак_", "Фляга_", "Цистерна_"];//словарь названий емкостей
+            string[] material_voc = ["Сталь", "Платина", "Алюминий", "ПЭТ", "Чугун", "Алюминий", "Сталь"];//словарь названий видов топлива
             int count_tank_voc = tank_voc.GetLength(0);
             int count_material_voc = material_voc.GetLength(0);
             for (int tankID = 1; tankID <= tanks_number; tankID++)
@@ -45,7 +45,7 @@ namespace FuelStation.DataLayer.Data
             db.SaveChanges();
 
             //Заполнение таблицы видов топлива
-            string[] fuel_voc = { "Нефть_", "Бензин_", "Керосин_", "Мазут_", "Спирт_" };
+            string[] fuel_voc = ["Нефть_", "Бензин_", "Керосин_", "Мазут_", "Спирт_"];
             int count_fuel_voc = fuel_voc.GetLength(0);
             for (int fuelID = 1; fuelID <= fuels_number; fuelID++)
             {
@@ -57,10 +57,12 @@ namespace FuelStation.DataLayer.Data
             db.SaveChanges();
 
             //Заполнение таблицы операций
+            int tankIDmin = db.Tanks.FirstOrDefault().TankID;
+            int fuelIDmin = db.Fuels.FirstOrDefault().FuelID;
             for (int operationID = 1; operationID <= operations_number; operationID++)
             {
-                int tankID = randObj.Next(1, tanks_number - 1);
-                int fuelID = randObj.Next(1, fuels_number - 1);
+                int tankID = randObj.Next(tankIDmin, tankIDmin+tanks_number - 1);
+                int fuelID = randObj.Next(fuelIDmin, fuelIDmin+fuels_number - 1);
                 int inc_exp = randObj.Next(200) - 100;
                 DateTime today = DateTime.Now.Date;
                 DateTime operationdate = today.AddDays(-operationID);

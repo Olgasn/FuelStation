@@ -8,14 +8,10 @@ using System.Threading.Tasks;
 
 namespace FuelStation.Middleware
 {
-    public class DbInitializerMiddleware
+    public class DbInitializerMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
-        public DbInitializerMiddleware(RequestDelegate next)
-        {
-            // инициализация базы данных 
-            _next = next;
-        }
+        private readonly RequestDelegate _next = next;
+
         public Task Invoke(HttpContext context)
         {
             if (!(context.Session.Keys.Contains("starting")))
