@@ -1,6 +1,7 @@
 # FuelStation
 Учебный пример простого Web приложения баз данных на языке C#, использующего такие технологии и инструменты как: 
 ASP.NET Core 8, EF Core 8, Fluent Validation, XUnit.
+Посмотреть - http://olas.tryasp.net/
 
 [![build and test](https://github.com/Olgasn/FuelStation/actions/workflows/build-and-test.yml/badge.svg?branch=identity)](https://github.com/Olgasn/FuelStation/actions/workflows/build-and-test.yml)
 
