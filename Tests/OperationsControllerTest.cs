@@ -30,7 +30,7 @@ namespace Tests
         }
 
         [Fact]
-        public async void GetOperation()
+        public async Task GetOperation()
         {
             // Arrange
             var fuelsContextMock = new Mock<FuelsContext>();
@@ -46,8 +46,6 @@ namespace Tests
             Assert.IsType<NotFoundResult>(notFoundResult);
             Assert.IsType<ViewResult>(foundResult);
         }
-
-
 
 
         [Fact]

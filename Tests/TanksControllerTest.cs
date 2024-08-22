@@ -27,7 +27,7 @@ namespace Tests
         }
 
         [Fact]
-        public async void GetTank()
+        public async Task GetTank()
         {
             // Arrange
             var tanks = TestDataHelper.GetFakeTanksList();

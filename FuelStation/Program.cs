@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.IO;
 
 
 
@@ -23,9 +25,29 @@ namespace FuelStation
 
             var services = builder.Services;
 
-            // внедрение зависимости для доступа к БД с использованием EF
-            string connectionDB = builder.Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<FuelsContext>(options => options.UseSqlServer(connectionDB));
+            /// внедрение зависимости для доступа к БД с использованием EF
+
+
+            //Вариант строки подключения к экземпляру локального SQL Server, не требующего секретной информации
+            string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+            ////Вариант строки подключения к экземпляру удаленного SQL Server, требующего имя пользователя и пароль
+            //// создаем конфигурацию для считывания секретной информации
+            //IConfigurationRoot configuration = builder.Configuration.AddUserSecrets<Program>().Build();
+            //connectionString = configuration.GetConnectionString("RemoteSQLConnection");
+            ////Считываем пароль и имя пользователя из secrets.json
+            //string secretPass = configuration["Database:password"];
+            //string secretUser = configuration["Database:login"];
+            //SqlConnectionStringBuilder sqlConnectionStringBuilder = new(connectionString)
+            //{
+            //    Password = secretPass,
+            //    UserID = secretUser
+            //};
+            //connectionString = sqlConnectionStringBuilder.ConnectionString;
+
+
+
+            services.AddDbContext<FuelsContext>(options => options.UseSqlServer(connectionString));
             string connectionUsers = builder.Configuration.GetConnectionString("IdentityConnection");
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionUsers));
             services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)

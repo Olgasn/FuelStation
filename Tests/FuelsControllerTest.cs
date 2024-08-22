@@ -27,7 +27,7 @@ namespace Tests
         }
 
         [Fact]
-        public async void GetFuel()
+        public async Task GetFuel()
         {
             // Arrange
             var fuels = TestDataHelper.GetFakeFuelsList();
@@ -206,12 +206,6 @@ namespace Tests
             fuelsContextMock.Verify();
 
         }
-
-
-
-
-
-
 
 
     }
