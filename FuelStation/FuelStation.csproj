@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>FuelStation</AssemblyName>
     <RootNamespace>FuelStation</RootNamespace>
+    <UserSecretsId>91df55b6-1cba-4dcc-b2cd-f958eccf9a5c</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
