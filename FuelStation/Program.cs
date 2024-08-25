@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
 
-namespace FuelStationT
+namespace FuelStation
 {
     public class Program
     {
