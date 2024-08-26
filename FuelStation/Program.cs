@@ -18,8 +18,22 @@ namespace FuelStation
             IServiceCollection services = builder.Services;
 
             // внедрение зависимости для доступа к БД с использованием EF
-            string connection = builder.Configuration.GetConnectionString("SqlServerConnection");
-            services.AddDbContext<FuelsContext>(options => options.UseSqlServer(connection));
+            string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            ////Вариант строки подключения к экземпляру удаленного SQL Server, требующего имя пользователя и пароль
+            //// создаем конфигурацию для считывания секретной информации
+            //IConfigurationRoot configuration = builder.Configuration.AddUserSecrets<Program>().Build();
+            //connectionString = configuration.GetConnectionString("RemoteSQLConnection");
+            ////Считываем пароль и имя пользователя из secrets.json
+            //string secretPass = configuration["Database:password"];
+            //string secretUser = configuration["Database:login"];
+            //SqlConnectionStringBuilder sqlConnectionStringBuilder = new(connectionString)
+            //{
+            //    Password = secretPass,
+            //    UserID = secretUser
+            //};
+            //connectionString = sqlConnectionStringBuilder.ConnectionString;
+
+            services.AddDbContext<FuelsContext>(options => options.UseSqlServer(connectionString));
             // внедрение зависимости OperationService
             services.AddTransient<IOperationService, OperationService>();
             // добавление кэширования
@@ -55,12 +69,10 @@ namespace FuelStation
 
             //Маршрутизация
             app.UseRouting();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
+            // устанавливаем сопоставление маршрутов с контроллерами 
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
 
