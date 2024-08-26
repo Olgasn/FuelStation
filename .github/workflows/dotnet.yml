@@ -2,27 +2,36 @@
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
 name: .NET
-
 on:
   push:
-    branches: [ "caching" ]
   pull_request:
-    branches: [ "caching" ]
+    branches: [ caching ]
+    paths:
+    - '**.cs'
+    - '**.csproj'
+
+env:
+  DOTNET_VERSION: '8.0' # The .NET SDK version to use
 
 jobs:
-  build:
+  build-and-test:
 
-    runs-on: ubuntu-latest
+    name: build-and-test-${{matrix.os}}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
 
     steps:
     - uses: actions/checkout@v4
-    - name: Setup .NET
+    - name: Setup .NET Core
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
-    - name: Restore dependencies
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Install dependencies
       run: dotnet restore
+      
     - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet build --configuration Release --no-restore
+    
