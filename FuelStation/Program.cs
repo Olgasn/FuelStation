@@ -11,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.IO;
 
 
 
@@ -30,7 +29,6 @@ namespace FuelStation
 
             //Вариант строки подключения к экземпляру локального SQL Server, не требующего секретной информации
             string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
             ////Вариант строки подключения к экземпляру удаленного SQL Server, требующего имя пользователя и пароль
             //// создаем конфигурацию для считывания секретной информации
             //IConfigurationRoot configuration = builder.Configuration.AddUserSecrets<Program>().Build();
@@ -73,6 +71,7 @@ namespace FuelStation
 
             //Использование MVC
             services.AddControllersWithViews();
+            //Использование RazorPages
             services.AddRazorPages();
             var app = builder.Build();
             if (app.Environment.IsDevelopment())
@@ -98,14 +97,14 @@ namespace FuelStation
             app.UseAuthentication();
             app.UseAuthorization();
             // использование обработчика маршрутов
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
-            });
+
+            // устанавливаем сопоставление маршрутов с контроллерами и страницами
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.MapRazorPages();
             app.Run();
+
 
         }
 
