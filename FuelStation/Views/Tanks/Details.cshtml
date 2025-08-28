@@ -1,45 +1,37 @@
-﻿@model Tank
-
+﻿<!-- Details.cshtml -->
+@model Tank
 @{
     ViewData["Title"] = "Подробно";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Детально</h2>
-
 <div>
     <h4>Емкость</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TankType)
-        </dt>
+        <dt>@Html.DisplayNameFor(model => model.TankType)</dt>
+        <dd>@Html.DisplayFor(model => model.TankType)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.TankWeight)</dt>
+        <dd>@Html.DisplayFor(model => model.TankWeight)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.TankVolume)</dt>
+        <dd>@Html.DisplayFor(model => model.TankVolume)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.TankMaterial)</dt>
+        <dd>@Html.DisplayFor(model => model.TankMaterial)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.TankPicture)</dt>
         <dd>
-            @Html.DisplayFor(model => model.TankType)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TankWeight)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TankWeight)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TankVolume)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TankVolume)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TankMaterial)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TankMaterial)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TankPicture)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TankPicture)
+            @if (!string.IsNullOrEmpty(Model.TankPicture))
+            {
+                <img src="~/images/@Model.TankPicture" alt="Image" style="max-width: 200px;" />
+            }
+            else
+            {
+                <span>Нет изображения</span>
+            }
         </dd>
     </dl>
 </div>

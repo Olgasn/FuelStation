@@ -1,17 +1,16 @@
-﻿@model Tank
-
+﻿<!-- Edit.cshtml -->
+@model Tank
 @{
     ViewData["Title"] = "Редактировать";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Редактировать</h2>
-
 <h4>Емкость</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="TankID" />
             <div class="form-group">
@@ -36,9 +35,16 @@
             </div>
             <div class="form-group">
                 <label asp-for="TankPicture" class="control-label"></label>
-                <input asp-for="TankPicture" class="form-control" />
+                <input type="file" name="file" class="form-control" />
                 <span asp-validation-for="TankPicture" class="text-danger"></span>
             </div>
+            @if (!string.IsNullOrEmpty(Model.TankPicture))
+            {
+                <div class="form-group">
+                    <label>Текущее изображение:</label>
+                    <img src="~/images/@Model.TankPicture" alt="Image" style="max-width: 200px;" />
+                </div>
+            }
             <div class="form-group">
                 <input type="submit" value="Сохранить" class="btn btn-default" />
             </div>
@@ -51,5 +57,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

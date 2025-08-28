@@ -35,14 +35,16 @@ namespace Tests
                     TankType = "Small tank",
                     TankMaterial ="Silver",
                     TankVolume = 300.4F,
-                    TankWeight = 123.14F
+                    TankWeight = 123.14F,
+                    TankPicture= "d368fc74 - a5a6 - 49e0 - 8117 - 13a02c431f24_1756385275.png"
                 },
                 new() {
                     TankID=2,
                     TankType = "Medium tank",
                     TankMaterial ="Copper",
                     TankVolume = 3000.5F,
-                    TankWeight = 1023.14F
+                    TankWeight = 1023.14F,
+                    TankPicture= "d368fc74 - a5a6 - 49e0 - 8117 - 13a02c431f24_1756385276.png"
                 },
                 new() {
                     TankID=3,

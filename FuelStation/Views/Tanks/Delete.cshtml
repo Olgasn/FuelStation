@@ -1,49 +1,41 @@
-﻿@model Tank
-
+﻿<!-- Delete.cshtml -->
+@model Tank
 @{
     ViewData["Title"] = "Удалить";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Удаление</h2>
-
 <h3>Вы уверены, что хотите удалить это?</h3>
 <div>
     <h4>Емкость</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TankType)
-        </dt>
+        <dt>@Html.DisplayNameFor(model => model.TankType)</dt>
+        <dd>@Html.DisplayFor(model => model.TankType)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.TankWeight)</dt>
+        <dd>@Html.DisplayFor(model => model.TankWeight)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.TankVolume)</dt>
+        <dd>@Html.DisplayFor(model => model.TankVolume)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.TankMaterial)</dt>
+        <dd>@Html.DisplayFor(model => model.TankMaterial)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.TankPicture)</dt>
         <dd>
-            @Html.DisplayFor(model => model.TankType)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TankWeight)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TankWeight)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TankVolume)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TankVolume)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TankMaterial)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TankMaterial)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TankPicture)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TankPicture)
+            @if (!string.IsNullOrEmpty(Model.TankPicture))
+            {
+                <img src="~/images/@Model.TankPicture" alt="Image" style="max-width: 200px;" />
+            }
+            else
+            {
+                <span>Нет изображения</span>
+            }
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="TankID" />
         <input type="submit" value="Удалить" class="btn btn-default" /> |
