@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FuelStation.Data.ApplicationDbContext" Collapsed="true">
+    <Position X="2.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\ApplicationDbContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FuelStation.Data.DbUserInitializer" Collapsed="true">
+    <Position X="4" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\DbUserInitializer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FuelStation.ViewModels.FilterOperationViewModel" Collapsed="true">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAggAAAAAAAAAAAAAAAABEAAAAAAACAA=</HashCode>
+      <FileName>ViewModels\FilterOperationViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FuelStation.ViewModels.FuelsViewModel" Collapsed="true">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAgASAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\FuelsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FuelStation.ViewModels.HomeViewModel" Collapsed="true">
+    <Position X="1" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAQAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>ViewModels\HomeViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FuelStation.ViewModels.OperationsViewModel" Collapsed="true">
+    <Position X="2.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AJAAAAACAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\OperationsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FuelStation.ViewModels.PageViewModel" Collapsed="true">
+    <Position X="4.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAgAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\PageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FuelStation.ViewModels.SortViewModel" Collapsed="true">
+    <Position X="6.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAQAAAAAAgA=</HashCode>
+      <FileName>ViewModels\SortViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FuelStation.ViewModels.TanksViewModel" Collapsed="true">
+    <Position X="1" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAJAAAAAEAAAAAACAAAAAAAAAAAAAAIAAAACAA=</HashCode>
+      <FileName>ViewModels\TanksViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FuelStation.ViewModels.Users.CreateUserViewModel" Collapsed="true">
+    <Position X="1" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAQAAAAgCAQAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Users\CreateUserViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FuelStation.ViewModels.Users.EditUserViewModel" Collapsed="true">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAAAAAAAAAAAQAAAAgAAQAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Users\EditUserViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FuelStation.ViewModels.Users.UserViewModel" Collapsed="true">
+    <Position X="2.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAAAAAAAAAAAQAAAAAAAQAAEAAAAAA=</HashCode>
+      <FileName>ViewModels\Users\UserViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FuelStation.DataLayer.Models.Fuel">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="FuelStation.DataLayer.Models.Operation">
+    <Position X="9.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Fuel" />
+      <Property Name="Tank" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="FuelStation.DataLayer.Models.Tank">
+    <Position X="5.75" Y="3" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Enum Name="FuelStation.ViewModels.SortState" Collapsed="true">
+    <Position X="1" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAEAgAAAAAAAAAAiAABAAAAAAAAAAAAAI=</HashCode>
+      <FileName>ViewModels\SortViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
