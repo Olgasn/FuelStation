@@ -2,6 +2,7 @@ name: build and test
 
 on:
   push:
+    branches: [ identity ]
   pull_request:
     branches: [ identity ]
 
@@ -23,7 +24,7 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
-        # Убрали cache: true и cache-dependency-path, так как нет lock.json файлов
+        # Г“ГЎГ°Г Г«ГЁ cache: true ГЁ cache-dependency-path, ГІГ ГЄ ГЄГ ГЄ Г­ГҐГІ lock.json ГґГ Г©Г«Г®Гў
 
     - name: Install dependencies
       run: dotnet restore
