@@ -4,14 +4,12 @@
 name: .NET
 on:
   push:
+    branches: [ RequestProcessing ]
   pull_request:
     branches: [ RequestProcessing ]
-    paths:
-    - '**.cs'
-    - '**.csproj'
 
 env:
-  DOTNET_VERSION: '8.0' # The .NET SDK version to use
+  DOTNET_VERSION: '10.0' # The .NET SDK version to use
 
 jobs:
   build-and-test:
