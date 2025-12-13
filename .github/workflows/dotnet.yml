@@ -4,11 +4,9 @@
 name: .NET
 on:
   push:
+    branches: [ caching ]
   pull_request:
     branches: [ caching ]
-    paths:
-    - '**.cs'
-    - '**.csproj'
 
 env:
   DOTNET_VERSION: '10.0' # The .NET SDK version to use
