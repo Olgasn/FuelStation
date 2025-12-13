@@ -24,7 +24,7 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
-        # Óáðàëè cache: true è cache-dependency-path, òàê êàê íåò lock.json ôàéëîâ
+
 
     - name: Install dependencies
       run: dotnet restore
