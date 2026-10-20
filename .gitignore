@@ -259,3 +259,12 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+# Локальная база пользователей (создается миграциями при старте)
+*.db
+*.db-shm
+*.db-wal
+
+# Локальная база пользователей (создается миграциями при старте)
+*.db
+*.db-shm
+*.db-wal

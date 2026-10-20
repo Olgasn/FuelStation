@@ -1,6 +1,6 @@
 ﻿using FuelStation.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
@@ -10,14 +10,15 @@ namespace FuelStation.Data
     //Инициализация базы данных первой учетной записью и двумя ролями admin и user
     public static class DbUserInitializer
     {
-        public static async Task Initialize(HttpContext context)
+        public static async Task Initialize(IServiceProvider services)
         {
-            UserManager<ApplicationUser> userManager = context.RequestServices.GetRequiredService<UserManager<ApplicationUser>>();
-            RoleManager<IdentityRole> roleManager = context.RequestServices.GetRequiredService<RoleManager<IdentityRole>>();
+            UserManager<ApplicationUser> userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+            RoleManager<IdentityRole> roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
             string adminEmail = "admin@gmail.com";
             string adminName = "admin@gmail.com";
 
-            string password = "_Aa123456";
+            // Пароль администратора задается в конфигурации (user-secrets / переменная окружения Admin__Password)
+            string password = services.GetRequiredService<IConfiguration>()["Admin:Password"] ?? "_Aa123456";
             if (await roleManager.FindByNameAsync("admin") == null)
             {
                 await roleManager.CreateAsync(new IdentityRole("admin"));
