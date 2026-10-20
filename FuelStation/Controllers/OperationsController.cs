@@ -60,7 +60,7 @@ namespace FuelStation.Controllers
             // Считывание данных из сессии
             var sessionSortState = HttpContext.Session.Get("SortState");
             var sortOrder = new SortState();
-            if (sessionSortState.Count > 0)
+            if (sessionSortState != null && sessionSortState.Count > 0)
                 sortOrder = (SortState)Enum.Parse(typeof(SortState), sessionSortState["sortOrder"]);
 
             // Сортировка и фильтрация данных

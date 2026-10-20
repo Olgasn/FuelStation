@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace FuelStation.Infrastructure.Filters
 {
     // Простой фильтр ресурсов, кэширующий ViewResult 
     public class CacheResourceFilterAttribute : Attribute, IResourceFilter
     {
-        private static readonly Dictionary<string, object> _cache
-            = []; // Коллекция в виде словаря, в которую будем кэшировать данные
+        private static readonly ConcurrentDictionary<string, object> _cache
+            = new(); // Коллекция в виде словаря, в которую будем кэшировать данные
         private string _cacheKey; // ключ доступа
 
         // Выполняется до выполнения метода контроллера
@@ -30,13 +30,9 @@ namespace FuelStation.Infrastructure.Filters
         public void OnResourceExecuted(ResourceExecutedContext context)
         {
             // запись представления в коллекцию
-            if (!String.IsNullOrEmpty(_cacheKey) &&
-            !_cache.ContainsKey(_cacheKey))
+            if (!String.IsNullOrEmpty(_cacheKey) && context.Result is ViewResult result)
             {
-                if (context.Result is ViewResult result)
-                {
-                    _cache.Add(_cacheKey, result);
-                }
+                _cache.TryAdd(_cacheKey, result);
             }
 
         }

@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace FuelStation.Infrastructure.Filters
@@ -10,11 +11,14 @@ namespace FuelStation.Infrastructure.Filters
         public void OnException(ExceptionContext context)
         {
             string actionName = context.ActionDescriptor.DisplayName; //имя метода действия
-            string exceptionStack = context.Exception.StackTrace;
-            string exceptionMessage = context.Exception.Message;
+            // подробности пишем в лог, пользователю их не показываем
+            ILogger logger = (ILogger)context.HttpContext.RequestServices
+                .GetService(typeof(ILogger<ExceptionFilterAttribute>));
+            logger?.LogError(context.Exception, "Исключение в методе {Action}", actionName);
             context.Result = new ContentResult
             {
-                Content = $"В методе {actionName} возникло исключение: \n {exceptionMessage} \n {exceptionStack}"
+                Content = $"В методе {actionName} возникло исключение.",
+                StatusCode = 500
             };
             context.ExceptionHandled = true;
         }
